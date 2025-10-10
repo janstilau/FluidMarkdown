@@ -50,7 +50,7 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
         if (self.styles.codeBlockAttributes.stringAttributes[@"backgroundColor"]) {
             self.textView.backgroundColor = self.styles.codeBlockAttributes.stringAttributes[@"backgroundColor"];
         }
-       
+        
         self.backgroundColor = [UIColor whiteColor];
         self.layer.cornerRadius = 12;
         self.layer.masksToBounds = YES;
@@ -99,7 +99,7 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
             NSString* iconPath = self.styles.codeBlockAttributes.stringAttributes[@"operationIcon"];
             NSRange iOSRange = [iconPath rangeOfString:@"/"];
             if (iOSRange.location != NSNotFound) {
-                 
+                
                 NSString *bundlePart = [iconPath substringToIndex:iOSRange.location];
                 NSString *imagePart = [iconPath substringFromIndex:iOSRange.location + 1];
                 [self.codeCopyButton setImage:[UIImage imageNamed_ant_bundle:bundlePart name:imagePart] forState:UIControlStateNormal];
@@ -135,11 +135,11 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
         
         [self.textView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
         self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.textView
-                                                                         attribute:NSLayoutAttributeHeight
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:nil
-                                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                                        multiplier:1
+                                                             attribute:NSLayoutAttributeHeight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                            multiplier:1
                                                               constant:AMCodeHeaderHeight];
         self.heightConstraint.priority = UILayoutPriorityDefaultHigh -1;
         
@@ -276,12 +276,12 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
         [self.textView setAttributedText:codeText];
     }
     if (codeText.length > 0) {
-//        UIColor *bgColor = [codeText attribute:NSBackgroundColorAttributeName
-//                                       atIndex:0
-//                                effectiveRange:NULL];
-//        if ([bgColor isKindOfClass:[UIColor class]]) {
-//            self.backgroundColor = bgColor;
-//        }
+        //        UIColor *bgColor = [codeText attribute:NSBackgroundColorAttributeName
+        //                                       atIndex:0
+        //                                effectiveRange:NULL];
+        //        if ([bgColor isKindOfClass:[UIColor class]]) {
+        //            self.backgroundColor = bgColor;
+        //        }
     }
     
     if([NSThread isMainThread])

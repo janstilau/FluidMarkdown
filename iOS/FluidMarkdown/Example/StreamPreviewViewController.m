@@ -10,10 +10,10 @@ CGFloat buttonHeight = 40;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
-                   title:(NSString *)title
-              titleColor:(UIColor *)titleColor
-           gradientStart:(UIColor *)startColor
-             gradientEnd:(UIColor *)endColor {
+                        title:(NSString *)title
+                   titleColor:(UIColor *)titleColor
+                gradientStart:(UIColor *)startColor
+                  gradientEnd:(UIColor *)endColor {
     self = [super initWithFrame:frame];
     if (self) {
         [self setTitle:title forState:UIControlStateNormal];
@@ -57,26 +57,26 @@ CGFloat buttonHeight = 40;
     
     self.actionStartButton = [[CustomButton alloc]
                               initWithFrame:CGRectMake(20, 50 + self.navigationController.navigationBar.frame.size.height, buttonWidth, buttonHeight)
-                         title:@"start print"
-                         titleColor:[UIColor whiteColor]
-                         gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
-                         gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
-
+                              title:@"start print"
+                              titleColor:[UIColor whiteColor]
+                              gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
+                              gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
+    
     self.actionStartButton.cornerRadius = 10;
     self.actionStartButton.shadowOffset = CGSizeMake(0, 6);
     self.actionStartButton.shadowOpacity = 0.3;
     self.actionStartButton.backgroundColor = [UIColor lightGrayColor];
     [self.actionStartButton addTarget:self action:@selector(buttonTappedStart) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.actionStartButton];
-
+    
     
     self.actionPauseButton = [[CustomButton alloc]
                               initWithFrame:CGRectMake(self.actionStartButton.frame.origin.x + buttonWidth + 20, 50 + self.navigationController.navigationBar.frame.size.height, buttonWidth, buttonHeight)
-                         title:@"pause"
-                         titleColor:[UIColor whiteColor]
-                         gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
-                         gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
-
+                              title:@"pause"
+                              titleColor:[UIColor whiteColor]
+                              gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
+                              gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
+    
     self.actionPauseButton.cornerRadius = 10;
     self.actionPauseButton.shadowOffset = CGSizeMake(0, 6);
     self.actionPauseButton.shadowOpacity = 0.3;
@@ -86,11 +86,11 @@ CGFloat buttonHeight = 40;
     
     self.actionResumeButton = [[CustomButton alloc]
                                initWithFrame:CGRectMake(self.actionPauseButton.frame.origin.x + buttonWidth + 20, 50 + self.navigationController.navigationBar.frame.size.height, buttonWidth, buttonHeight)
-                         title:@"continue"
-                         titleColor:[UIColor whiteColor]
-                         gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
-                         gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
-
+                               title:@"continue"
+                               titleColor:[UIColor whiteColor]
+                               gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
+                               gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
+    
     self.actionResumeButton.cornerRadius = 10;
     self.actionResumeButton.shadowOffset = CGSizeMake(0, 6);
     self.actionResumeButton.shadowOpacity = 0.3;
@@ -100,11 +100,11 @@ CGFloat buttonHeight = 40;
     
     self.actionStopButton = [[CustomButton alloc]
                              initWithFrame:CGRectMake(20, self.actionStartButton.frame.origin.y + buttonHeight + 20, buttonWidth, buttonHeight)
-                         title:@"stop"
-                         titleColor:[UIColor whiteColor]
-                         gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
-                         gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
-
+                             title:@"stop"
+                             titleColor:[UIColor whiteColor]
+                             gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
+                             gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
+    
     self.actionStopButton.cornerRadius = 10;
     self.actionStopButton.shadowOffset = CGSizeMake(0, 6);
     self.actionStopButton.shadowOpacity = 0.3;
@@ -114,11 +114,11 @@ CGFloat buttonHeight = 40;
     
     self.actionAppendButton = [[CustomButton alloc]
                                initWithFrame:CGRectMake(self.actionStopButton.frame.origin.x + buttonWidth + 20, self.actionStartButton.frame.origin.y + buttonHeight + 20, buttonWidth, buttonHeight)
-                         title:@"append"
-                         titleColor:[UIColor whiteColor]
-                         gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
-                         gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
-
+                               title:@"append"
+                               titleColor:[UIColor whiteColor]
+                               gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
+                               gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
+    
     self.actionAppendButton.cornerRadius = 10;
     self.actionAppendButton.shadowOffset = CGSizeMake(0, 6);
     self.actionAppendButton.shadowOpacity = 0.3;
@@ -127,12 +127,12 @@ CGFloat buttonHeight = 40;
     [self.view addSubview:self.actionAppendButton];
     
     self.oneceButton = [[CustomButton alloc]
-                               initWithFrame:CGRectMake(self.actionAppendButton.frame.origin.x + buttonWidth + 20, self.actionStartButton.frame.origin.y + buttonHeight + 20, buttonWidth, buttonHeight)
-                         title:@"onece render"
-                         titleColor:[UIColor whiteColor]
-                         gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
-                         gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
-
+                        initWithFrame:CGRectMake(self.actionAppendButton.frame.origin.x + buttonWidth + 20, self.actionStartButton.frame.origin.y + buttonHeight + 20, buttonWidth, buttonHeight)
+                        title:@"onece render"
+                        titleColor:[UIColor whiteColor]
+                        gradientStart:[UIColor colorWithRed:0.10 green:0.68 blue:1.00 alpha:1.0]
+                        gradientEnd:[UIColor colorWithRed:0.20 green:0.40 blue:0.95 alpha:1.0]];
+    
     self.oneceButton.cornerRadius = 10;
     self.oneceButton.shadowOffset = CGSizeMake(0, 6);
     self.oneceButton.shadowOpacity = 0.3;
@@ -146,7 +146,7 @@ CGFloat buttonHeight = 40;
     
     CGFloat screenWidht = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-
+    
     [self initUI];
     
     
@@ -163,7 +163,7 @@ CGFloat buttonHeight = 40;
     [self.view addSubview:self.inputView];
     
     self.containerView = [[UIScrollView alloc] initWithFrame:CGRectMake(20, self.inputView.frame.origin.y + self.inputView.frame.size.height + 20, screenWidht - 20 * 2, screenHeight - (self.inputView.frame.origin.y + self.inputView.frame.size.height + 20 + 40))];
-
+    
     self.contentTextView = [[AMXMarkdownTextView alloc] initWithFrame_ant_mark:CGRectMake(0, 0, screenWidht - 20 * 2, 1)];
     self.contentTextView.styleId = @"demo";
     self.contentTextView.textColor = [UIColor blackColor];
@@ -176,6 +176,7 @@ CGFloat buttonHeight = 40;
 {
     [[AMXRenderService shared] setMarkdownStyleWithId:[AMXMarkdownStyleConfig defaultConfig] styleId:@"demo"];
 }
+
 - (void)buttonTappedStart {
     [UIView animateWithDuration:0.1 animations:^{
         self.actionStartButton.transform = CGAffineTransformMakeScale(0.95, 0.95);
@@ -185,7 +186,7 @@ CGFloat buttonHeight = 40;
         }];
     }];
     [self.contentTextView startStreamingWithContent:_inputView.text];
-
+    
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 }
 - (void)buttonTappedPause {
@@ -293,7 +294,7 @@ CGFloat buttonHeight = 40;
 - (NSString*)markdownReplaceBr:(NSString *)markdown {
     if(!(markdown && [markdown isKindOfClass:[NSString class]] && ![@"" isEqualToString:markdown]))
         return markdown;
-        
+    
     NSString* resStr = [markdown stringByReplacingOccurrencesOfString:@"<br/>" withString:@"\n"];
     
     NSString *pattern = @"\\\\\\[([\\s\\S]*?)\\\\\\]";
@@ -311,7 +312,7 @@ CGFloat buttonHeight = 40;
     
     
     NSString *pattern2 = @"\\\\\\((.*?)\\\\\\)";
-
+    
     NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:pattern2 options:0 error:&error];
     
     if (error) {
@@ -330,6 +331,6 @@ CGFloat buttonHeight = 40;
 }
 -(void)onTap:(AMXMarkdownTapType)type content:(id)content gesture:(UITapGestureRecognizer *)gesture attachment:(NSTextAttachment*)attachment tapIndex:(NSUInteger)tapIndex attrString:(NSAttributedString*)attrString
 {
-   
+    
 }
 @end

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import "AMXRenderService.h"
+// AMXMarkdownExtendEngine 是一个内部类, 直接就隐藏在 M 文件里面了
 @interface AMXMarkdownExtendEngine : NSObject
 {
     @private

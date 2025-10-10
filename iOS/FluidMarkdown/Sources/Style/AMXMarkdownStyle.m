@@ -11,6 +11,7 @@
 @end
 
 @implementation AMXListLevelConfig
+
 + (instancetype)defaultStyle:(NSInteger)level{
     AMXListLevelConfig* config = [AMXListLevelConfig new];
     config.prefixType = AMXListPrefixTypeCharacter;
@@ -19,6 +20,7 @@
     return config;
 }
 @end
+
 @implementation AMXTableCellStyle
 
 @end
@@ -57,7 +59,7 @@
     config.maxWidth = 319;
     config.maxHeight = -1;
     config.operationIconPath = @"AntMarkdown/blow_up";
-
+    
     return config;
 }
 
@@ -121,7 +123,7 @@
     AMXFontConfig *titleFont = [[AMXFontConfig alloc] init];
     titleFont.font = [UIFont boldSystemFontOfSize:AUFVS(13.0)];
     titleFont.fontColor = [AMUtils colorWithString:@"#999999"];
-   
+    
     config.titleFont = titleFont;
     config.borderWidth = 1;
     config.borderColor = [AMUtils colorWithString:@"#33333329"];
@@ -163,10 +165,10 @@
     AMXFontConfig *defaultFont = [[AMXFontConfig alloc] init];
     defaultFont.font = [UIFont systemFontOfSize:AUFVS(15.0)];
     defaultFont.fontColor = [AMUtils colorWithString:@"#333333"];
-  
+    
     AMXFontConfig *defaultBoldFont = [[AMXFontConfig alloc] init];
     defaultBoldFont.font = [UIFont boldSystemFontOfSize:AUFVS(15.0)];
-                             defaultBoldFont.fontColor = [AMUtils colorWithString:@"#333333"];
+    defaultBoldFont.fontColor = [AMUtils colorWithString:@"#333333"];
     [config setFontConfig:defaultFont forElementType:AMXElementTypeParagraph];
     [config setFontConfig:defaultBoldFont forElementType:AMXElementTypeHeader1];
     [config setFontConfig:defaultBoldFont forElementType:AMXElementTypeHeader2];
@@ -197,7 +199,7 @@
     defaultSpacing.paragraphSpacingBefore = 10;
     defaultSpacing.paragraphSpacing = 0;
     defaultSpacing.lineSpacing = 0;
-
+    
     for (NSInteger i = 0; i <= AMXElementTypeHRule; i++) {
         [config setSpacingConfig:defaultSpacing forElementType:i];
         [config setLineHeightConfig:AUFVS(24.0) forElementType:i];
@@ -232,7 +234,7 @@
     
     AMXHRuleConfig* hruleConfig = [AMXHRuleConfig defaultStyle];
     config.hRuleConfig = hruleConfig;
-
+    
     AMXFootNoteConfig* footNoteConfig = [AMXFootNoteConfig defaultStyle];
     config.footNoteConfig = footNoteConfig;
     

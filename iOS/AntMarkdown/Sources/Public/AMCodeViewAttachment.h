@@ -9,6 +9,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol AMCodeView <NSObject>
+
 - (void)setPlainCodeText:(NSString *)codeText;
 - (void)setLanguage:(nullable NSString *)lang;
 - (void)setAttributedCodeText:(NSAttributedString *)codeText;
