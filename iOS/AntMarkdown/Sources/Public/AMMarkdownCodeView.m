@@ -292,7 +292,7 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
 
 - (void)didCopyCode:(NSString *)code
 {
-    
+    NSLog(@"%@", code);
 }
 
 + (CGSize)sizeThatFits:(CGSize)size 

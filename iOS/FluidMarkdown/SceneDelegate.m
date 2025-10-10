@@ -6,6 +6,7 @@
 #import "SceneDelegate.h"
 #import <AntMarkdown/AntMarkdown.h>
 #import "MenuViewController.h"
+#import "CustomAttachmentViewController.h"
 
 @interface SceneDelegate ()
 
@@ -19,12 +20,12 @@
     // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
     // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     UIWindowScene *windowScene = (UIWindowScene *)scene;
-        self.window = [[UIWindow alloc] initWithWindowScene:windowScene];
-        self.window.frame = windowScene.coordinateSpace.bounds;
-        
+    self.window = [[UIWindow alloc] initWithWindowScene:windowScene];
+    self.window.frame = windowScene.coordinateSpace.bounds;
+    
     MenuViewController *rootVC = [[MenuViewController alloc] init];
-        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootVC];
-        [self.window makeKeyAndVisible];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootVC];
+    [self.window makeKeyAndVisible];
 }
 
 
@@ -39,13 +40,13 @@
 - (void)sceneDidBecomeActive:(UIScene *)scene {
     // Called when the scene has moved from an inactive state to an active state.
     // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-//    NSString* text = @"";
-//    [text markdownToAttributedStringWithStyles_ant_mark:nil delegate:nil];
-//    AMTextStyles* styles;
-//    [styles.blockQuoteAttributes.stringAttributes addEntriesFromDictionary:@{
-//        AMBackgroundDrawableAttributeName: [AMTextBackground leftBorderColor:[UIColor colorWithHex_ant_mark:0xd1d9e0]
-//                                                                       width:4],
-//    }];
+    //    NSString* text = @"";
+    //    [text markdownToAttributedStringWithStyles_ant_mark:nil delegate:nil];
+    //    AMTextStyles* styles;
+    //    [styles.blockQuoteAttributes.stringAttributes addEntriesFromDictionary:@{
+    //        AMBackgroundDrawableAttributeName: [AMTextBackground leftBorderColor:[UIColor colorWithHex_ant_mark:0xd1d9e0]
+    //                                                                       width:4],
+    //    }];
 }
 
 

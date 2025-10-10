@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06F3EB292E99143C00827F56 /* data4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06F3EB282E99143C00827F56 /* data4.txt */; };
 		774C570F2E77BAED003034DC /* highlightjs.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 774C570C2E77BAED003034DC /* highlightjs.bundle */; };
 		774C57102E77BAED003034DC /* data3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 774C570B2E77BAED003034DC /* data3.txt */; };
 		774C57112E77BAED003034DC /* mathFonts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 774C570D2E77BAED003034DC /* mathFonts.bundle */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06F3EB282E99143C00827F56 /* data4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data4.txt; sourceTree = "<group>"; };
 		774C563F2E77B5B4003034DC /* FluidMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FluidMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		774C57082E77BAED003034DC /* AntMarkdown.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AntMarkdown.bundle; sourceTree = "<group>"; };
 		774C57092E77BAED003034DC /* data1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data1.txt; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				774C57092E77BAED003034DC /* data1.txt */,
 				774C570A2E77BAED003034DC /* data2.txt */,
 				774C570B2E77BAED003034DC /* data3.txt */,
+				06F3EB282E99143C00827F56 /* data4.txt */,
 				774C570C2E77BAED003034DC /* highlightjs.bundle */,
 				774C570D2E77BAED003034DC /* mathFonts.bundle */,
 			);
@@ -206,6 +209,7 @@
 			files = (
 				774C570F2E77BAED003034DC /* highlightjs.bundle in Resources */,
 				774C57102E77BAED003034DC /* data3.txt in Resources */,
+				06F3EB292E99143C00827F56 /* data4.txt in Resources */,
 				774C57112E77BAED003034DC /* mathFonts.bundle in Resources */,
 				774C57122E77BAED003034DC /* data1.txt in Resources */,
 				774C57132E77BAED003034DC /* AntMarkdown.bundle in Resources */,
@@ -246,7 +250,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D4NA563L94;
+				DEVELOPMENT_TEAM = R82J37D478;
 				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -263,7 +267,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alipay.card.FluidMarkdown;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alipay.card.FluidMarkdowndemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -282,7 +286,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D4NA563L94;
+				DEVELOPMENT_TEAM = R82J37D478;
 				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -299,7 +303,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alipay.card.FluidMarkdown;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alipay.card.FluidMarkdowndemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

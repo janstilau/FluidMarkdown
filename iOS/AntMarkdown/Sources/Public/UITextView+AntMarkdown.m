@@ -60,7 +60,7 @@
     self = [self initWithFrame:frame textContainer:container];
     if (self) {
         self.editable = NO;
-        self.selectable = NO;
+        self.selectable = YES;
         self.textContainerInset = UIEdgeInsetsZero;
         self.textContainer.lineFragmentPadding = 0;
         if (@available(iOS 16.0, *)) {
@@ -82,7 +82,7 @@
     self = [self initWithFrame:frame textContainer:container];
     if (self) {
         self.editable = NO;
-        self.selectable = NO;
+        self.selectable = YES;
         self.textContainerInset = UIEdgeInsetsZero;
         self.textContainer.lineFragmentPadding = 0;
         if (@available(iOS 16.0, *)) {

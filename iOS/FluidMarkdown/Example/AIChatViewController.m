@@ -23,10 +23,10 @@
     [self setupUI];
     self.markdownViewArray = [NSMutableArray array];
     self.dataArray = [NSMutableArray array];
-    for (int i = 0; i < 3; i++) {
-        NSString* fileName = [NSString stringWithFormat:@"data%d", (i + 1) ];
+    for (int i = 0; i < 120; i++) {
+        int idx = i % 4;
+        NSString* fileName = [NSString stringWithFormat:@"data%d", (idx + 1) ];
         NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
-                
         if (!filePath) {
             NSLog(@"not exist");
         } else {
@@ -40,7 +40,6 @@
     
 }
 - (void)setMarkdown {
-    
     [[AMXRenderService shared] setMarkdownStyleWithId:[AMXMarkdownStyleConfig defaultConfig] styleId:@"chat"];
     AMXMarkdownTextView* markdownView = [[AMXMarkdownTextView alloc] initWithFrame_ant_mark:CGRectMake(20, 0, self.view.frame.size.width - 80, 1) ];
     markdownView.styleId = @"chat";
@@ -48,9 +47,8 @@
     markdownView.font = [UIFont systemFontOfSize:16];
     markdownView.textViewDelegate = self;
     [self.markdownViewArray addObject:markdownView];
-    
-    
 }
+
 - (void)setupUI {
     self.navigationItem.title = @"chat";
     self.view.backgroundColor = [UIColor whiteColor];
@@ -60,16 +58,16 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-
+    
     self.inputView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
     self.inputView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.view addSubview:self.inputView];
-
+    
     self.messageField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width - 80, 30)];
     self.messageField.borderStyle = UITextBorderStyleRoundedRect;
     self.messageField.delegate = self;
     [self.inputView addSubview:self.messageField];
-
+    
     self.sendButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.sendButton.frame = CGRectMake(self.view.frame.size.width - 70, 10, 60, 30);
     [self.sendButton setTitle:@"send" forState:UIControlStateNormal];
@@ -83,7 +81,7 @@
         [self.tableView reloadData];
         [self totalContent];
         self.messageField.text = @"";
-
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self setMarkdown];
             [self.reciveMessages addObject:[self.dataArray objectAtIndex:self.dataIndex]];
@@ -93,9 +91,7 @@
             [[self.markdownViewArray objectAtIndex:self.dataIndex] startStreamingWithContent:[self.dataArray objectAtIndex:self.dataIndex]];
             [self.tableView reloadData];
             self.dataIndex++;
-            
         });
-        [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
     }
 }
 
@@ -221,7 +217,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didChangeState:(AMXMarkdownPrintState)state {
-
+    
 }
 
 - (void)onError:(nonnull NSError *)error {
@@ -239,8 +235,39 @@
 
 - (void)onTap:(AMXMarkdownTapType)type content:(nonnull id)content gesture:(nonnull UITapGestureRecognizer *)gesture attachment:(nonnull NSTextAttachment *)attachment tapIndex:(NSUInteger)tapIndex attrString:(nonnull NSAttributedString *)attrString {
     
+    // 打印点击类型
+    NSString *typeString = @"";
+    switch (type) {
+        case AMXMarkdownTapIconLink:
+            typeString = @"AMXMarkdownTapIconLink";
+            break;
+        case AMXMarkdownTapLink:
+            typeString = @"AMXMarkdownTapLink";
+            break;
+        case AMXMarkdownTapImage:
+            typeString = @"AMXMarkdownTapImage";
+            break;
+        case AMXMarkdownTapTable:
+            typeString = @"AMXMarkdownTapTable";
+            break;
+        default:
+            typeString = [NSString stringWithFormat:@"Unknown(%lu)", (unsigned long)type];
+            break;
+    }
+    
+    NSLog(@"=== onTap 回调参数 ===");
+    NSLog(@"type: %@", typeString);
+    NSLog(@"content: %@", content);
+    NSLog(@"content class: %@", [content class]);
+    NSLog(@"gesture: %@", gesture);
+    NSLog(@"gesture location: %@", NSStringFromCGPoint([gesture locationInView:gesture.view]));
+    NSLog(@"attachment: %@", attachment);
+    NSLog(@"attachment class: %@", [attachment class]);
+    NSLog(@"tapIndex: %lu", (unsigned long)tapIndex);
+    NSLog(@"attrString length: %lu", (unsigned long)attrString.length);
+    NSLog(@"attrString preview: %@", [attrString.string substringToIndex:MIN(50, attrString.length)]);
+    NSLog(@"==================");
 }
-
 - (void)onUpdateExposureElement:(nonnull NSArray<AMXMarkdownCustomRenderEventModel *> *)elements {
     
 }
@@ -248,8 +275,8 @@
 + (NSString *)readTextDataFromFile:(NSString *)filePath {
     NSError *error = nil;
     NSString *fileContents = [NSString stringWithContentsOfFile:filePath
-                                                      encoding:NSUTF8StringEncoding
-                                                         error:&error];
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&error];
     
     if (error) {
         NSLog(@"read file error: %@", error.localizedDescription);
