@@ -61,6 +61,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ * AMCodeViewAttachment 是 AMViewAttachment 的子类，用于在富文本中嵌入代码块视图。
+ * 支持语法高亮、多种编程语言和部分更新功能。
+ * 主要用于 Markdown 代码块语法的渲染，如 ```language...```。
+ */
 @interface AMCodeViewAttachment : AMViewAttachment
 @property (nonatomic, readonly, nullable) UIView<AMCodeView> *view;
 @property (nonatomic) BOOL partialUpdate;

@@ -7,6 +7,10 @@
 
 @interface AMXFootNoteAttachment : NSTextAttachment
 
+/**
+ * AMXFootNoteAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入脚注引用。
+ * 支持脚注索引和标题设置，主要用于 Markdown 脚注语法的渲染。
+ */
 @property(nonatomic,assign)NSInteger noteIndex;
 @property(nonatomic,copy)NSString *noteTitle;
 

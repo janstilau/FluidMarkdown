@@ -11,6 +11,7 @@
     self = [super init];
     if (self) {
         _lineColor = [CMColor lightGrayColor];
+        _lineColor = [CMColor redColor];
         _lineThickness = 1.0;
         _horizontalInset = 0.0;
         _verticalPadding = 6.0;
@@ -33,10 +34,10 @@
     
     AMUIGraphicsBeginImageContextWithOptions(size, NO, 0);
     CGContextRef context = UIGraphicsGetCurrentContext();
-
+    
     CGContextSetStrokeColorWithColor(context, _lineColor.CGColor);
     CGContextSetLineWidth(context, _lineThickness);
-
+    
     CGFloat yPosition = _verticalPaddingBefore + _lineThickness / 2.0;
     CGContextMoveToPoint(context, 0, yPosition);
     CGContextAddLineToPoint(context, size.width, yPosition);
@@ -49,15 +50,15 @@
 }
 
 - (CGRect)attachmentBoundsForTextContainer:(NSTextContainer *)textContainer proposedLineFragment:(CGRect)lineFrag glyphPosition:(CGPoint)position characterIndex:(NSUInteger)charIndex {
-
+    
     CGFloat width = textContainer.size.width - textContainer.lineFragmentPadding * 2 - _horizontalInset * 2;
     CGFloat height = _lineThickness + _verticalPadding + _verticalPaddingBefore;
-
+    
     CGFloat x = _horizontalInset;
-
+    
     CGFloat y = -_verticalPaddingBefore;
     
     return CGRectMake(x, y, width, height);
 }
 
-@end 
+@end

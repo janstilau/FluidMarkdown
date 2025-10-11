@@ -6,6 +6,10 @@
 #import "UIColor+Random.h"
 
 // 自定义图表 Attachment
+/**
+ * CustomChartAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入自定义图表。
+ * 支持数据点数组和图表尺寸设置，能够绘制简单的折线图表。
+ */
 @interface CustomChartAttachment : NSTextAttachment
 @property (nonatomic, strong) NSArray<NSNumber *> *dataPoints;
 @property (nonatomic, assign) CGSize chartSize;
@@ -95,6 +99,10 @@
 @end
 
 // 自定义标签 Attachment
+/**
+ * CustomLabelAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入自定义标签。
+ * 支持文本内容、背景色、文字颜色、内边距和字体设置，能够绘制圆角标签样式。
+ */
 @interface CustomLabelAttachment : NSTextAttachment
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) UIColor *backgroundColor;
@@ -165,6 +173,10 @@
 @end
 
 // 自定义进度条 Attachment
+/**
+ * CustomProgressAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入自定义进度条。
+ * 支持进度值（0.0-1.0）、尺寸、进度色和轨道色设置，能够绘制可视化的进度条。
+ */
 @interface CustomProgressAttachment : NSTextAttachment
 @property (nonatomic, assign) CGFloat progress; // 0.0 - 1.0
 @property (nonatomic, assign) CGSize progressSize;
@@ -235,6 +247,10 @@
 @end
 
 // 自定义星级评分 Attachment
+/**
+ * CustomStarRatingAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入星级评分显示。
+ * 支持1-5星评分设置和自定义尺寸，能够绘制可视化的星级评分图标。
+ */
 @interface CustomStarRatingAttachment : NSTextAttachment
 @property (nonatomic, assign) NSInteger rating; // 1-5
 @property (nonatomic, assign) CGSize starSize;
@@ -311,6 +327,10 @@
 @end
 
 // 自定义二维码 Attachment
+/**
+ * CustomQRCodeAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入二维码显示。
+ * 支持自定义二维码文本内容和尺寸，能够绘制模拟的二维码图案（简化版）。
+ */
 @interface CustomQRCodeAttachment : NSTextAttachment
 @property (nonatomic, strong) NSString *qrText;
 @property (nonatomic, assign) CGSize qrSize;
@@ -394,6 +414,10 @@
 @end
 
 // 自定义徽章 Attachment
+/**
+ * CustomBadgeAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入徽章显示。
+ * 支持自定义徽章文本、颜色和尺寸，能够绘制圆形或椭圆形的徽章样式。
+ */
 @interface CustomBadgeAttachment : NSTextAttachment
 @property (nonatomic, strong) NSString *badgeText;
 @property (nonatomic, strong) UIColor *badgeColor;

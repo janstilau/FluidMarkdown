@@ -68,7 +68,7 @@
         _attributeStack = [[CMCascadingAttributeStack alloc] init];
         _HTMLStack = [[CMStack alloc] init];
         _buffer = [[NSMutableAttributedString alloc] init];
-        
+        // 在 CMParser 的各种 Delegate 方法里面, 不断地给 _attributedString 添加真实的数据. 
         CMParser *parser = [[CMParser alloc] initWithDocument:_document delegate:self];
         [parser parse];
         

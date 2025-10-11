@@ -7,6 +7,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * CMTaskCheckAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入任务列表的复选框。
+ * 支持选中/未选中状态，并可以自定义边框颜色、宽度和背景色。
+ * 主要用于 Markdown 任务列表语法的渲染，如 - [x] 已完成任务 和 - [ ] 未完成任务。
+ */
 @interface CMTaskCheckAttachment : NSTextAttachment
 
 @property (nonatomic, assign) BOOL checked;

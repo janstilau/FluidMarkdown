@@ -9,6 +9,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * AMIconAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入图标元素。
+ * 支持自定义图标路径、文本内容、字体、颜色、尺寸、对齐方式和边距等属性。
+ * 主要用于渲染带有图标的文本元素，提供丰富的视觉效果和布局控制。
+ */
 @interface AMIconAttachment : NSTextAttachment
 @property (nonatomic, nullable) NSString *path;
 @property (nonatomic, nullable) NSString *text;

@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ * AMImageTextAttachment 是 CMImageTextAttachment 的子类，用于在富文本中嵌入图片。
+ * 支持图片缓存、布局更新和显示更新功能。
+ * 主要用于 Markdown 图片语法的渲染，如 ![alt](url)。
+ */
 @interface AMImageTextAttachment : CMImageTextAttachment <AMAttachmentUpdatable>
 @property (nonatomic) BOOL enableImageCache;
 

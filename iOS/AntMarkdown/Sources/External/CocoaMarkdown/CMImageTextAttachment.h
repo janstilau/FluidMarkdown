@@ -15,6 +15,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * CMImageTextAttachment 是 NSTextAttachment 的子类，专门用于在富文本中嵌入图片。
+ * 它支持从 URL 加载图片，并可以设置图片的尺寸和替代文本。
+ * 主要用于 Markdown 图片语法的渲染，如 ![alt text](image_url)。
+ */
 @interface CMImageTextAttachment : NSTextAttachment
 {
     @protected

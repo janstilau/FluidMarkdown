@@ -24,6 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ * AMInlineMathAttachment 是 CMInlineTextAttachment 的子类，用于在富文本中嵌入内联数学公式。
+ * 支持 LaTeX 数学表达式的渲染，可以显示内联的数学公式和符号。
+ * 主要用于 Markdown 内联数学公式语法的渲染，如 $...$。
+ */
 @interface AMInlineMathAttachment : CMInlineTextAttachment
 
 @property (nonatomic, nullable, strong) NSError *error;

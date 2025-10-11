@@ -8,7 +8,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  A text attachment for displaying horizontal rules in Markdown.
+ * CMHorizontalRuleAttachment 是 NSTextAttachment 的子类，用于在富文本中显示水平分割线。
+ * 支持自定义线条颜色和粗细，主要用于 Markdown 水平分割线语法的渲染，如 --- 或 ***。
+ * A text attachment for displaying horizontal rules in Markdown.
  */
 @interface CMHorizontalRuleAttachment : NSTextAttachment
 
@@ -50,4 +52,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END 
+NS_ASSUME_NONNULL_END

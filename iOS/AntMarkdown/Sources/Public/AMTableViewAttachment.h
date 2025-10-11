@@ -39,6 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ * AMTableViewAttachment 是 AMViewAttachment 的子类，用于在富文本中嵌入表格视图。
+ * 支持表格数据显示、部分更新和自定义样式。
+ * 主要用于 Markdown 表格语法的渲染，如 |col1|col2|。
+ */
 @interface AMTableViewAttachment : AMViewAttachment
 @property (nonatomic, readonly, nullable) UIView<AMTableView> *view;
 @property (nonatomic) BOOL partialUpdate;

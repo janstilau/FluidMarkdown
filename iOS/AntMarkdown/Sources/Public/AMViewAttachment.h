@@ -89,7 +89,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 UIKIT_EXTERN NSString *const AMTextAttachmentSizeDidUpdateNotification;
 
-
+/**
+ * AMViewAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入 UIView 视图。
+ * 支持全宽显示、布局更新、尺寸计算等功能，为在文本中嵌入复杂视图提供基础支持。
+ * 这是一个基础类，通常通过其子类来实现具体的视图嵌入功能。
+ */
 @interface AMViewAttachment : NSTextAttachment <AMViewAttachment>
 
 @property (nonatomic, readonly, nullable) __kindof UIView<AMAttachedView> *view;
@@ -112,6 +116,10 @@ UIKIT_EXTERN NSString *const AMTextAttachmentSizeDidUpdateNotification;
 
 typedef void(^ButtonAction)(void);
 
+/**
+ * AMButtonViewAttachment 是 AMViewAttachment 的子类，用于在富文本中嵌入按钮视图。
+ * 支持自定义按钮标题和点击事件，主要用于在文本中嵌入可交互的按钮元素。
+ */
 @interface AMButtonViewAttachment : AMViewAttachment
 @property (nonatomic, strong) UIButton *button;
 

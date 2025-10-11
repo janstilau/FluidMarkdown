@@ -9,6 +9,11 @@ NS_ASSUME_NONNULL_BEGIN
 @class MTMathListDisplay;
 @class MTMathList;
 
+/**
+ * AMBlockMathAttachment 是 CMBlockTextAttachment 的子类，用于在富文本中嵌入块级数学公式。
+ * 支持 LaTeX 数学表达式的渲染，可以显示复杂的数学公式和符号。
+ * 主要用于 Markdown 数学公式语法的渲染，如 $$...$$。
+ */
 @interface AMBlockMathAttachment : CMBlockTextAttachment
 
 @property (nonatomic, nullable, strong) NSError *error;

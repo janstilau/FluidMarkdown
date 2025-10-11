@@ -15,7 +15,7 @@
                              glyphPosition:(CGPoint)position
                             characterIndex:(NSUInteger)charIndex {
     _textContainer = textContainer;
-    
+    // A Boolean that controls whether the text container adjusts the width of its bounding rectangle when its text view resizes.
     textContainer.widthTracksTextView = YES;
     const CGFloat width = textContainer.size.width - textContainer.lineFragmentPadding * 2;
     CGRect rect = [super attachmentBoundsForTextContainer:textContainer
