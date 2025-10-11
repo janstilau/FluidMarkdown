@@ -32,7 +32,7 @@
         _document = document;
         _attributes = attributes;
         _tagNameToTransformerMapping = [[NSMutableDictionary alloc] init];
-
+        
     }
     return self;
 }
@@ -179,7 +179,7 @@
             font = self.attributes.paragraphAttributes.stringAttributes[NSFontAttributeName];
         }
         UIFont* linkFont = [UIFont systemFontOfSize:font.pointSize weight:UIFontWeightSemibold];
-            [linkStyleAttributes.stringAttributes addEntriesFromDictionary:@{NSFontAttributeName: linkFont}];
+        [linkStyleAttributes.stringAttributes addEntriesFromDictionary:@{NSFontAttributeName: linkFont}];
     }
     
     [_attributeStack pushAttributes:linkStyleAttributes];
@@ -374,7 +374,7 @@
         }
     }
     
-  
+    
     [_attributeStack pushAttributes:styleAttributes];
 }
 
@@ -406,7 +406,7 @@
 - (void)parser:(CMParser *)parser didStartUnorderedListWithTightness:(BOOL)tight
 {
     if ([self sublistLevel:parser.currentNode.parent] == 0) {
-       [_attributeStack pushAttributes:_attributes.unorderedListAttributes];
+        [_attributeStack pushAttributes:_attributes.unorderedListAttributes];
     }
     else {
         [self closeBlockForNode:parser.currentNode]; // When starting a sublist, the parent item must have its block closed first
@@ -476,7 +476,7 @@
                     [self appendString:@"\t"];
                 }
                 
-
+                
                 parentRun.orderedListItemNumber++;
             }
             [_attributeStack pushAttributes:_attributes.orderedListItemAttributes];
@@ -488,7 +488,7 @@
 }
 
 - (void)addCheckBoxAttachment:(CMNode *)curNode {
-
+    
     CMTaskCheckAttachment *attachment = [[CMTaskCheckAttachment alloc] init];
     attachment.checked = curNode.checked;
     

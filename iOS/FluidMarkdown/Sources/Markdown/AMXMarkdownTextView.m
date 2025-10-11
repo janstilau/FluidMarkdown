@@ -40,7 +40,7 @@ static AMXMarkdownTextView* _caculateContentView;
         self.state = AMXMarkdownPrintStateInitial;
         self.logModel = [[AMXMarkdownLogModel alloc] init];
         // This is an example.
-        // 这两个值, 应该在实际代码里面删除掉. 
+        // 这两个值, 应该在实际代码里面删除掉.
         self.logModel.spm = @"a235";
         self.logModel.styleId = @"demo";
         self.textContainerInset = UIEdgeInsetsZero;
@@ -189,6 +189,8 @@ static AMXMarkdownTextView* _caculateContentView;
     self.clickableLocationObjs = nil;
     self.state = AMXMarkdownPrintStateStopped;
 }
+
+// 从这里来看, MDTextView 有着一个定时刷新的机制. 
 - (void)onTimer {
     if (!self.timer) {
         return;

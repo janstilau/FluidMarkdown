@@ -21,10 +21,10 @@ static int core_extensions_registration(cmark_plugin *plugin) {
 }
 
 void cmark_gfm_core_extensions_ensure_registered(void) {
-  static int registered = 0;
-
-  if (!registered) {
-    cmark_register_plugin(core_extensions_registration);
-    registered = 1;
-  }
+    static int registered = 0;
+    
+    if (!registered) {
+        cmark_register_plugin(core_extensions_registration);
+        registered = 1;
+    }
 }

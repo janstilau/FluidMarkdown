@@ -14,7 +14,6 @@
 @implementation CMDocument
 
 + (void)initialize {
-//    [super initialize];
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         cmark_gfm_core_extensions_ensure_registered();

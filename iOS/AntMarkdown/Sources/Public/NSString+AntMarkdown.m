@@ -6,7 +6,7 @@
 #import "AMTextStyles.h"
 #import "AMAttributedStringRenderer.h"
 
-const CMDocumentOptions AMDefaultDocumentOptions 
+const CMDocumentOptions AMDefaultDocumentOptions
 = CMDocumentOptionsNormalize | CMDocumentOptionsUnsafe | CMDocumentOptionsFootNotes
 | CMDocumentOptionsFootNotesWithoutDefinition | CMDocumentOptionsStrikeThrough;
 
