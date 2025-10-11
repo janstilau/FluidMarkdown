@@ -36,6 +36,10 @@
 
 /* Begin PBXFileReference section */
 		06F3EB282E99143C00827F56 /* data4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data4.txt; sourceTree = "<group>"; };
+		06F3EB872E9A529F00827F56 /* NSLayoutManager_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLayoutManager_zh.h; sourceTree = "<group>"; };
+		06F3EB882E9A529F00827F56 /* NSTextContainer_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTextContainer_zh.h; sourceTree = "<group>"; };
+		06F3EB892E9A529F00827F56 /* NSTextStorage_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTextStorage_zh.h; sourceTree = "<group>"; };
+		06F3EB8B2E9A531200827F56 /* UITextView_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UITextView_zh.h; sourceTree = "<group>"; };
 		774C563F2E77B5B4003034DC /* FluidMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FluidMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		774C57082E77BAED003034DC /* AntMarkdown.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AntMarkdown.bundle; sourceTree = "<group>"; };
 		774C57092E77BAED003034DC /* data1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data1.txt; sourceTree = "<group>"; };
@@ -79,6 +83,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06F3EB8A2E9A529F00827F56 /* apple */ = {
+			isa = PBXGroup;
+			children = (
+				06F3EB8B2E9A531200827F56 /* UITextView_zh.h */,
+				06F3EB872E9A529F00827F56 /* NSLayoutManager_zh.h */,
+				06F3EB882E9A529F00827F56 /* NSTextContainer_zh.h */,
+				06F3EB892E9A529F00827F56 /* NSTextStorage_zh.h */,
+			);
+			path = apple;
+			sourceTree = "<group>";
+		};
 		774C56362E77B5B4003034DC = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +123,7 @@
 		774C570E2E77BAED003034DC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				06F3EB8A2E9A529F00827F56 /* apple */,
 				774C57082E77BAED003034DC /* AntMarkdown.bundle */,
 				774C57092E77BAED003034DC /* data1.txt */,
 				774C570A2E77BAED003034DC /* data2.txt */,

@@ -64,7 +64,7 @@
     [self registerHTMLElementTransformer:[[AMHTMLDelTransformer alloc] initWithStyles:attributes]];
     [self registerHTMLElementTransformer:[[AMHTMLFontTransformer alloc] initWithStyles:attributes]];
     UIColor* underlineColor = attributes.underlineAttributes.stringAttributes[NSForegroundColorAttributeName] ? : [UIColor colorWithHex_ant_mark:0x521677FF];
-
+    
     CGFloat underLineWidth = attributes.underlineAttributes.stringAttributes[@"lineWidth"] ? [attributes.underlineAttributes.stringAttributes[@"lineWidth"] floatValue] : 6;
     CGFloat underlineOffset = attributes.underlineAttributes.stringAttributes[@"lineOffset"] ? [attributes.underlineAttributes.stringAttributes[@"lineOffset"] floatValue] : 4;
     [self registerHTMLElementTransformer:[[AMHTMLUnderlineTransformer alloc] initWithStyle:NSUnderlineStyleThick
@@ -211,7 +211,7 @@
     if ([code hasSuffix:@"\n"]) {
         code = [code substringToIndex:code.length - 1]; // Remove final "\n"
     }
-
+    
     info = [info lowercaseString];
     
     NSTextAttachment<AMViewAttachment> * attach = [self.attributes.codeBuilder buildWithCode:code
@@ -564,7 +564,7 @@
                 attachment.textSize = !subTitleStyle ? 10 : font.pointSize;
                 attachment.textAlignment = !subTitleStyle ? NSTextAlignmentCenter : NSTextAlignmentLeft;
                 attachment.boldText = !subTitleStyle;
-  
+                
                 if (number > 9 && subTitleStyle) {
                     [self calOrderListTwoDigitIndent:attributes number:number size:iconSize subTitle:subTitleStyle];
                 }
@@ -593,16 +593,16 @@
                 }
                 NSMutableParagraphStyle* paraStyle = attributes.stringAttributes[NSParagraphStyleAttributeName];
                 NSMutableArray *mutableTabs = [paraStyle.tabStops mutableCopy];
-
-                if (mutableTabs.count > 0) {
                 
+                if (mutableTabs.count > 0) {
+                    
                     NSTextTab *tab1 = (NSTextTab*)[mutableTabs objectAtIndex:0];
                     CGFloat digitIndent = tab1.location + _listItemExtraIndent;
                     CGFloat internal = [attributes.stringAttributes[CMListInternalSpace] floatValue];
                     
                     CGFloat textIndent = digitIndent + digitSize + internal + _listItemExtraIndent;
                     NSTextTab *newTab1 = [[NSTextTab alloc]            initWithTextAlignment:NSTextAlignmentLeft
-                                                                         location:digitIndent
+                                                                                    location:digitIndent
                                                                                      options:@{}];
                     NSTextTab *tab2 = [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft
                                                                       location:textIndent
@@ -683,12 +683,12 @@
         NSInteger textExtraIndent = iconSize + [attributes.stringAttributes[CMListInternalSpace] intValue];
         NSMutableParagraphStyle* paraStyle = attributes.stringAttributes[NSParagraphStyleAttributeName];
         NSMutableArray *mutableTabs = [paraStyle.tabStops mutableCopy];
-
+        
         if (mutableTabs.count > 0) {
             NSTextTab *newTab1;
             newTab1 = [[NSTextTab alloc]            initWithTextAlignment:alignment
                                                                  location:extraIndent
-                                                                             options:@{}];
+                                                                  options:@{}];
             NSTextTab *newTab2 = [[NSTextTab alloc]            initWithTextAlignment:NSTextAlignmentLeft
                                                                             location:extraIndent + textExtraIndent
                                                                              options:@{}];
@@ -713,14 +713,14 @@
         CGFloat textIndent = extraIndent + iconSize + [attributes.stringAttributes[CMListInternalSpace] intValue];
         NSMutableParagraphStyle* paraStyle = attributes.stringAttributes[NSParagraphStyleAttributeName];
         NSMutableArray *mutableTabs = [paraStyle.tabStops mutableCopy];
-
+        
         if (mutableTabs.count > 0) {
             NSTextTab *newTab1;
             newTab1 = [[NSTextTab alloc]            initWithTextAlignment:NSTextAlignmentLeft
                                                                  location:iconIndent
-                                                                             options:@{}];
+                                                                  options:@{}];
             NSTextTab *newTab2 = [[NSTextTab alloc]            initWithTextAlignment:NSTextAlignmentLeft
-                                                                 location:textIndent
+                                                                            location:textIndent
                                                                              options:@{}];
             [mutableTabs replaceObjectAtIndex:0 withObject:newTab1];
             [mutableTabs replaceObjectAtIndex:1 withObject:newTab2];
@@ -732,9 +732,9 @@
     } else if (attributes.stringAttributes[CMListSingleDigitSize]) {
         NSMutableParagraphStyle* paraStyle = attributes.stringAttributes[NSParagraphStyleAttributeName];
         NSMutableArray *mutableTabs = [paraStyle.tabStops mutableCopy];
-
-        if (mutableTabs.count > 0) {
         
+        if (mutableTabs.count > 0) {
+            
             NSTextTab *tab1 = (NSTextTab*)[mutableTabs objectAtIndex:0];
             CGFloat digitIndent = tab1.location;
             CGFloat internal = [attributes.stringAttributes[CMListInternalSpace] floatValue];
@@ -742,7 +742,7 @@
             CGFloat iconIndent = digitIndent + _listItemExtraIndent + [attributes.stringAttributes[CMListLevelIndent] floatValue];;
             CGFloat textIndent = digitIndent + digitSize + internal + _listItemExtraIndent + [attributes.stringAttributes[CMListLevelIndent] floatValue];;
             NSTextTab *newTab1 = [[NSTextTab alloc]            initWithTextAlignment:NSTextAlignmentLeft
-                                                                 location:iconIndent
+                                                                            location:iconIndent
                                                                              options:@{}];
             NSTextTab *tab2 = [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft
                                                               location:textIndent
@@ -757,22 +757,22 @@
         if (_listItemExtraIndent != 0) {
             NSMutableParagraphStyle* paraStyle = attributes.stringAttributes[NSParagraphStyleAttributeName];
             NSMutableArray *mutableTabs = [paraStyle.tabStops mutableCopy];
-
+            
             if (mutableTabs.count > 0) {
                 CGFloat iconIndent = ((NSTextTab*)[mutableTabs objectAtIndex:0]).location + _listItemExtraIndent;
                 CGFloat textIndent = ((NSTextTab*)[mutableTabs objectAtIndex:1]).location + _listItemExtraIndent;
                 NSTextTab *newTab1;
                 newTab1 = [[NSTextTab alloc]            initWithTextAlignment:NSTextAlignmentLeft
                                                                      location:iconIndent
-                                                                                 options:@{}];
+                                                                      options:@{}];
                 NSTextTab *newTab2 = [[NSTextTab alloc]            initWithTextAlignment:NSTextAlignmentLeft
-                                                                     location:textIndent
+                                                                                location:textIndent
                                                                                  options:@{}];
                 [mutableTabs replaceObjectAtIndex:0 withObject:newTab1];
                 [mutableTabs replaceObjectAtIndex:1 withObject:newTab2];
                 [paraStyle setValue:[mutableTabs copy] forKey:@"tabStops"];
                 [paraStyle setValue:@(textIndent) forKey:@"headIndent"];
-            
+                
             }
         }
         

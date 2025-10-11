@@ -9,6 +9,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AMAttributedStringRenderer : CMAttributedStringRenderer
+
 @property (readonly) AMTextStyles *attributes;
 
 - (instancetype)initWithDocument:(CMDocument *)document attributes:(AMTextStyles *)attributes;

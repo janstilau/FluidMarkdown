@@ -433,39 +433,93 @@
 
 @implementation NSDictionary (AMUtils)
 
+/**
+ * 判断当前字典是否包含另一个字典的所有键值对（深度比较）
+ * 
+ * 功能概述：
+ * 这是一个用于字典包含关系检查的核心方法，主要用于 AntMarkdown 框架中的属性差异检测和增量更新优化。
+ * 该方法会递归地比较两个字典，确保当前字典包含目标字典的所有键值对。
+ * 
+ * 应用场景：
+ * 1. 富文本属性差异检测：在 setAttributedTextPartialUpdate_ant_mark 方法中用于判断文本属性是否发生变化
+ * 2. 增量渲染优化：避免不必要的文本重绘，只更新真正发生变化的部分
+ * 3. 嵌套字典比较：支持多层嵌套的字典结构比较
+ * 
+ * 比较策略：
+ * 1. 数量检查：如果目标字典的键值对数量大于当前字典，直接返回 NO
+ * 2. 递归比较：对于嵌套字典，递归调用自身进行深度比较
+ * 3. 协议优先：优先使用 AMDiffable 协议的自定义比较方法
+ * 4. 默认比较：使用 NSObject 的 isEqual: 方法进行标准比较
+ * 5. 并发枚举：使用 NSEnumerationConcurrent 提高大字典的比较性能
+ * 
+ * 性能优化：
+ * - 早期退出：一旦发现不匹配的键值对，立即停止遍历
+ * - 并发处理：利用多核处理器并行比较多个键值对
+ * - 智能比较：根据对象类型选择最合适的比较方法
+ * 
+ * @param otherDictionary 要检查的目标字典，当前字典应该包含该字典的所有键值对
+ * @return YES 表示当前字典包含目标字典的所有键值对；NO 表示不包含或存在差异
+ * 
+ * @note 该方法支持嵌套字典的递归比较，对于实现了 AMDiffable 协议的对象会使用自定义比较逻辑
+ * @warning 如果目标字典为 nil，方法会返回 YES（空字典被认为包含在任何字典中）
+ * 
+ * 示例用法：
+ * ```objc
+ * NSDictionary *currentAttrs = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color};
+ * NSDictionary *newAttrs = @{NSFontAttributeName: font};
+ * BOOL contains = [currentAttrs includesDictionary_ant_mark:newAttrs]; // YES
+ * ```
+ */
 - (BOOL)includesDictionary_ant_mark:(NSDictionary *)otherDictionary
 {
+    // 快速检查：如果目标字典的键值对数量大于当前字典，肯定不包含
     if (otherDictionary.count > self.count) {
         return NO;
     }
+    
+    // 使用 block 变量跟踪比较结果，支持在并发枚举中修改
     __block BOOL included = YES;
+    
+    // 并发枚举目标字典的所有键值对，提高大字典的比较性能
     [otherDictionary enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent
                                              usingBlock:^(id  _Nonnull key, id  _Nonnull value, BOOL * _Nonnull stop) {
+        // 获取当前字典中对应键的值
         id obj = self[key];
+        
+        // 情况1：值是嵌套字典，需要递归比较
         if ([value isKindOfClass:[NSDictionary class]]) {
             NSDictionary * dict = obj;
+            // 确保当前字典中对应的值也是字典类型
             if ([dict isKindOfClass:[NSDictionary class]]) {
+                // 递归调用自身，深度比较嵌套字典
                 if (![dict includesDictionary_ant_mark:value]) {
                     included = NO;
-                    *stop = YES;
+                    *stop = YES; // 发现不匹配，立即停止枚举
                 }
             } else {
+                // 类型不匹配：目标是字典，但当前值不是字典
                 included = NO;
                 *stop = YES;
             }
         } else {
+            // 情况2：值是普通对象，进行对象比较
+            
+            // 优先使用 AMDiffable 协议的自定义比较方法
+            // 这对于复杂对象（如 NSParagraphStyle）提供了更精确的比较逻辑
             if ([obj conformsToProtocol:@protocol(AMDiffable)] && [value conformsToProtocol:@protocol(AMDiffable)]) {
                 if (![(id<AMDiffable>)obj isEqualToDiffableObject:(id<AMDiffable>)value]) {
                     included = NO;
                     *stop = YES;
                 }
             }
+            // 使用标准的 NSObject isEqual: 方法进行比较
             else if (![obj isEqual:value]) {
                 included = NO;
                 *stop = YES;
             }
         }
     }];
+    
     return included;
 }
 - (NSString *)stringForKey_ap:(id)aKey {

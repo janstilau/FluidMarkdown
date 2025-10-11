@@ -8,7 +8,9 @@
 #import "AMUtils.h"
 #import "AMDrawable.h"
 #import "AMTextBackground.h"
+
 NSMutableDictionary* stylesForId;
+
 AMStyleProvider AMDefaultProvider(void) {
     return ^CMStyleAttributes * (NSInteger level) {
         CMStyleAttributes *styles = [[CMStyleAttributes alloc] init];

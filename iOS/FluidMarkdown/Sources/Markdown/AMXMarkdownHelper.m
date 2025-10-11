@@ -64,6 +64,7 @@ AMStyleProvider AMCustomProvider(void) {
     if (![text isKindOfClass:NSString.class] || (text.length == 0)) {
         return nil;
     }
+    
     AMTextStyles *styles = defaultStyles ?: [AMTextStyles cpl_cardDefaultTextStyles];
     if (styles) {
         @try {
@@ -417,7 +418,6 @@ AMStyleProvider AMCustomProvider(void) {
         } else if (linkConfig.prefixOrSuffix == 2) {
             [defaultStyle.linkAttributes.stringAttributes addEntriesFromDictionary:@{CMLinkIconSuffix: linkConfig.iconPath}];
         }
-        
     }
 }
 + (void)transformInlineCode:(AMTextStyles*)defaultStyle customStyle:(AMXMarkdownStyleConfig*)config
