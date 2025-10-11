@@ -29,11 +29,12 @@
 {
     if(self.isRun)
         return;
-
+    
     if(_timer)
     {
         return;
     }
+    // 系统内核定时器触发 → GCD 事件分发 → 线程池调度 → 选择工作线程 → 执行 onTimer 回调
     _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.queue);
     dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.intervalTime * NSEC_PER_MSEC));
     uint64_t intervalTime = (uint64_t)(self.intervalTime * NSEC_PER_MSEC);
@@ -47,13 +48,13 @@
     });
     
     dispatch_resume(_timer);
-
+    
     self.isRun = YES;
 }
 
 - (void)stopTimer
 {
-
+    
     self.isRun = NO;
 }
 

@@ -12,31 +12,75 @@ NS_ASSUME_NONNULL_BEGIN
 @class AMTextStyles;
 @class CMTable;
 
+/**
+ * 图片附件构建器协议
+ * 用于创建图片类型的文本附件
+ */
 @protocol AMImageAttachmentBuilder <NSObject>
 
+/**
+ * 根据URL和样式构建图片附件
+ * @param url 图片URL地址
+ * @param title 图片标题（可选）
+ * @param styles 文本样式配置
+ * @return 构建的图片文本附件
+ */
 - (NSTextAttachment *)buildWithURL:(NSURL *)url
                              title:(nullable NSString *)title
                             styles:(AMTextStyles *)styles;
 
 @end
 
+/**
+ * 表格附件构建器协议
+ * 用于创建表格类型的视图附件
+ */
 @protocol AMTableAttachmentBuilder <NSObject>
 
+/**
+ * 根据表格数据和样式构建表格附件
+ * @param table 表格数据模型
+ * @param styles 文本样式配置
+ * @return 构建的表格视图附件
+ */
 - (NSTextAttachment<AMViewAttachment> *)buildWithTable:(CMTable *)table
                                                 styles:(AMTextStyles *)styles;
 
 @end
 
+/**
+ * 代码附件构建器协议
+ * 用于创建代码块类型的视图附件
+ */
 @protocol AMCodeAttachmentBuilder <NSObject>
 
+/**
+ * 根据代码内容和样式构建代码附件
+ * @param code 代码文本内容
+ * @param language 编程语言类型（可选）
+ * @param styles 文本样式配置
+ * @return 构建的代码视图附件
+ */
 - (NSTextAttachment<AMViewAttachment> *)buildWithCode:(NSString *)code
                                              language:(nullable NSString *)language
                                                styles:(AMTextStyles *)styles;
 
 @end
 
+/**
+ * 脚注引用构建器协议
+ * 用于创建脚注引用的属性字符串
+ */
 @protocol AMFootnoteRefBuilder <NSObject>
 
+/**
+ * 根据引用信息构建脚注引用字符串
+ * @param reference 脚注引用标识
+ * @param title 脚注标题
+ * @param index 脚注索引
+ * @param styles 文本样式配置
+ * @return 构建的脚注引用属性字符串
+ */
 - (NSAttributedString *)buildWithReference:(NSString *)reference
                                      title:(NSString *)title
                                      index:(NSInteger)index

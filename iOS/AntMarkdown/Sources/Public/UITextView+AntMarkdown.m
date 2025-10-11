@@ -105,8 +105,8 @@
     __block NSUInteger location = 0;
     // find the diffrent location,from ending to beginning
     [self.textStorage enumerateAttributesInRange:NSMakeRange(0, MIN(textLength, attributedText.length))
-                                       options:NSAttributedStringEnumerationReverse
-                                    usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+                                         options:NSAttributedStringEnumerationReverse
+                                      usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
         if ([[attributedText attributedSubstringFromRange:range] isEqualToAttributedString:[self.textStorage attributedSubstringFromRange:range]]) {
             location = NSMaxRange(range);
             *stop = YES;
@@ -135,7 +135,7 @@
                         if ([attach respondsToSelector:@selector(updateAttachmentFromAttachment:)] &&
                             [newAttach isKindOfClass:attach.class]) {
                             shouldReplace = currentRange.length != range.length;
-                          
+                            
                             if ([attach isKindOfClass:AMCodeViewAttachment.class]) {
                                 dispatch_async(dispatch_get_main_queue(), ^{
                                     [attach updateAttachmentFromAttachment:newAttach];
@@ -234,7 +234,7 @@
         [self.textStorage deleteCharactersInRange:rangeToDelete];
     }
     [self.textStorage endEditing];
-
+    
     
     NSInteger totalCount = [attributedText length];
     if (animated) {
@@ -345,15 +345,15 @@
                 BOOL hasSameFadeLayer = NO;
                 // if there is a same layer, then drop it
                 for (CALayer *l in lineSubLayer) {
-                        if ([l isKindOfClass:[AMGradientLayer class]]) {
-                            if(CGRectEqualToRect(CGRectIntegral(l.frame), CGRectIntegral(newLayerFrame)))
-                            {
-                                hasSameFadeLayer = YES;
-                                break;
-                            }
+                    if ([l isKindOfClass:[AMGradientLayer class]]) {
+                        if(CGRectEqualToRect(CGRectIntegral(l.frame), CGRectIntegral(newLayerFrame)))
+                        {
+                            hasSameFadeLayer = YES;
+                            break;
                         }
+                    }
                 }
-
+                
                 NSLog(@"=fade= hasSameFadeLayer = %d, lineHasLayerCount = %ld",hasSameFadeLayer,[lineSubLayer count]);
                 
                 if(!hasSameFadeLayer
@@ -413,7 +413,7 @@
             }
         }
     }];
-
+    
     self.layer.mask = nil;
     
     [self setAttributedText:attributedText];

@@ -16,6 +16,7 @@ NSString *const AMTextAttachmentSizeDidUpdateNotification = @"AMTextAttachmentSi
 {
     __weak NSTextContainer *_textContainer;
 }
+
 @dynamic view;
 
 - (void)dealloc
@@ -131,7 +132,7 @@ NSString *const AMTextAttachmentSizeDidUpdateNotification = @"AMTextAttachmentSi
             style.firstLineHeadIndent = 0;
             style;
         });
-
+        
         [attr appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
         [attr addAttribute:NSParagraphStyleAttributeName value:paragraph range:NSMakeRange(0, attr.length)];
     }

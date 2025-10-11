@@ -9,9 +9,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * Markdown 表格单元格协议
+ * 定义表格单元格需要实现的基本接口
+ */
 @protocol AMMarkdownTableCell <NSObject>
+
+/**
+ * 单元格数据模型
+ */
 @property (nonatomic, nullable) CMTableCell *cellData;
 
+/**
+ * 计算单元格在指定宽度约束下的尺寸
+ * @param cell 单元格数据模型
+ * @param width 宽度约束
+ * @return 计算得出的单元格尺寸
+ */
 + (CGSize)sizeForCell:(CMTableCell *)cell
      constrainedWidth:(CGFloat)width;
 

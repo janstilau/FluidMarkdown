@@ -260,9 +260,18 @@ __attribute__((const));
 
 @end
 
+/**
+ * 可比较差异协议
+ * 定义对象比较差异的接口，用于优化渲染性能
+ */
 @protocol AMDiffable <NSObject>
 
 @required
+/**
+ * 判断当前对象是否与另一个可比较对象相等
+ * @param object 要比较的对象
+ * @return YES表示相等，NO表示不相等
+ */
 - (BOOL)isEqualToDiffableObject:(nullable id<AMDiffable>)object;
 
 @end

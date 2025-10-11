@@ -4,13 +4,29 @@
 
 #import "AMXRenderService.h"
 // AMXMarkdownExtendEngine 是一个内部类, 直接就隐藏在 M 文件里面了
+/**
+ * AMX Markdown 扩展引擎
+ * 内部类，用于管理自定义样式配置的存储和检索
+ */
 @interface AMXMarkdownExtendEngine : NSObject
 {
     @private
-    dispatch_semaphore_t _configMapLock;
+    dispatch_semaphore_t _configMapLock;  // 线程安全锁
 }
-@property (nonatomic, strong) NSMutableDictionary *styleConfigMap;
+@property (nonatomic, strong) NSMutableDictionary *styleConfigMap;  // 样式配置映射表
+
+/**
+ * 设置自定义样式配置
+ * @param styleConfig 样式配置对象
+ * @param styleId 样式唯一标识符
+ */
 -(void)setCustomStyleWithId:(AMXMarkdownStyleConfig*)styleConfig styleId:(NSString*)styleId;
+
+/**
+ * 获取指定ID的样式配置
+ * @param styleId 样式唯一标识符
+ * @return 对应的样式配置对象，不存在时返回nil
+ */
 -(AMXMarkdownStyleConfig*)getStyleConfigWithId:(NSString*)styleId;
 @end
 

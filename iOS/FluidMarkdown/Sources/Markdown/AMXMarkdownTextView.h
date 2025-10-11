@@ -29,26 +29,45 @@ typedef enum : NSUInteger {
     AMXMarkdownPrintStateStopped,
 } AMXMarkdownPrintState;
 
-@protocol AMXMarkdownTextViewDelegate <NSObject>
 /**
- MarkdownView size change
+ * AMXMarkdownTextView 代理协议
+ * 用于处理 Markdown 文本视图的各种事件回调
+ */
+@protocol AMXMarkdownTextViewDelegate <NSObject>
+
+/**
+ * Markdown 视图尺寸变化回调
+ * @param size 新的视图尺寸
  */
 -(void)onSizeChange:(CGSize)size;
+
 /**
- Markdown printing state change
+ * Markdown 打印状态变化回调
+ * @param state 新的打印状态（开始、进行中、完成等）
  */
 -(void)didChangeState:(AMXMarkdownPrintState)state;
+
 /**
- The delagate of tap action
+ * 点击事件回调
+ * @param type 点击类型（链接、图片、代码块等）
+ * @param content 点击的内容对象
+ * @param gesture 手势识别器
+ * @param attachment 文本附件对象
+ * @param tapIndex 点击索引
+ * @param attrString 属性字符串
  */
 -(void)onTap:(AMXMarkdownTapType)type content:(id)content gesture:(UITapGestureRecognizer *)gesture attachment:(NSTextAttachment*)attachment tapIndex:(NSUInteger)tapIndex attrString:(NSAttributedString*)attrString;
+
 /**
- The delagate of exposure element
+ * 曝光元素更新回调
+ * 用于统计和追踪用户浏览行为
+ * @param elements 曝光元素数组，包含渲染事件模型
  */
 -(void)onUpdateExposureElement:(NSArray<AMXMarkdownCustomRenderEventModel*>*)elements;
 
 /**
- Exception
+ * 错误处理回调
+ * @param error 发生的错误对象
  */
 -(void)onError:(NSError*)error;
 

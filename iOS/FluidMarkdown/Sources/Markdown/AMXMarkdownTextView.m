@@ -32,6 +32,7 @@ static AMXMarkdownTextView* _caculateContentView;
 @implementation AMXMarkdownTextView
 - (instancetype)initWithFrame_ant_mark:(CGRect)frame {
     if (self = [super initWithFrame_ant_mark:frame delegate:self]) {
+        // 这是一个串行队列. 
         self.queue = dispatch_queue_create("AMXMarkdownWidget", DISPATCH_QUEUE_SERIAL);
         self.typingSpeed = 0.025;
         self.chunkSize = 1;
@@ -39,6 +40,7 @@ static AMXMarkdownTextView* _caculateContentView;
         self.state = AMXMarkdownPrintStateInitial;
         self.logModel = [[AMXMarkdownLogModel alloc] init];
         // This is an example.
+        // 这两个值, 应该在实际代码里面删除掉. 
         self.logModel.spm = @"a235";
         self.logModel.styleId = @"demo";
         self.textContainerInset = UIEdgeInsetsZero;
@@ -236,7 +238,7 @@ static AMXMarkdownTextView* _caculateContentView;
     });
 }
 - (NSMutableAttributedString *)timerUpdateRenderAttrText {
-   
+    
     NSMutableAttributedString *markdownAttrStr = [self.preloadMarkdownAttrStr attributedSubstringFromRange:NSMakeRange(0, MIN(self.timerCountIndex, self.preloadMarkdownAttrStr.length))].mutableCopy;
     if (!markdownAttrStr || markdownAttrStr.length <= 0) {
         markdownAttrStr = self.markdownAttrStr;
@@ -463,7 +465,7 @@ static AMXMarkdownTextView* _caculateContentView;
     tappedCharacterIndex = [layoutManager characterIndexForPoint:tapLocation
                                                  inTextContainer:textContainer
                         fractionOfDistanceBetweenInsertionPoints:nil];
-
+    
     if (tappedCharacterIndex >= 0 && tappedCharacterIndex < attributedText.length) {
         // Check if the tapped character is an attachment
         NSRange range = {0};
@@ -519,7 +521,7 @@ static AMXMarkdownTextView* _caculateContentView;
     tapLocation.x -= textView.textContainerInset.left;
     tapLocation.y -= textView.textContainerInset.top;
     tappedCharacterIndex = [layoutManager characterIndexForPoint:tapLocation inTextContainer:textContainer fractionOfDistanceBetweenInsertionPoints:nil];
-
+    
     if (tappedCharacterIndex >= 0 && tappedCharacterIndex < attributedText.length) {
         // Check if the tapped character is an attachment
         NSRange range = {0};
@@ -592,7 +594,7 @@ static AMXMarkdownTextView* _caculateContentView;
 
 - (void)onImageLoadFinish:(UIImage *)image url:(NSString *)url {
     if (image &&
-       ![AMXMarkdownTextView isEmptyStringOrNotString:url]) {
+        ![AMXMarkdownTextView isEmptyStringOrNotString:url]) {
         [self.cacheImgDic setObject:image forKey:url];
     }
     

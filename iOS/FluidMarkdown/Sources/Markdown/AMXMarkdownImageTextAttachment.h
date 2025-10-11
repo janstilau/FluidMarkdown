@@ -8,10 +8,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * AMXMarkDown 图片附件协议
+ * 用于处理 Markdown 中图片的缓存和加载回调
+ */
 @protocol AMXMarkDownImageAttachmentProtocol <NSObject>
 
+/**
+ * 从缓存中获取图片
+ * @param url 图片的URL地址
+ * @return 如果缓存中存在则返回UIImage对象，否则返回nil
+ */
 - (UIImage *)getImageFromCacheIfExist:(NSString *)url;
 
+/**
+ * 图片加载完成回调
+ * @param image 加载完成的图片对象
+ * @param url 图片的URL地址
+ */
 - (void)onImageLoadFinish:(UIImage *)image url:(NSString *)url;
 
 @end

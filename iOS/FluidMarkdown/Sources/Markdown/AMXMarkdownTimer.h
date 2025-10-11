@@ -4,9 +4,17 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ * AMXMarkdownTimer 定时器代理协议
+ * 用于处理定时器触发事件
+ */
 @protocol AMXMarkdownTimerDelegate <NSObject>
 
 @required
+/**
+ * 定时器触发回调
+ * 当定时器达到设定的时间间隔时调用此方法
+ */
 - (void)onTimer;
 
 @end

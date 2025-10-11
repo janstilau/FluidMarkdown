@@ -13,17 +13,21 @@
 @class CMTextAttributes;
 @protocol CMHTMLElementTransformer;
 
-@protocol CMAttributedStringRendererDelegate <NSObject>
 /**
- *  Notify the infos of all clickable elements.
- *
- *  @param dataArray   Contents of clickable elements that is visible .
+ * CM 属性字符串渲染器代理协议
+ * 用于处理 Markdown 渲染过程中的可点击元素通知
+ */
+@protocol CMAttributedStringRendererDelegate <NSObject>
+
+/**
+ * 通知所有可点击元素的信息
+ * @param dataArray 可见的可点击元素内容数组
  */
 -(void)notifyNodeUpdate:( NSArray* _Nonnull )dataArray;
+
 /**
- *  Notify the locations base on parent textView of all clickable elements.
- *
- *  @param dataArray   Locations of clickable elements that is visible .
+ * 通知所有可点击元素基于父文本视图的位置信息
+ * @param locArray 可见的可点击元素位置数组
  */
 -(void)notifyNodeLocation:(NSArray* _Nonnull )locArray;
 
