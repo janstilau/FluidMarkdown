@@ -118,7 +118,26 @@ typedef void(^ButtonAction)(void);
 
 /**
  * AMButtonViewAttachment 是 AMViewAttachment 的子类，用于在富文本中嵌入按钮视图。
- * 支持自定义按钮标题和点击事件，主要用于在文本中嵌入可交互的按钮元素。
+ * 支持自定义按钮样式和交互行为，主要用于创建可交互的按钮元素。
+ * 提供点击回调功能，可以实现各种自定义交互逻辑。
+ * 
+ * 使用示例：
+ * ```objective-c
+ * // 创建带回调的按钮附件
+ * AMButtonViewAttachment *buttonAttachment = [[AMButtonViewAttachment alloc] 
+ *     initWithTitle:@"点击我" 
+ *     action:^{
+ *         NSLog(@"按钮被点击了！");
+ *         // 执行自定义逻辑
+ *     }];
+ * 
+ * // 创建简单按钮
+ * AMButtonViewAttachment *simpleButton = [[AMButtonViewAttachment alloc] 
+ *     initWithTitle:@"确认" 
+ *     action:nil];
+ * ```
+ * 
+ * 注意：此类不对应标准 Markdown 语法，主要用于程序化创建交互式按钮元素。
  */
 @interface AMButtonViewAttachment : AMViewAttachment
 @property (nonatomic, strong) UIButton *button;

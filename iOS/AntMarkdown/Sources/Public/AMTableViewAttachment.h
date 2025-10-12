@@ -41,8 +41,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * AMTableViewAttachment 是 AMViewAttachment 的子类，用于在富文本中嵌入表格视图。
- * 支持表格数据显示、部分更新和自定义样式。
- * 主要用于 Markdown 表格语法的渲染，如 |col1|col2|。
+ * 支持多行多列的表格数据显示，包括表头、表格边框和单元格样式设置。
+ * 主要用于 Markdown 表格语法的渲染，提供完整的表格显示功能。
+ * 
+ * 对应的 Markdown 语法示例：
+ * ```
+ * | 姓名 | 年龄 | 城市 |
+ * |------|------|------|
+ * | 张三 | 25   | 北京 |
+ * | 李四 | 30   | 上海 |
+ * | 王五 | 28   | 广州 |
+ * 
+ * | 左对齐 | 居中对齐 | 右对齐 |
+ * |:-------|:--------:|-------:|
+ * | 内容1  |   内容2  |  内容3 |
+ * | 数据A  |   数据B  |  数据C |
+ * ```
  */
 @interface AMTableViewAttachment : AMViewAttachment
 @property (nonatomic, readonly, nullable) UIView<AMTableView> *view;

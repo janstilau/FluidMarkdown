@@ -11,8 +11,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * AMBlockMathAttachment 是 CMBlockTextAttachment 的子类，用于在富文本中嵌入块级数学公式。
- * 支持 LaTeX 数学表达式的渲染，可以显示复杂的数学公式和符号。
- * 主要用于 Markdown 数学公式语法的渲染，如 $$...$$。
+ * 支持 LaTeX 数学表达式的渲染，能够显示复杂的数学公式和符号。
+ * 主要用于 Markdown 块级数学语法的渲染和显示。
+ * 
+ * 对应的 Markdown 语法示例：
+ * ```
+ * $$
+ * \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+ * $$
+ * 
+ * $$
+ * \sum_{i=1}^{n} x_i = x_1 + x_2 + \cdots + x_n
+ * $$
+ * ```
  */
 @interface AMBlockMathAttachment : CMBlockTextAttachment
 

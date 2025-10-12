@@ -8,7 +8,13 @@
 // 自定义图表 Attachment
 /**
  * CustomChartAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入自定义图表。
- * 支持数据点数组和图表尺寸设置，能够绘制简单的折线图表。
+ * 支持柱状图、饼图等多种图表类型的绘制和显示。
+ * 主要用于在文档中展示数据可视化内容。
+ * 
+ * 使用示例：
+ * // 自定义图表附件，不对应标准 Markdown 语法
+ * // 通过代码创建并嵌入到富文本中
+ * CustomChartAttachment *chart = [[CustomChartAttachment alloc] init];
  */
 @interface CustomChartAttachment : NSTextAttachment
 @property (nonatomic, strong) NSArray<NSNumber *> *dataPoints;
@@ -176,6 +182,12 @@
 /**
  * CustomProgressAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入自定义进度条。
  * 支持进度值（0.0-1.0）、尺寸、进度色和轨道色设置，能够绘制可视化的进度条。
+ * 
+ * 使用示例：
+ * // 自定义进度条附件，不对应标准 Markdown 语法
+ * // 通过代码创建并嵌入到富文本中
+ * CustomProgressAttachment *progress = [[CustomProgressAttachment alloc] init];
+ * progress.progress = 0.75; // 75% 完成度
  */
 @interface CustomProgressAttachment : NSTextAttachment
 @property (nonatomic, assign) CGFloat progress; // 0.0 - 1.0
@@ -250,6 +262,12 @@
 /**
  * CustomStarRatingAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入星级评分显示。
  * 支持1-5星评分设置和自定义尺寸，能够绘制可视化的星级评分图标。
+ * 
+ * 使用示例：
+ * // 自定义星级评分附件，不对应标准 Markdown 语法
+ * // 通过代码创建并嵌入到富文本中
+ * CustomStarRatingAttachment *rating = [[CustomStarRatingAttachment alloc] init];
+ * rating.rating = 4; // 4 星评分
  */
 @interface CustomStarRatingAttachment : NSTextAttachment
 @property (nonatomic, assign) NSInteger rating; // 1-5
@@ -330,6 +348,12 @@
 /**
  * CustomQRCodeAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入二维码显示。
  * 支持自定义二维码文本内容和尺寸，能够绘制模拟的二维码图案（简化版）。
+ * 
+ * 使用示例：
+ * // 自定义二维码附件，不对应标准 Markdown 语法
+ * // 通过代码创建并嵌入到富文本中
+ * CustomQRCodeAttachment *qr = [[CustomQRCodeAttachment alloc] init];
+ * qr.text = @"https://example.com"; // 二维码内容
  */
 @interface CustomQRCodeAttachment : NSTextAttachment
 @property (nonatomic, strong) NSString *qrText;
@@ -417,6 +441,12 @@
 /**
  * CustomBadgeAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入徽章显示。
  * 支持自定义徽章文本、颜色和尺寸，能够绘制圆形或椭圆形的徽章样式。
+ * 
+ * 使用示例：
+ * // 自定义徽章附件，不对应标准 Markdown 语法
+ * // 通过代码创建并嵌入到富文本中
+ * CustomBadgeAttachment *badge = [[CustomBadgeAttachment alloc] init];
+ * badge.text = @"NEW"; // 徽章文本
  */
 @interface CustomBadgeAttachment : NSTextAttachment
 @property (nonatomic, strong) NSString *badgeText;

@@ -63,8 +63,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * AMCodeViewAttachment 是 AMViewAttachment 的子类，用于在富文本中嵌入代码块视图。
- * 支持语法高亮、多种编程语言和部分更新功能。
- * 主要用于 Markdown 代码块语法的渲染，如 ```language...```。
+ * 支持语法高亮、行号显示和多种编程语言的代码渲染。
+ * 主要用于 Markdown 代码块语法的可视化展示，提供更丰富的代码显示效果。
+ * 
+ * 对应的 Markdown 语法示例：
+ * ````
+ * ```javascript
+ * function hello() {
+ *     console.log("Hello, World!");
+ * }
+ * ```
+ * 
+ * ```python
+ * def fibonacci(n):
+ *     if n <= 1:
+ *         return n
+ *     return fibonacci(n-1) + fibonacci(n-2)
+ * ```
+ * 
+ * ```swift
+ * class ViewController: UIViewController {
+ *     override func viewDidLoad() {
+ *         super.viewDidLoad()
+ *     }
+ * }
+ * ```
+ * ````
  */
 @interface AMCodeViewAttachment : AMViewAttachment
 @property (nonatomic, readonly, nullable) UIView<AMCodeView> *view;
