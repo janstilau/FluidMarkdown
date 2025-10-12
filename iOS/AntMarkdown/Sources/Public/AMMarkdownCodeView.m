@@ -300,6 +300,7 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
               language:(NSString *)lang
                 styles:(AMTextStyles *)styles
 {
+    // Code 的 size 确定, 其实就是 String 的 boundingRectWithSize, 其实 Code 就是文本, 然后拿一个特定的 View 装起来而已. 
     size = [code boundingRectWithSize:CGSizeMake(size.width - AMCodeViewInset.left - AMCodeViewInset.right, size.height)
                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                            attributes:@{

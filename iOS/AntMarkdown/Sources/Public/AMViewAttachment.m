@@ -1,7 +1,3 @@
-// Copyright 2025 The FluidMarkdown Authors. All rights reserved.
-// Use of this source code is governed by a Apache 2.0 license that can be
-// found in the LICENSE file.
-
 #import "AMViewAttachment.h"
 #import "CMImageTextAttachment.h"
 #import "AMUtils.h"
@@ -63,6 +59,7 @@ NSString *const AMTextAttachmentSizeDidUpdateNotification = @"AMTextAttachmentSi
         self.cachedBounds = CGRectNull;
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            // 这里其实是告诉, layout manager, 自己的这块数据发生了改变, 需要重新布局, 重新绘制.
             [mgr setNeedsLayoutForAttachment:self];
             
             NSNotification *noti = [[NSNotification alloc] initWithName:AMTextAttachmentSizeDidUpdateNotification
@@ -121,6 +118,7 @@ NSString *const AMTextAttachmentSizeDidUpdateNotification = @"AMTextAttachmentSi
 - (NSAttributedString *)attributedString
 {
     NSMutableAttributedString *attr = [[NSAttributedString attributedStringWithAttachment:self] mutableCopy];
+    // 这种 View Attachment, 固定要进行一次换行.
     if (self.fullWidth) {
         NSParagraphStyle *paragraph = ({
             NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -144,6 +142,7 @@ NSString *const AMTextAttachmentSizeDidUpdateNotification = @"AMTextAttachmentSi
     return [self.view sizeThatFits:size];
 }
 
+// 这种 View Attachment, 就不是 Image 的实现了.
 - (UIImage *)imageForBounds:(CGRect)imageBounds
               textContainer:(NSTextContainer *)textContainer
              characterIndex:(NSUInteger)charIndex {
@@ -165,6 +164,8 @@ NSString *const AMTextAttachmentSizeDidUpdateNotification = @"AMTextAttachmentSi
                                      proposedLineFragment:lineFrag
                                             glyphPosition:position
                                            characterIndex:charIndex];
+    // super 这里, 主要想要拿到的, 其实是 origin 的值.
+    // 然后具体长多大, 其实是自己的 View 实现 sizeThatFits 来进行的视线. 
     rect.size = [self sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];
     if (self.fullWidth) {
         rect.size.width = width;
