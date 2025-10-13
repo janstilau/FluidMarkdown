@@ -231,7 +231,6 @@ CGFloat buttonHeight = 40;
             self.actionAppendButton.transform = CGAffineTransformIdentity;
         }];
     }];
-    [ToastView showToastInView:self.view withText:@"append string：**潇珺测试内容**" duration:2.0];
     [self.contentTextView addStreamContent:@"**潇珺测试内容**"];
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 }

@@ -6,13 +6,14 @@
 #import "MenuViewController.h"
 #import "StreamPreviewViewController.h"
 #import "AIChatViewController.h"
+#import "StreamFlueViewController.h"
 
 
 @implementation MenuViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.menuItems = @[@"stream print preview", @"AI conversation scenario simulation"];
+    self.menuItems = @[@"stream print preview", @"AI conversation scenario simulation", @"Stream Flue Demo"];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -106,6 +107,9 @@
     } else if (indexPath.row == 1) {
         AIChatViewController *chatVC = [[AIChatViewController alloc] init];
         [self.navigationController pushViewController:chatVC animated:YES];
+    } else if (indexPath.row == 2) {
+        StreamFlueViewController *streamFlueVC = [[StreamFlueViewController alloc] init];
+        [self.navigationController pushViewController:streamFlueVC animated:YES];
     }
 }
 @end
