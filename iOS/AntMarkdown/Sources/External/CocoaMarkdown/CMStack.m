@@ -9,6 +9,7 @@
 
 #import "CMStack.h"
 
+// 就是一个  NSMutableArray 的封装.
 @implementation CMStack {
     NSMutableArray *_objects;
 }

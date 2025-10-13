@@ -224,6 +224,7 @@
     
 }
 
+// 这里的 Delegate 设置的很傻逼, 为什么不报原来的 TextView 传递过来呢. 还需要专门通过 self.dataIndex 找一下. 
 - (void)onSizeChange:(CGSize)size {
     AMXMarkdownTextView* markdownView = [self.markdownViewArray objectAtIndex:(self.dataIndex - 1)];
     [markdownView setFrame:CGRectMake(20, 0, markdownView.frame.size.width, size.height)];

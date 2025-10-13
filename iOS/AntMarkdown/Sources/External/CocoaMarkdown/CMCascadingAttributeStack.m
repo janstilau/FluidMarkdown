@@ -66,7 +66,7 @@
         NSMutableDictionary *combinedAttributes = [NSMutableDictionary dictionaryWithDictionary:_cascadedAttributes.lastObject ?: @{}];
         
         for (NSUInteger level = _cascadedAttributes.count; level < _stack.objects.count; level += 1) {
-
+            
             CMStyleAttributes * currentStyleAttributes = _stack.objects[level].attributes;
             
             if (currentStyleAttributes != nil) {
@@ -223,12 +223,12 @@
         }
         
         if (matchingFontDescriptor != nil) {
-    
+            
 #if TARGET_OS_IPHONE
             if (@available(iOS 11.0, *)) {
                 CGFloat currentStyleFontSize = [UIFont preferredFontForTextStyle:currentFontTextStyle].pointSize;
                 CGFloat currentStyleBaseFontSize = [UIFont preferredFontForTextStyle:currentFontTextStyle 
-                                                compatibleWithTraitCollection:[UITraitCollection traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryMedium]].pointSize;
+                                                       compatibleWithTraitCollection:[UITraitCollection traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryMedium]].pointSize;
                 UIFont* nonScalableFont = [UIFont fontWithDescriptor:matchingFontDescriptor 
                                                                 size:matchingFontDescriptor.pointSize * currentStyleBaseFontSize / currentStyleFontSize];
                 matchingFont = [[UIFontMetrics metricsForTextStyle:currentFontTextStyle] scaledFontForFont:nonScalableFont];
@@ -239,10 +239,10 @@
 #else   
             matchingFont = [CMFont fontWithDescriptor:matchingFontDescriptor size:matchingFontDescriptor.pointSize];
 #endif
-
+            
         }
     }
-
+    
     return matchingFont;
 }
 

@@ -9,6 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// 原理这种, 在默认分类里面, 添加私有方法的方式, 在很多地方都会用到了. 
 @interface CMAttributedStringRenderer () <CMParserDelegate>
 {
 @protected

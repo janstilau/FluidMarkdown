@@ -7,6 +7,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// CodeView 的真正实现对象. 
 @interface AMMarkdownCodeView : UIView <AMCodeView, AMAttachedView>
 @property (nonatomic) UILabel *languageLabel;
 @property (nonatomic) UIButton *codeCopyButton;

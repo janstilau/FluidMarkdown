@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
  * • 异步加载: 避免阻塞主线程
  * • 回调更新: 图片加载完成后刷新显示
  */
+
 @protocol AMXImageAttachmentProtocol <NSObject>
 
 /**

@@ -22,6 +22,7 @@ static CMStyleAttributes * CMDefaultBaseTextAttributes(void)
 {
     NSDictionary* stringAttributes;
 #if TARGET_OS_IPHONE
+    // 这里使用的是, 可变字体. 
     stringAttributes = @{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]};
 #else
     stringAttributes = @{NSFontAttributeName: [NSFont userFontOfSize:12.0]};
@@ -241,6 +242,7 @@ static CMStyleAttributes * CMDefaultHorizontalRuleAttributes(void)
     return [[CMStyleAttributes alloc] initWithStringAttributes:hruleAttributes];
 }
 
+// 各种标签都有自己的一些默认的实现, 都在上面 static 方法里面进行了逻辑的封装.
 @implementation CMTextAttributes
 
 - (instancetype)init

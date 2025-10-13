@@ -83,6 +83,7 @@
 
 #pragma mark - CMParserDelegate
 
+// 在这里, 完成了各种对于 MD 文本, 到 Attribute 的转化
 - (void)parserDidStartDocument:(CMParser *)parser
 {
     [_attributeStack pushAttributes:_attributes.baseTextAttributes];

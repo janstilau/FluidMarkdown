@@ -12,6 +12,7 @@
  *  Array backed stack.
  */
 @interface CMStack<ElementType> : NSObject
+
 @property (nonatomic, readonly) NSArray<ElementType> *objects;
 
 - (void)push:(ElementType)object;
