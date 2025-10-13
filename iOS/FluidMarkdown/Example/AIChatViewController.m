@@ -88,6 +88,7 @@
             self.markdownStr = [self.dataArray objectAtIndex:self.dataIndex];
             
             [self totalContent];
+            // 没有调用 addStreamContent, 这里其实就是一次性渲染的. 
             [[self.markdownViewArray objectAtIndex:self.dataIndex] startStreamingWithContent:[self.dataArray objectAtIndex:self.dataIndex]];
             [self.tableView reloadData];
             self.dataIndex++;

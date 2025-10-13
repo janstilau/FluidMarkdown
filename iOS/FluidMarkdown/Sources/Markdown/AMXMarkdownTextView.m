@@ -27,6 +27,7 @@ static AMXMarkdownTextView* _caculateContentView;
 @property (atomic, strong) NSMutableArray    *clickableObjs;
 @property (atomic, strong) NSMutableArray    *clickableLocationObjs;
 @property (atomic, strong) NSMutableDictionary    *cacheImgDic;
+@property (atomic, strong) NSMutableString *preloadMarkdownRawText;
 @end
 
 @implementation AMXMarkdownTextView
@@ -97,6 +98,8 @@ static AMXMarkdownTextView* _caculateContentView;
         return;
     }
     self.state = AMXMarkdownPrintStateRunning;
+    // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
+    self.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
     self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:content];
     [self startTimer];
 }
@@ -122,6 +125,8 @@ static AMXMarkdownTextView* _caculateContentView;
         return;
     }
     self.state = AMXMarkdownPrintStateRunning;
+    // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
+    self.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
     self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:content];
     [self renderCompleteContent:[content substringToIndex:printIndex]];
     self.timerCountIndex = printIndex;
@@ -132,7 +137,21 @@ static AMXMarkdownTextView* _caculateContentView;
     if (self.state != AMXMarkdownPrintStateRunning && self.state != AMXMarkdownPrintStatePaused) {
         return;
     }
-    [self.preloadMarkdownAttrStr appendAttributedString:[self markdowmMutableAttributedStringFromValue:text]];
+    if (text.length <= 0) {
+        return;
+    }
+    // 先维护原始 Markdown 文本，再整体重建富文本，实现“每次都渲染完整文档”
+    if (!self.preloadMarkdownRawText) {
+        self.preloadMarkdownRawText = [NSMutableString string];
+    }
+    [self.preloadMarkdownRawText appendString:text];
+    
+    NSLog(@"新的流式 %@", text);
+    NSLog(@"结果是 %@", self.preloadMarkdownRawText);
+    
+    // 重新构建整份富文本
+    self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:self.preloadMarkdownRawText];
+    // 如果处于暂停状态，恢复计时器以继续渲染
     if (self.state == AMXMarkdownPrintStatePaused) {
         [self resume];
     }
@@ -189,6 +208,8 @@ static AMXMarkdownTextView* _caculateContentView;
     self.markdownAttrStr = nil;
     self.clickableObjs = nil;
     self.clickableLocationObjs = nil;
+    // 清理原始 Markdown 文本缓冲
+    self.preloadMarkdownRawText = nil;
     self.state = AMXMarkdownPrintStateStopped;
 }
 
@@ -197,14 +218,14 @@ static AMXMarkdownTextView* _caculateContentView;
     if (!self.timer) {
         return;
     }
-    if (self.preloadMarkdownAttrStr.length == 0) {
+    if (self.preloadMarkdownRawText.length == 0) {
         return;
     }
     
-    if (self.timerCountIndex <= self.preloadMarkdownAttrStr.length) {
+    if (self.timerCountIndex <= self.preloadMarkdownRawText.length) {
         [self timerRenderUI];
         self.timerCountIndex += self.chunkSize;
-        if (self.timerCountIndex > self.preloadMarkdownAttrStr.length) {
+        if (self.timerCountIndex > self.preloadMarkdownRawText.length) {
             [self pause];
         }
     } else {

@@ -76,6 +76,9 @@
     self.contentTextView.textColor = [UIColor blackColor];
     self.contentTextView.font = [UIFont systemFontOfSize:16];
     self.contentTextView.textViewDelegate = self;
+    self.contentTextView.layer.borderColor = UIColor.redColor.CGColor;
+    self.contentTextView.layer.borderWidth = 1.0;
+    
     [self.view addSubview:self.containerView];
     [self.containerView addSubview:self.contentTextView];
     // 注册 Markdown 样式，确保渲染引擎有样式配置
@@ -112,7 +115,6 @@
         self.fullContent = @"# 错误\n\n找不到 data1.txt 文件。";
     }
     // 预处理 Markdown 内容：换行与数学公式标记转换
-    self.fullContent = [self markdownReplaceBr:self.fullContent];
     
     [self updateProgressLabel];
 }
@@ -154,8 +156,7 @@
         return;
     }
     
-    // 每次取20个字符
-    NSInteger chunkSize = 20;
+    NSInteger chunkSize = 2;
     NSInteger remainingLength = self.fullContent.length - self.currentIndex;
     NSInteger actualChunkSize = MIN(chunkSize, remainingLength);
     
@@ -233,13 +234,13 @@
 #pragma mark - AMXMarkdownTextViewDelegate
 
 - (void)onSizeChange:(CGSize)size {
-    [self.contentTextView setFrame:CGRectMake(10, 10, self.containerView.frame.size.width - 20, size.height)];
+    [self.contentTextView setFrame:CGRectMake(0, 0, self.containerView.frame.size.width - 20, size.height)];
     [self.containerView setContentSize:CGSizeMake(self.containerView.frame.size.width, size.height + 20)];
     
-    // 自动滚动到底部
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self scrollToBottom];
-    });
+//    // 自动滚动到底部
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self scrollToBottom];
+//    });
 }
 
 - (void)onError:(NSError*)error {

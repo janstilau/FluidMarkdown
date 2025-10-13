@@ -1,4 +1,11 @@
+经典的高斯积分：
+$$
+\int_{-\infty}^{+\infty} e^{-x^2} \, dx = \sqrt{\pi}
+$$
+
+
 # FluidMarkdown 特殊显示功能完整示例
+
 
 这个文档展示了 FluidMarkdown 库支持的所有特殊显示类型和功能。
 
