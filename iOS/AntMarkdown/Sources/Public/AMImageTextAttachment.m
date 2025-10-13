@@ -8,7 +8,8 @@
 
 @implementation AMImageTextAttachment
 {
-    CGRect  _usedRect;
+    // 这套机制没有用上, 可能原来还想进行 Image 的显示控制, 但是现在来说, 还是 MD 的默认实现.
+    CGRect _usedRect;
 }
 
 - (instancetype) initWithImageURL:(NSURL*)imageURL title:(NSString*)title
@@ -22,6 +23,7 @@
 
 - (void)setImageWithData:(NSData *)imageData
 {
+    // setImageWithData 也重写了, 会有缓存的存入.
     [super setImageWithData:imageData];
     if ([self enableImageCache]) {
         [[AMSimpleImageCache sharedCache] setImageData:imageData forURL:self.imageURL];
@@ -65,10 +67,12 @@
     }
 }
 
-- (UIImage *)imageForBounds:(CGRect)imageBounds 
+// 完全重写了, 父类的实现.
+- (UIImage *)imageForBounds:(CGRect)imageBounds
               textContainer:(NSTextContainer *)textContainer
              characterIndex:(NSUInteger)charIndex
 {
+    // 会有一个缓存机制的检查.
     if (self.enableImageCache && !self.isImageLoaded) {
         NSData *data = [[AMSimpleImageCache sharedCache] imageDataForURL:self.imageURL];
         if (data) {
@@ -88,7 +92,6 @@
     CGSize attachmentImageSize = self.image.size;
     
     CGFloat maxWidth = lineFrag.size.width - textContainer.lineFragmentPadding * 2;
-
     
     if (attachmentImageSize.width > maxWidth) {
         attachmentImageSize = CGSizeMake(maxWidth, attachmentImageSize.height * maxWidth / attachmentImageSize.width);

@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
  * ![图片描述](https://example.com/image.png)
  * ![本地图片](./assets/image.jpg)
  */
+// md 里面的图片, 是一个行内元素, 所以会围绕着 Text 进行展示.
+// 如果图片的尺寸, 比 container 还宽, 那么就单独占据一行了. 
 @interface CMImageTextAttachment : NSTextAttachment
 {
     @protected

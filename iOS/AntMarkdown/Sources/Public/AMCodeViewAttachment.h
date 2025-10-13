@@ -91,6 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
  * ````
  */
 @interface AMCodeViewAttachment : AMViewAttachment
+
 @property (nonatomic, readonly, nullable) UIView<AMCodeView> *view;
 @property (nonatomic) BOOL partialUpdate;
 @property (nonatomic, nullable) NSString *language;

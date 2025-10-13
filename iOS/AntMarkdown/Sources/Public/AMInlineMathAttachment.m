@@ -72,9 +72,10 @@
                                                         error:&error];
     // 如果发生错误,绘制原公式文本
     if (error) {
+        AMMathStyle *fallbackStyle = style ?: [AMMathStyle defaultStyle];
         NSAttributedString* attrText = [[NSAttributedString alloc]initWithString:text attributes:@{
-            NSFontAttributeName:[UIFont systemFontOfSize:style.fontSize],
-            NSForegroundColorAttributeName:style.textColor?:[UIColor blackColor],
+            NSFontAttributeName:[UIFont systemFontOfSize:fallbackStyle.fontSize],
+            NSForegroundColorAttributeName:fallbackStyle.textColor?:[UIColor blackColor],
         }];
         self = [super initWithText:text size:CGSizeZero];
         if (self) {
@@ -146,6 +147,7 @@
         CGContextRef context = rendererContext.CGContext;
         CGContextTranslateCTM(context, 0, size.height);
         CGContextScaleCTM(context, 1.0, -1.0);
+        // 在这里, 是真正的实际绘制的代码. 
         [_displayList draw:context];
     }];
 }
@@ -187,7 +189,8 @@
 {
     if(self.error)
     {
-        return [[NSAttributedString alloc] initWithString:@" "];
+        // 解析失败时返回原始公式文本，避免内容丢失
+        return _mathCodeAttrText ?: [[NSAttributedString alloc] initWithString:@" "];
     }
     return [NSAttributedString attributedStringWithAttachment:self];
 }

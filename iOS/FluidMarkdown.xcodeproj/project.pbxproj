@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06ACE9722E9D045100454F57 /* dataxiaop.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9712E9D044800454F57 /* dataxiaop.txt */; };
+		06ACE9742E9D060C00454F57 /* data6.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9732E9D060400454F57 /* data6.txt */; };
 		06F3EB292E99143C00827F56 /* data4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06F3EB282E99143C00827F56 /* data4.txt */; };
 		774C570F2E77BAED003034DC /* highlightjs.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 774C570C2E77BAED003034DC /* highlightjs.bundle */; };
 		774C57102E77BAED003034DC /* data3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 774C570B2E77BAED003034DC /* data3.txt */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06ACE9712E9D044800454F57 /* dataxiaop.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dataxiaop.txt; sourceTree = "<group>"; };
+		06ACE9732E9D060400454F57 /* data6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data6.txt; sourceTree = "<group>"; };
 		06F3EB282E99143C00827F56 /* data4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data4.txt; sourceTree = "<group>"; };
 		06F3EB872E9A529F00827F56 /* NSLayoutManager_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLayoutManager_zh.h; sourceTree = "<group>"; };
 		06F3EB882E9A529F00827F56 /* NSTextContainer_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTextContainer_zh.h; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 		774C570E2E77BAED003034DC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				06ACE9712E9D044800454F57 /* dataxiaop.txt */,
+				06ACE9732E9D060400454F57 /* data6.txt */,
 				06F3EB8A2E9A529F00827F56 /* apple */,
 				774C57082E77BAED003034DC /* AntMarkdown.bundle */,
 				774C57092E77BAED003034DC /* data1.txt */,
@@ -225,7 +231,9 @@
 			files = (
 				774C570F2E77BAED003034DC /* highlightjs.bundle in Resources */,
 				774C57102E77BAED003034DC /* data3.txt in Resources */,
+				06ACE9722E9D045100454F57 /* dataxiaop.txt in Resources */,
 				06F3EB292E99143C00827F56 /* data4.txt in Resources */,
+				06ACE9742E9D060C00454F57 /* data6.txt in Resources */,
 				774C57112E77BAED003034DC /* mathFonts.bundle in Resources */,
 				774C57122E77BAED003034DC /* data1.txt in Resources */,
 				774C57132E77BAED003034DC /* AntMarkdown.bundle in Resources */,

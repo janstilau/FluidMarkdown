@@ -1,12 +1,3 @@
-//
-//  CMImageTextAttachment.m
-//  CocoaMarkdown
-//
-//  Created by Jean-Luc Jumpertz on 10/05/2019.
-//  Inspired by https://www.cocoanetics.com/2016/09/asynchronous-nstextattachments-22/
-//  Copyright © 2019 Jean-Luc Jumpertz. All rights reserved.
-//
-
 #import "CMImageTextAttachment.h"
 #import "AMUtils.h"
 
@@ -24,7 +15,6 @@
 
 @end
 
-
 @implementation CMImageTextAttachment
 
 static CGSize _placeholderImageSize = {16, 16};
@@ -33,6 +23,7 @@ static CGFloat _placeholderImageCornerRadius = 3.0;
 #if TARGET_OS_IPHONE
 static UIImage* _placeholderImage;
 
+//
 + (UIImage*) placeholderImage
 {
     if (_placeholderImage == nil) {
@@ -90,10 +81,13 @@ static NSImage* _placeholderImage;
         _imageSize = CGSizeZero;
         _isImageLoaded = NO;
         _imageTitle = title;
+        // 默认其实要用 placehoder 的值.
+        // 这更多的像是一个 nil 对象, 能够简化操作.
         self.image = [self.class placeholderImage];
     }
     return self;
 }
+
 - (instancetype) initWithImageURL:(NSURL*)imageURL title:(NSString*)title size:(CGSize)size {
     NSString* imageUrlUti = (__bridge_transfer NSString*) UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)imageURL.pathExtension, kUTTypeData);
     
@@ -107,6 +101,7 @@ static NSImage* _placeholderImage;
     }
     return self;
 }
+// 无用
 - (NSString*)imageCaption
 {
     // 优先使用title,如果title不可用，则使用alt
@@ -146,10 +141,9 @@ static NSImage* _placeholderImage;
 
 - (void)downloadImage:(NSURL *)imageURL completion:(void(^)(NSError * _Nullable error, NSData * _Nullable data))block {
     // Not a file URL and no download task in progress: use an URL-data-task to get the data
-    _downloadTask = [NSURLSession.sharedSession dataTaskWithURL:_imageURL 
+    _downloadTask = [NSURLSession.sharedSession dataTaskWithURL:_imageURL
                                               completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         block(error, data);
-        
         self->_downloadTask = nil;
     }];
     
@@ -172,11 +166,13 @@ static NSImage* _placeholderImage;
 }
 
 #if TARGET_OS_IPHONE
+// 只有, 真正的用到 UIImage 的时候, 才会触发下载的动作.
 - (nullable UIImage *)imageForBounds:(CGRect)imageBounds textContainer:(nullable NSTextContainer *)textContainer characterIndex:(NSUInteger)charIndex
 #else
 - (nullable NSImage *)imageForBounds:(NSRect)imageBounds textContainer:(nullable NSTextContainer *)textContainer characterIndex:(NSUInteger)charIndex
 #endif
-{    
+{
+    // image 是默认有值的, 就是 placehoder image.
     if (! _isImageLoaded && (_imageURL != nil)) {
         
         // Save a reference to the textcontainer
@@ -185,7 +181,7 @@ static NSImage* _placeholderImage;
         // Load the image asynchronously
         if (_imageURL.isFileURL) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+                // 这里还有对于本地文件的处理.
                 NSData* imageData = [NSData dataWithContentsOfURL:self->_imageURL];
                 if (imageData.length > 0) {
                     [self setImageWithData:imageData];
@@ -205,11 +201,11 @@ static NSImage* _placeholderImage;
                 }
             }];
         }
-    }    
+    }
     
 #if !TARGET_OS_IPHONE
 #ifdef __MAC_10_15
-    if (! [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion: (NSOperatingSystemVersion){10, 15, 0}]) 
+    if (! [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion: (NSOperatingSystemVersion){10, 15, 0}])
 #endif
     {
         // On macOS 10.14.6 and below, the image attachment is dislayed vertically flipped, so we need to flip it again to display it correctly
@@ -228,12 +224,14 @@ static NSImage* _placeholderImage;
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    // 在这里更新的新的 UIImage
     self.image = newImage;
 }
 - (void) setImageWithData:(NSData*)imageData
 {
     NSString* imageUti = (__bridge_transfer NSString*) UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)_imageURL.pathExtension, kUTTypeData);
     self.fileType = imageUti;
+    // Modifying this property has the side effect of invalidating the image property.
     self.contents = imageData;
     
     CGSize currentImageSize = self.image.size;
@@ -244,12 +242,13 @@ static NSImage* _placeholderImage;
     self.image = [[NSImage alloc] initWithData:imageData];
 #endif
     
+    // 当 image 发生了改变之后, 会及时通知 layoutManager 做重绘的处理. 
     if (self.image != nil) {
         if (_imageSize.width != 0 && _imageSize.height !=0) {
             [self imageResize:self.image scaledToSize:_imageSize];
         }
         if (! CGSizeEqualToSize(self.image.size, currentImageSize)) {
-             // The layout needs to be refreshed
+            // The layout needs to be refreshed
             [_textContainer.layoutManager setNeedsLayoutForAttachment:self];
         }
         else {

@@ -146,9 +146,6 @@ static AMXMarkdownTextView* _caculateContentView;
     }
     [self.preloadMarkdownRawText appendString:text];
     
-    NSLog(@"新的流式 %@", text);
-    NSLog(@"结果是 %@", self.preloadMarkdownRawText);
-    
     // 重新构建整份富文本
     self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:self.preloadMarkdownRawText];
     // 如果处于暂停状态，恢复计时器以继续渲染

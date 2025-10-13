@@ -103,7 +103,7 @@
 }
 
 - (void)loadDataFromFile {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"data1" ofType:@"txt"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"data6" ofType:@"txt"];
     if (filePath) {
         NSError *error;
         self.fullContent = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];

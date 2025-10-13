@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * AMImageTextAttachment 是 CMImageTextAttachment 的子类，用于在富文本中嵌入图片。
  * 支持本地图片和网络图片的加载显示，提供图片缓存和异步加载功能。
+ * 
  * 主要用于 Markdown 图片语法的渲染，支持图片的自适应尺寸和样式设置。
  * 
  * 对应的 Markdown 语法示例：

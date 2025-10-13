@@ -199,6 +199,7 @@ static inline CGRect AMRectIntegral(CGRect rect) {
 }
 static inline void AMUIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat scale) {
     if (@available(iOS 17.0, *)) {
+        //     iOS 17 后，如果传入 width 或 height ≤ 0，UIGraphicsBeginImageContextWithOptions 可能会崩溃或报错。
         if (size.width <= 0 || size.height <= 0) {
             CGSize s = CGSizeMake(size.width > 0 ? size.width : 0.01, size.height > 0 ? size.height : 0.01);
             UIGraphicsBeginImageContextWithOptions(s, opaque, scale);
