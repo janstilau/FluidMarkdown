@@ -189,7 +189,6 @@
                     }
                 }];
             }
-            
         }
         
         CGSize size = CGSizeMake(imageBounds.size.width, imageBounds.size.height);

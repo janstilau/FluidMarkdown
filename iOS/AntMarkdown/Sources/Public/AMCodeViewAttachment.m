@@ -51,6 +51,7 @@
     
 }
 
+// AMCodeHighlighter 在这里被缓存了, 是在类的层面上, 而不是在示例的层面上. 
 + (AMCodeHighlighter *)highlighterForStyles:(AMTextStyles *)styles {
     static dispatch_once_t onceToken;
     static NSCache<NSNumber *, AMCodeHighlighter *> * cached = nil;
@@ -106,6 +107,9 @@
     [_codeView setLanguage:language];
 }
 
+/*
+ 如果未命中缓存，则先显示纯文本，然后通过 performSelector 在 0.3 秒后调度
+ */
 - (void)setCode:(NSString *)code
 {
     if (![_code isEqualToString:code]) {
@@ -121,6 +125,7 @@
         } else {
             [_codeView setPlainCodeText:code];
             [_codeView setLanguage:self.language];
+            // 不会立马触发高亮这件事, 会在某些时刻之后触发.
             [self performSelector:@selector(highlightCode) withObject:nil afterDelay:0.3];
         }
     }
@@ -140,6 +145,7 @@
     }
 }
 
+// 只会真正的 View 开始展示的时候, 才会触发真是的 View 的创建. 
 - (__kindof UIView *)view
 {
     if (!_codeView) {
