@@ -2,6 +2,34 @@
 以下为你呈现几个不同数学分支中具有代表性的复杂公式，它们不仅形式优美，
 更蕴含着深刻的数学思想：
 
+# Emoji 映射测试
+
+直接 Unicode：😊 🚀
+
+短码映射：:tada: :rocket: :taco: :email: :link: :technologist:
+
+未知短码回退：:not_a_real_emoji:
+
+混排文本：We love :taco: and code :rocket:!
+
+## 段落换行
+第一段：Hello :tada:
+第二段：Next :rocket:
+
+## 列表
+- 列表项 1：:tada:
+- 列表项 2：Coding :technologist: + Launch :rocket:
+- 列表项 3：Foods :taco:
+
+## 链接文本中使用短码
+[查看文档 :link:](https://example.com)
+
+---
+
+备注：
+- “短码”将通过解析扩展识别并由 AMEmojiManager 映射为 Unicode。
+- 未知短码（如 :not_a_real_emoji:）会保留原文，方便确认回退路径。
+
 
 ### 1. **流体力学：纳维-斯托克斯方程（Navier-Stokes Equations）**
 描述粘性不可压缩流体动量守恒的运动方程，是流体力学的核心方程之一，

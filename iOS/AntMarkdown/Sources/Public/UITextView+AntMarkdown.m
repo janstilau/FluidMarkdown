@@ -599,6 +599,7 @@
                         anim.fillMode = kCAFillModeBoth;
                         anim.duration = 0.15;  // 动画持续时间
                         anim.removedOnCompletion = YES;
+                        // 这里的 delegate, 是一个强引用 
                         anim.delegate = [_AMAnimationDelegate delegateWithEnd:^(CAAnimation *anim, BOOL flag) {
                             @strongify(layer);
                             layer.isFadeComplete = YES;

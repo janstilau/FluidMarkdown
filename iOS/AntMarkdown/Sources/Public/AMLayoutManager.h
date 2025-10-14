@@ -6,7 +6,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol CMAttributedStringRendererDelegate;
+
 @interface AMLayoutManager : NSLayoutManager
+
 @property (nonatomic, weak)id<CMAttributedStringRendererDelegate> delegate;
 @property (nonatomic, strong)NSMutableArray* locArray;
 @property (nonatomic, strong)NSMutableDictionary* attachmentDic;

@@ -774,10 +774,8 @@
                 [mutableTabs replaceObjectAtIndex:1 withObject:newTab2];
                 [paraStyle setValue:[mutableTabs copy] forKey:@"tabStops"];
                 [paraStyle setValue:@(textIndent) forKey:@"headIndent"];
-                
             }
         }
-        
     }
 }
 @end

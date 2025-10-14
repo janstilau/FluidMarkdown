@@ -386,7 +386,9 @@ typedef NSString * CMCustomStyleAttributeName NS_EXTENSIBLE_STRING_ENUM;
 @interface CMStyleAttributes: NSObject <NSCopying>
 
 @property (readonly) NSMutableDictionary<NSAttributedStringKey, id> * stringAttributes;        // 字符串属性字典 / String attributes dictionary
+
 @property (readonly) NSMutableDictionary<CMFontDescriptorAttributeName, id> * fontAttributes; // 字体属性字典 / Font attributes dictionary
+
 @property (readonly) NSMutableDictionary<CMParagraphStyleAttributeName, id> * paragraphStyleAttributes; // 段落样式属性字典 / Paragraph style attributes dictionary
 
 // 在 fontAttributes 中设置特定符号特征的辅助方法

@@ -190,6 +190,7 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     rect = UIEdgeInsetsInsetRect(rect, self.contentInset);
+    // 先是画背景.
     if (self.cornerRadius > 0) {
         UIRectCorner corners = UIRectCornerAllCorners;
         if (edges & UIRectEdgeRight) {
@@ -205,11 +206,13 @@
         [self.backgroundColor setFill];
         [path fill];
     } else {
+        // UIColor 本身就可以画.
         [self.backgroundColor drawInRect:rect clipEdges:edges];
     }
     
     
     CGPoint points[2] = {0};
+    // 然后是各个 Border 逐步画.
     if (self.leftBorder) {
         const CGFloat lineWidth = self.leftBorder.borderWidth;
         CGContextSetLineCap(context, self.leftBorder.lineCap);

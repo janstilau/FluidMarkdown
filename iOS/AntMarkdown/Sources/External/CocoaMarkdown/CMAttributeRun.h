@@ -12,6 +12,7 @@
 @class CMStyleAttributes;
 
 @interface CMAttributeRun : NSObject
+
 @property (nonatomic, readonly) CMStyleAttributes *attributes;
 @property (nonatomic) NSInteger orderedListItemNumber;
 @property (nonatomic, readonly) BOOL listTight;

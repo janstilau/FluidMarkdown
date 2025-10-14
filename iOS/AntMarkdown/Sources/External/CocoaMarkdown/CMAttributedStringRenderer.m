@@ -36,6 +36,7 @@
     }
     return self;
 }
+
 - (instancetype)initWithDocument:(CMDocument *)document attributes:(CMTextAttributes *)attributes delegate:(nullable id<CMAttributedStringRendererDelegate>)delegate
 {
     if ((self = [super init])) {
@@ -68,7 +69,7 @@
         _attributeStack = [[CMCascadingAttributeStack alloc] init];
         _HTMLStack = [[CMStack alloc] init];
         _buffer = [[NSMutableAttributedString alloc] init];
-        // 在 CMParser 的各种 Delegate 方法里面, 不断地给 _attributedString 添加真实的数据. 
+        // 在 CMParser 的各种 Delegate 方法里面, 不断地给 _attributedString 添加真实的数据.
         CMParser *parser = [[CMParser alloc] initWithDocument:_document delegate:self];
         [parser parse];
         
@@ -199,8 +200,8 @@
         // Detect if an image has its own paragraph, in which cas we can apply specific attributes.
         // (Note: This test also detect the case: image in link in paragraph)
         CMNode* imageNode = parser.currentNode;
-        BOOL isInImageParagraph = ((imageNode.next == nil) && (imageNode.previous == nil) 
-                                   && ((imageNode.parent.type == CMNodeTypeParagraph) 
+        BOOL isInImageParagraph = ((imageNode.next == nil) && (imageNode.previous == nil)
+                                   && ((imageNode.parent.type == CMNodeTypeParagraph)
                                        || ((imageNode.parent.next == nil) && (imageNode.parent.previous == nil) && (imageNode.parent.parent.type == CMNodeTypeParagraph))));
         
         CMHTMLElement *element = [_HTMLStack peek];
@@ -220,7 +221,7 @@
             if ((imageDescriptionNode.type == CMNodeTypeText) && (imageDescriptionNode.stringValue.length > 0)) {
                 imageAttachmentAttributes.stringAttributes [NSToolTipAttributeName] = imageDescriptionNode.stringValue;
             }
-#endif     
+#endif
             [_attributeStack pushAttributes:imageAttachmentAttributes];
             
             const unichar attachmentChar = NSAttachmentCharacter;
@@ -275,6 +276,7 @@
 }
 
 - (void)parser:(CMParser *)parser foundEmoji:(NSString *)emoji {
+    //
     NSString *emojiVal = [[AMEmojiManager sharedManager] emojiWithName:emoji];
     if (emojiVal) {
         [self appendString:emojiVal];
@@ -628,7 +630,7 @@ static NSTextTab * textTabWithPosition(CGFloat tabPosition)
             [_buffer addAttribute:NSParagraphStyleAttributeName value:itemParagrahStyle range:currentParagraphRange];
         }
     }
-}    
+}
 
 - (void)appendHTMLElement:(CMHTMLElement *)element
 {

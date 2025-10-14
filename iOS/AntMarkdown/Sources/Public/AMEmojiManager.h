@@ -6,6 +6,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// 这个机制, 各个不同的渲染器支持的不太一致.
+// 不过简单来说, 是有这个机制. 
 @interface AMEmojiManager : NSObject
 
 + (instancetype)sharedManager;
