@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+// AMMarkdownLabelTableCell 这个没有实际用上了.
 @interface AMMarkdownLabelTableCell : UICollectionViewCell <AMMarkdownTableCell>
 @property (nonatomic) UILabel * label;
 @property (nonatomic) UIEdgeInsets contentInsets;
@@ -49,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface AMMarkdownTableView : UIView <AMTableView, AMAttachedView>
+// 
 @property (nonatomic) CGFloat maximumColumnWidth;
 @property (nonatomic, readonly) UICollectionView *collectionView;
 @property (nonatomic, copy) NSArray<UIView *> *tableOperationViews;

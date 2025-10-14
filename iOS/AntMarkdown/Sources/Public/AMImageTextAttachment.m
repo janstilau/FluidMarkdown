@@ -105,6 +105,8 @@
 
 @end
 
+
+// 增加了一套, 应对缓存的策略, 但是没有对应的清理机制现在. 
 @implementation AMSimpleImageCache
 {
     NSLock      * _lock;

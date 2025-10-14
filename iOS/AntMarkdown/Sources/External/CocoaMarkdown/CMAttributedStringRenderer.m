@@ -489,7 +489,6 @@
 }
 
 - (void)addCheckBoxAttachment:(CMNode *)curNode {
-    
     CMTaskCheckAttachment *attachment = [[CMTaskCheckAttachment alloc] init];
     attachment.checked = curNode.checked;
     

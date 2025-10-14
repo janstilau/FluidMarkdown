@@ -21,10 +21,17 @@
  * [^1]: 这是第一个脚注的内容。
  * [^note2]: 这是第二个脚注的详细说明。
  * [^custom-footnote]: 这是自定义脚注的内容，可以包含更多信息。
+ * 
  * ```
  */
-@property(nonatomic,assign)NSInteger noteIndex;
-@property(nonatomic,copy)NSString *noteTitle;
+
+/*
+ •    脚注定义可以出现在文档的任意位置，只要它在首次被引用之后；
+ •    渲染时，解析器会自动把所有脚注统一显示在文章底部（渲染器负责收集和展示）；
+ •    因此 位置不影响显示效果，但过早定义会影响可读性。
+ */
+@property(nonatomic,assign) NSInteger noteIndex;
+@property(nonatomic,copy) NSString *noteTitle;
 
 @end
 
@@ -58,6 +65,7 @@
     return [AMXFootnodeBuilder footnoteWithTitle:title index:index styles:styles];
 }
 
+// 这里是实际根据 title 生成脚注图片的地方. 
 + (NSAttributedString *)footnoteWithTitle:(NSString *)title index:(NSInteger)index styles:(AMTextStyles*)styles{
 
     if (!(title && [title isKindOfClass:[NSString class]] && ![@"" isEqualToString:title])) {

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * ___
  * A text attachment for displaying horizontal rules in Markdown.
  */
+
 @interface CMHorizontalRuleAttachment : NSTextAttachment
 
 /**

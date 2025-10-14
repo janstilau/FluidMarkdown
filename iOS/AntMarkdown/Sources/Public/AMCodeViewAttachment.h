@@ -18,18 +18,21 @@ NS_ASSUME_NONNULL_BEGIN
  * 设置纯文本代码内容
  * @param codeText 代码文本字符串
  */
+// 使用这个方法, 就是没有任何的特殊显示, 就一种显示的方案
 - (void)setPlainCodeText:(NSString *)codeText;
 
 /**
  * 设置代码语言类型
  * @param lang 编程语言标识（如 "swift", "objc", "javascript" 等）
  */
+// 这个仅仅是改变, 上方的语言 Label 的显示
 - (void)setLanguage:(nullable NSString *)lang;
 
 /**
  * 设置带属性的代码文本（支持语法高亮）
  * @param codeText 带格式的属性字符串
  */
+// 这个会在高亮相关逻辑完成后, 调用这里将真正的有特殊展示的文本设置过来. 
 - (void)setAttributedCodeText:(NSAttributedString *)codeText;
 
 @optional
@@ -37,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 代码复制完成回调（可选实现）
  * @param code 被复制的代码内容
  */
+// 点击右上角的按钮, 这个其实现在没有任何的实现. 
 - (void)didCopyCode:(NSString *)code;
 
 /**
@@ -92,6 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AMCodeViewAttachment : AMViewAttachment
 
+// 这是一个懒加载的 View.
 @property (nonatomic, readonly, nullable) UIView<AMCodeView> *view;
 @property (nonatomic) BOOL partialUpdate;
 @property (nonatomic, nullable) NSString *language;

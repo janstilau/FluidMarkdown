@@ -33,6 +33,7 @@
 - (void)setNeedsUpdate {
     [_textContainer.layoutManager setNeedsLayoutForAttachment:self];
 }
+
 - (void)downloadImage:(NSURL *)imageURL completion:(void(^)(NSError * _Nullable error, NSData * _Nullable data))block {
     // Not a file URL and no download task in progress: use an URL-data-task to get the data
     _downloadTask = [NSURLSession.sharedSession dataTaskWithURL:imageURL
@@ -138,6 +139,7 @@
 + (BOOL)isNetworkPath:(NSString *)path {
     return [path hasPrefix:@"http://"] || [path hasPrefix:@"https://"];
 }
+
 - (void)loadLocalImage:(NSString *)path
             completion:(void(^)(NSError * _Nullable error, UIImage * _Nullable image))block
 {
@@ -224,7 +226,6 @@
                 }
                 
             }
-            
         }
         
         

@@ -23,6 +23,8 @@
     AMCodeViewAttachment *a = [[self alloc] initWithStyles:styles];
     
     if (styles.highlightCodeOnRender) {
+        // highlighter 会缓存 highlightCodeString 的结果.
+        // 所以这里调用, 是带有副作用的调用, 目的就是为了后续可以读取缓存使用. 
         AMCodeHighlighter *highlighter = [self.class highlighterForStyles:styles];
         [highlighter highlightCodeString:code language:hint];
     }
@@ -51,7 +53,7 @@
     
 }
 
-// AMCodeHighlighter 在这里被缓存了, 是在类的层面上, 而不是在示例的层面上. 
+// AMCodeHighlighter 在这里被缓存了, 是在类的层面上, 而不是在示例的层面上.
 + (AMCodeHighlighter *)highlighterForStyles:(AMTextStyles *)styles {
     static dispatch_once_t onceToken;
     static NSCache<NSNumber *, AMCodeHighlighter *> * cached = nil;
@@ -131,6 +133,8 @@
     }
 }
 
+// 如果已经创建出来了对应的 View, 那么就使用当前的 view sizeThatFits
+// 否则, 就是用类方法的, 类方法的主要是为了进行布局
 - (CGSize)sizeThatFits:(CGSize)size
 {
     if ([NSThread isMainThread] && [self viewIfLoaded]) {
@@ -145,7 +149,7 @@
     }
 }
 
-// 只会真正的 View 开始展示的时候, 才会触发真是的 View 的创建. 
+// 只会真正的 View 开始展示的时候, 才会触发 View 的创建.
 - (__kindof UIView *)view
 {
     if (!_codeView) {
@@ -158,7 +162,7 @@
         NSAssert([_codeView conformsToProtocol:@protocol(AMCodeView)], @"Class %@ must confirms to AMCodeView", cls);
 
         [_codeView setLanguage:self.language];
-        
+        // 这里有一个特殊的处理.
         if ([_codeView isKindOfClass:[AMMarkdownCodeView class]]) {
             ((AMMarkdownCodeView *)_codeView).partialUpdate = self.partialUpdate;
         }
@@ -175,6 +179,7 @@
     return _codeView;
 }
 
+// 这种 if 相关的命名的函数, 就是没有触发缓存机制的 View 
 - (__kindof UIView<AMAttachedView> *)viewIfLoaded
 {
     return _codeView;

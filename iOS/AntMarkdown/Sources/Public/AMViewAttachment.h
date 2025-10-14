@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 从另一个文本附件更新当前附件
  * @param attach 源文本附件对象
  */
+//
 - (void)updateAttachmentFromAttachment:(NSTextAttachment *)attach;
 
 @end
@@ -94,12 +95,13 @@ UIKIT_EXTERN NSString *const AMTextAttachmentSizeDidUpdateNotification;
  * 支持全宽显示、布局更新、尺寸计算等功能，为在文本中嵌入复杂视图提供基础支持。
  * 这是一个基础类，通常通过其子类来实现具体的视图嵌入功能。
  */
+// 对于 AMViewAttachment 的实现, 都在这个 AMViewAttachment 中, 所以, 所有的 View 相关的 Attachment, 都是这个类的子类
 @interface AMViewAttachment : NSTextAttachment <AMViewAttachment>
 
 @property (nonatomic, readonly, nullable) __kindof UIView<AMAttachedView> *view;
+// 这个名非常失败.
 @property (nonatomic) BOOL fullWidth;   // Default YES
 
-- (void)setNeedsUpdate DEPRECATED_MSG_ATTRIBUTE("use setNeedsLayout instead");
 - (void)setNeedsLayout;
 - (void)setNeedsDisplay;
 
@@ -139,7 +141,9 @@ typedef void(^ButtonAction)(void);
  * 
  * 注意：此类不对应标准 Markdown 语法，主要用于程序化创建交互式按钮元素。
  */
+// 没有地方用到这个, 这可以认为是自定义的一个场所. 
 @interface AMButtonViewAttachment : AMViewAttachment
+
 @property (nonatomic, strong) UIButton *button;
 
 - (instancetype)initWithTitle:(NSString *)title action:(nullable ButtonAction)action NS_DESIGNATED_INITIALIZER;

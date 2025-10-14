@@ -8,7 +8,9 @@
 #import "AMTextStyles.h"
 #import "CMCascadingAttributeStack.h"
 
+// 这是一个全局量, 也就是说, 可以直接修改这里, 来完成修改.
 const CGFloat AMCodeHeaderHeight = 40.0;
+// 这是一个全局量, 也就是说, 可以直接修改这里, 来完成修改.
 const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right = 12};
 
 @interface AMMarkdownCodeView ()
@@ -300,7 +302,7 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
               language:(NSString *)lang
                 styles:(AMTextStyles *)styles
 {
-    // Code 的 size 确定, 其实就是 String 的 boundingRectWithSize, 其实 Code 就是文本, 然后拿一个特定的 View 装起来而已.
+    
     size = [code boundingRectWithSize:
             CGSizeMake(size.width - AMCodeViewInset.left - AMCodeViewInset.right, size.height)
                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading

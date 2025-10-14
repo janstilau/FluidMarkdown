@@ -508,6 +508,8 @@
     }
     [super parser:parser didEndUnorderedListWithTightness:tight];
 }
+
+// 开始了列表之后
 - (void)parserDidStartListItem:(CMParser *)parser
 {
     

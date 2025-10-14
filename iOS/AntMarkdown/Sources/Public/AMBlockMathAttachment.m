@@ -32,7 +32,7 @@
     if (self) {
         _displayList = displayList;
         _style = style;
-  
+        
         self.bounds = CGRectMake(0, 0, displayList.width, totalHeight + 1.5);
         
         CGRect rect = self.bounds;
@@ -177,7 +177,7 @@
             AMBlockMathAttachment *attachment = [[self alloc] initWithDisplayList:realDisplayList style:style];
             [attachList addObject:attachment];
         }
-
+        
         NSUInteger lastIndex = [segIndexs.lastObject unsignedIntValue];
         if (lastIndex < totalMathList.atoms.count) {
             NSMutableArray<MTMathAtom *> *atoms = [NSMutableArray new];
@@ -223,7 +223,7 @@
     UIGraphicsImageRenderer *re = [[UIGraphicsImageRenderer alloc] initWithSize:size];
     self.image = [re imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
         CGContextRef context = rendererContext.CGContext;
-
+        
         CGContextTranslateCTM(context, 0, size.height);
         CGContextScaleCTM(context, 1.0, -1.0);
         
@@ -244,6 +244,7 @@
             default:
                 break;
         }
+        // 最终, latext 的显示, 还是需要 _displayList 来处理.
         _displayList.position = CGPointMake(x, (totalHeight - contentHeight) / 2 + _displayList.descent);
         [_displayList draw:context];
     }];
@@ -259,7 +260,7 @@
     return self.image;
 }
 
-- (CGRect)attachmentBoundsForTextContainer:(NSTextContainer *)textContainer 
+- (CGRect)attachmentBoundsForTextContainer:(NSTextContainer *)textContainer
                       proposedLineFragment:(CGRect)lineFrag
                              glyphPosition:(CGPoint)position
                             characterIndex:(NSUInteger)charIndex {
@@ -270,9 +271,9 @@
     
     CGFloat yPos = MAX(0, rect.origin.y);
     rect = CGRectMake(rect.origin.x, yPos, floor(rect.size.width), rect.size.height);
-        
+    
     const CGFloat width = textContainer.size.width - textContainer.lineFragmentPadding * 2;
-
+    
     if ((floor(width) != floor(self.image.size.width)) && [NSThread isMainThread]) {
         [self drawImage:CGSizeMake(floor(width), self.bounds.size.height)];
     }
@@ -282,6 +283,7 @@
 
 - (NSAttributedString *)attributedString
 {
+    // 如果报错了, 这里会有一个托底的处理. 
     if (self.error) {
         return [[NSAttributedString alloc] initWithString:self.text ?: @"" attributes:@{
             NSForegroundColorAttributeName: _style.textColor ?: [UIColor blackColor],

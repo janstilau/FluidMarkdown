@@ -45,10 +45,15 @@
 
 @implementation AMMarkdownTableLayout
 {
+    // 每列的尺寸约束（聚合该列所有行的 min/max 尺寸），用于同列内同宽
     NSMutableArray <AMSizeConstraint *> * _columnConstraint;
+    // 每行的尺寸约束（聚合该行所有列的 min/max 尺寸），用于统一行高
     NSMutableArray <AMSizeConstraint *> * _rowConstraint;
+    // 委托测量得到的每个 cell 的“内容所需尺寸”缓存
     NSMutableDictionary <NSIndexPath *, NSValue *> * _sizeCache;
+    // 所有布局属性的二维数组 [section][item]
     NSMutableArray <NSArray <UICollectionViewLayoutAttributes *> *> * _allAttributes;
+    // 最终内容总尺寸（供 collectionViewContentSize 返回）
     CGSize  _contentSize;
 }
 
@@ -114,6 +119,7 @@
 {
     [super prepareLayout];
     
+    // 清空上次布局数据，准备重新计算
     [_columnConstraint removeAllObjects];
     [_rowConstraint removeAllObjects];
     [_sizeCache removeAllObjects];
@@ -131,6 +137,7 @@
             CGSize size = [(id<UICollectionViewDelegateFlowLayout>)self.collectionView.delegate collectionView:self.collectionView
                                                                                                         layout:self
                                                                                         sizeForItemAtIndexPath:indexPath];
+            // 在这里, 将所有的 item 所占用的空间都计算出来了.
             _sizeCache[indexPath] = [NSValue valueWithCGSize:size];
         }
         
@@ -140,6 +147,7 @@
     }
     
     CGFloat totalWidth = 0;
+    // 按列聚合：统计该列所有行的内容尺寸，得到该列的最大需要宽度（maxSize.width）
     for (int c = 0; c < columns; c ++) {
         AMSizeConstraint *constraint = [[AMSizeConstraint alloc] init];
         for (int s = 0; s < sections; s ++) {
@@ -147,11 +155,13 @@
             CGSize size = _sizeCache[indexPath].CGSizeValue;
             [constraint updateSize:size];
         }
+        // 计算总宽（含列间距），用于后续是否需要填满容器
         totalWidth += constraint.maxSize.width + self.minimumInteritemSpacing;
         [_columnConstraint addObject:constraint];
     }
     totalWidth -= self.minimumInteritemSpacing;
     
+    // 按行聚合：统计该行所有列的内容尺寸，得到该行的最大需要高度（maxSize.height）
     for (int s = 0; s < sections; s ++) {
         AMSizeConstraint *constraint = [[AMSizeConstraint alloc] init];
         for (int c = 0; c < columns; c ++) {
@@ -165,6 +175,7 @@
     const CGFloat fullWidth = UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset).size.width;
     BOOL ignoreMaxWidth = NO;
 
+    // 如果总宽小于可用宽且允许填充（fillWidth），则按比例放大各列宽以“填满容器”
     if (totalWidth < fullWidth && self.fillWidth) {
         ignoreMaxWidth = YES;
         const CGFloat spacing = self.minimumInteritemSpacing * (columns - 1);
@@ -187,6 +198,7 @@
         for (int c = 0; c < col; c ++) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:c inSection:s];
             AMSizeConstraint *colConstraint = _columnConstraint[c];
+            // 同列内同宽：列宽取该列的 maxSize.width；若未填充，则受 maximumColumnWidth 限制
             const CGFloat width = MIN(colConstraint.maxSize.width, ignoreMaxWidth ? CGFLOAT_MAX : self.maximumColumnWidth);
             UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
             attr.frame = CGRectMake(offset.x, offset.y, width, height);
@@ -194,16 +206,25 @@
             
             offset.x += width + self.minimumInteritemSpacing;
         }
+        // 记录内容宽度（去除最后一个间距）
         contentSize.width = MAX(contentSize.width, offset.x - self.minimumInteritemSpacing);
         
         offset.x = initialOffset.x;
         offset.y += height + self.minimumLineSpacing;
         [_allAttributes addObject:arr.copy];
     }
+    // 记录内容高度（去除最后一行的行距）
     contentSize.height = offset.y - self.minimumLineSpacing;
     
     _contentSize = contentSize;
 }
+/*
+ 实现思路
+
+ - 列内同宽是由布局类 AMMarkdownTableLayout 在 prepareLayout 里实现的：它先对每个单元格调用 sizeForItemAtIndexPath: 计算“内容所需尺寸”，缓存到 _sizeCache 。
+ - 然后按列汇总一轮，给每一列建立一个 AMSizeConstraint ，遍历该列的所有行，持续 updateSize: ，得到该列的“最大需要宽度” constraint.maxSize.width 。
+ - 在真正排版时（逐行逐列生成 UICollectionViewLayoutAttributes ），每个单元格的 frame 宽度都取该列的 maxSize.width ，并做上限裁剪： width = MIN(colConstraint.maxSize.width, ignoreMaxWidth ? CGFLOAT_MAX : self.maximumColumnWidth) 。因此同一列所有行的单元格宽度一致。
+ */
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect
 {
@@ -228,6 +249,7 @@
     if (CGSizeEqualToSize(newBounds.size, self.collectionView.bounds.size)) {
         return NO;
     }
+    // 容器尺寸变化时，如启用填充，需要重新等比例分配列宽
     return self.fillWidth;
 }
 

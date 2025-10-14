@@ -29,6 +29,7 @@ const UIEdgeInsets AMTableLandScapeCellInset = {10, 40, 8, 40};
 @end
 
 @implementation AMMarkdownLandScapeTableCell
+
 @synthesize cellData = _cellData;
 
 + (CGSize)sizeForCell:(CMTableCell *)cell
@@ -193,10 +194,11 @@ const UIEdgeInsets AMTableLandScapeCellInset = {10, 40, 8, 40};
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.3];
     self.borderColor = self.styles.tableTitleAttributes.stringAttributes[NSBackgroundColorAttributeName]? : [UIColor colorWithHex_ant_mark:0x1f3b6329];
     self.borderWidth = self.styles.tableAttributes.stringAttributes[@"borderWidth"] ? [self.styles.tableAttributes.stringAttributes[@"borderWidth"] floatValue] : 0;
     [self setupUI];
+    
 }
 
 - (void)setupUI {

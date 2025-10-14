@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 主要用于渲染带有图标的文本元素，提供丰富的视觉效果和布局控制。
  */
 @interface AMIconAttachment : NSTextAttachment
+
 @property (nonatomic, nullable) NSString *path;
 @property (nonatomic, nullable) NSString *text;
 @property (nonatomic) UIFont *baseFont;

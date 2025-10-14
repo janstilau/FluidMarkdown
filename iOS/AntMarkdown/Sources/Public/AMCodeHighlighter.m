@@ -11,12 +11,15 @@
 
 // JS 运行环境与样式资源：用于在 iOS 端执行 highlight.js 并将其输出按默认 CSS 转换为富文本
 @interface AMCodeHighlighter ()
+
 @property (nonatomic) JSVirtualMachine *vm;
 @property (nonatomic) JSContext *context;
 @property (nonatomic) NSString *stylesheet;
 @property (nonatomic) AMTextStyles *styles;
 
+// 这里也是没有对应的缓存清理的策略.
 @property (nonatomic) NSCache<NSString *, NSAttributedString *> *cachedAttributedText; // 缓存「语言+代码」对应的高亮结果，避免重复计算
+
 @end
 
 @implementation AMCodeHighlighter
@@ -104,7 +107,7 @@
     if (!attr) {
         JSValue *hljs = self.context[@"hljs"];
         JSValue *result = nil;
-        
+        // The result of calling the value as a constructor, or nil if the value cannot be treated as a JavaScript constructor.
         if (language.length && [AMCodeHighlighter isSupportCodeLan:language]) {
             // 显式指定语言且受支持：可获得更准确的高亮
             result = [hljs invokeMethod:@"highlight" withArguments:@[code, @{
@@ -137,6 +140,25 @@
         }
                                                                         documentAttributes:nil
                                                                                      error:&error];
+        /*
+         本质原因
+         - NSAttributedString 内置了一个“HTML 导入器”。当你用 initWithData:options: 并设置 NSDocumentTypeDocumentAttribute = NSHTMLTextDocumentType 时，系统会把这份 HTML 解析成文本运行（text runs），并把标签/CSS 转成对应的富文本属性，最终得到一个 NSAttributedString / NSMutableAttributedString 。
+
+         - 解析 HTML（构建简化的 DOM）。
+         - 应用可支持的 CSS（内联 style 和文内 <style> ），计算每段文字的最终样式。
+         - 按样式切分成多个文本段，映射为 NSAttributedString 的属性：
+           - 颜色/字体： NSForegroundColorAttributeName 、 NSFontAttributeName
+           - 粗体/斜体： UIFontDescriptorTraits （strong/b/italic/em）
+           - 下划线/删除线： NSUnderlineStyleAttributeName 、 NSStrikethroughStyleAttributeName
+           - 段落： NSParagraphStyle （对齐、缩进、行距、段前后距）
+           - 链接： NSLinkAttributeName （ <a href> ）
+           - 图片： NSTextAttachment （ <img> ）
+         - 返回你构造的可变子类实例（你用了 NSMutableAttributedString alloc ），因此结果是可变的。
+         为何你的代码能高亮
+
+         - 你把 highlight.js 产生的类名（如 hljs-keyword ）对应的 CSS 放进 <style> ，系统在导入时读取这些规则，把不同 <span class="..."> 的样式转成文字颜色/字体等属性。
+         - <pre><code> 让换行和空白按“代码块”呈现（白空格保留、行内样式应用），再统一用 code{font-size: ...} 或设置 font-family 达到等宽效果。
+         */
         // 去掉末尾换行，避免影响布局高度
         if ([attri.mutableString hasSuffix:@"\n"]) {
             [attri.mutableString deleteCharactersInRange:NSMakeRange(attri.length - 1, 1)];

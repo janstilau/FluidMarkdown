@@ -6,7 +6,9 @@
 #import "AMUtils.h"
 
 @interface AMGradientView ()
+
 @property(nonatomic, readonly, strong) CAGradientLayer *layer;
+
 @end
 
 @implementation AMGradientView

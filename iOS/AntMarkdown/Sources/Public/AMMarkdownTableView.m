@@ -24,7 +24,9 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
 @property (nonatomic) CGFloat borderWidth;
 @end
 
+// 这个包装了, UICollectionViewDataSource 的相关逻辑.
 @interface AMMarkdownTableDatasource : NSObject <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
 @property (nonatomic) CMTable *table;
 @property (nonatomic) AMTextStyles *styles;
 @property (nonatomic) BOOL partialUpdate;
@@ -35,6 +37,7 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
 @end
 
 @interface AMMarkdownTableView() <UICollectionViewDelegate>
+
 @property (nonatomic) AMMarkdownTableDatasource *dataSource;
 @property (nonatomic) UIView *headerView;
 @property (nonatomic) UIStackView *operationView;
@@ -46,6 +49,7 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
 @end
 
 @implementation AMMarkdownTableView
+
 @synthesize table = _table;
 @synthesize attachment = _attachment;
 
@@ -68,6 +72,7 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         self.styles = styles;
+        // 一个视图的改变, 修改了全局的变量.
         if (self.styles.tableCellAttributes.stringAttributes[@"cellPadding"]) {
             AMTableCellInset.top = [self.styles.tableCellAttributes.stringAttributes[@"cellPadding"] UIEdgeInsetsValue].top;
             AMTableCellInset.bottom = [self.styles.tableCellAttributes.stringAttributes[@"cellPadding"] UIEdgeInsetsValue].bottom;
@@ -94,6 +99,7 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, AMTableHeaderHeight)];
         self.headerView.backgroundColor = self.styles.tableTitleAttributes.stringAttributes[NSBackgroundColorAttributeName] ? : [UIColor whiteColor];
         self.headerView.translatesAutoresizingMaskIntoConstraints = NO;
+        // 固定了 HeaderView 的高度.
         [self.headerView addConstraint:[NSLayoutConstraint constraintWithItem:self.headerView
                                                                     attribute:NSLayoutAttributeHeight
                                                                     relatedBy:NSLayoutRelationEqual
@@ -203,6 +209,7 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
         } else {
             [blowUpButton setImage:[UIImage imageNamed_ant_mark:@"blow_up_old"] forState:UIControlStateNormal];
         }
+        // 放大按钮.
         [blowUpButton addTarget:self action:@selector(_onBlowUp:) forControlEvents:UIControlEventTouchUpInside];
         blowUpButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self setTableOperationViews:@[blowUpButton]];
@@ -215,6 +222,7 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
         
         self.maximumColumnWidth = 300;
         
+        // 最终的展示, 还是用的 CollectionView
         self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
                                                  collectionViewLayout:self.layout];
         [self.collectionView registerClass:[self.class cellClass]
@@ -222,6 +230,7 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
         [self.collectionView registerClass:[AMMarkdownTableRowBackgroundView class]
                 forSupplementaryViewOfKind:@"Background"
                        withReuseIdentifier:CLSSTR(AMMarkdownTableRowBackgroundView)];
+        
         self.collectionView.bounces = NO;
         self.collectionView.scrollsToTop = NO;
         self.collectionView.contentInset = UIEdgeInsetsMake(1, 0, 0, 0);
@@ -469,6 +478,8 @@ UIEdgeInsets AMTableCellInset = {10, 12, 8, 12};
 
 - (CGSize)sizeThatFits:(CGSize)size {
     [self.collectionView layoutIfNeeded];
+    // width 选用内容或者最大的宽度
+    // height 选用内容 + 其他元素高度
     CGSize contentSize = self.layout.collectionViewContentSize;
     size.width = MIN(size.width, contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right);
     size.height = contentSize.height + self.headerView.bounds.size.height + self.collectionView.contentInset.top + self.collectionView.contentInset.bottom;
@@ -720,6 +731,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     return [self sizeForCell:cell constrainedWidth:CGFLOAT_MAX];
 }
 
+// 在这里, 可以获取到每个 Cell 的 size 打下哦.
 + (CGSize)sizeForCell:(CMTableCell *)cell constrainedWidth:(CGFloat)width
 {
     const CGFloat paddingHorizontal = AMTableCellInset.left + AMTableCellInset.right;

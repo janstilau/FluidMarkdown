@@ -109,6 +109,7 @@ typedef NS_ENUM(NSUInteger, AMXListPrefixType) {
 @property (nonatomic, assign) CGFloat borderWidth;          // 边框宽度 - 表格边框线的粗细
 @property (nonatomic, assign) CGFloat maxWidth;             // 表格最大宽度 - 表格显示的最大宽度限制
 @property (nonatomic, assign) CGFloat maxHeight;            // 表格最大高度 - 表格显示的最大高度限制
+// 所有相关的显示值, 其实都进行了配置. 
 @property (nonatomic, assign) CGFloat firstColumnMaxWidth;  // 首列最大宽度 - 第一列的最大宽度限制
 @property (nonatomic, assign) CGFloat columnMaxWidth;       // 列最大宽度 - 其他列的最大宽度限制
 @property (nonatomic, strong) NSString* operationIconPath;  // 操作图标路径 - 表格操作按钮的图标路径（格式：bundleName/iconName）
