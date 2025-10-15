@@ -137,6 +137,8 @@ typedef enum : NSUInteger {
  */
 + (CGSize)caculateContentSize:(NSString *)markdownText constrainSize:(CGSize)constrainSize styleId:(NSString*)styleId;
 
++ (CGSize)calculateSizeWithLayoutManager:(UITextView *)textView limitSize:(CGSize)limitSize;
+
 @end
 
 NS_ASSUME_NONNULL_END

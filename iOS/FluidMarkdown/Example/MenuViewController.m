@@ -7,20 +7,21 @@
 #import "StreamPreviewViewController.h"
 #import "AIChatViewController.h"
 #import "StreamFlueViewController.h"
+#import "StreamingChatViewController.h"
 
 
 @implementation MenuViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.menuItems = @[@"stream print preview", @"AI conversation scenario simulation", @"Stream Flue Demo"];
+    self.menuItems = @[@"stream print preview", @"AI conversation scenario simulation", @"Stream Flue Demo", @"Streaming Chat with AMXMarkdownTextView"];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
-    CGFloat yOffset = -200; // 全局偏移量，方便调整
+    CGFloat yOffset = -300; // 全局偏移量，方便调整
 
     // 1️⃣ 创建 NSTextStorage
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:@"Hello TextKit!Hello TextKit!Hello TextKit!"];
@@ -110,6 +111,9 @@
     } else if (indexPath.row == 2) {
         StreamFlueViewController *streamFlueVC = [[StreamFlueViewController alloc] init];
         [self.navigationController pushViewController:streamFlueVC animated:YES];
+    } else if (indexPath.row == 3) {
+        StreamingChatViewController *streamingChatVC = [[StreamingChatViewController alloc] init];
+        [self.navigationController pushViewController:streamingChatVC animated:YES];
     }
 }
 @end

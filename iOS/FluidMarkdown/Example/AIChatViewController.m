@@ -6,6 +6,7 @@
 #import "AIChatViewController.h"
 #import "AMXRenderService.h"
 #import "AMXMarkdownTextView.h"
+#import "AMXRenderService.h"
 
 @interface AIChatViewController ()<AMXMarkdownTextViewDelegate, UITextFieldDelegate>
 @property (nonatomic, assign) CGFloat keyboardHeight;
