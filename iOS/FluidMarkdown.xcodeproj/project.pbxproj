@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		06ACE9722E9D045100454F57 /* dataxiaop.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9712E9D044800454F57 /* dataxiaop.txt */; };
 		06ACE9742E9D060C00454F57 /* data6.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9732E9D060400454F57 /* data6.txt */; };
+		06ACE9812E9F811A00454F57 /* data7.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9802E9F811A00454F57 /* data7.txt */; };
 		06F3EB292E99143C00827F56 /* data4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06F3EB282E99143C00827F56 /* data4.txt */; };
 		774C570F2E77BAED003034DC /* highlightjs.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 774C570C2E77BAED003034DC /* highlightjs.bundle */; };
 		774C57102E77BAED003034DC /* data3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 774C570B2E77BAED003034DC /* data3.txt */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		06ACE9712E9D044800454F57 /* dataxiaop.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dataxiaop.txt; sourceTree = "<group>"; };
 		06ACE9732E9D060400454F57 /* data6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data6.txt; sourceTree = "<group>"; };
+		06ACE9802E9F811A00454F57 /* data7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data7.txt; sourceTree = "<group>"; };
 		06F3EB282E99143C00827F56 /* data4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data4.txt; sourceTree = "<group>"; };
 		06F3EB872E9A529F00827F56 /* NSLayoutManager_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLayoutManager_zh.h; sourceTree = "<group>"; };
 		06F3EB882E9A529F00827F56 /* NSTextContainer_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTextContainer_zh.h; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				06F3EB8A2E9A529F00827F56 /* apple */,
 				774C57082E77BAED003034DC /* AntMarkdown.bundle */,
 				774C57092E77BAED003034DC /* data1.txt */,
+				06ACE9802E9F811A00454F57 /* data7.txt */,
 				774C570A2E77BAED003034DC /* data2.txt */,
 				774C570B2E77BAED003034DC /* data3.txt */,
 				06F3EB282E99143C00827F56 /* data4.txt */,
@@ -186,6 +189,7 @@
 				TargetAttributes = {
 					774C563E2E77B5B4003034DC = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1640;
 					};
 				};
 			};
@@ -237,6 +241,7 @@
 				774C57112E77BAED003034DC /* mathFonts.bundle in Resources */,
 				774C57122E77BAED003034DC /* data1.txt in Resources */,
 				774C57132E77BAED003034DC /* AntMarkdown.bundle in Resources */,
+				06ACE9812E9F811A00454F57 /* data7.txt in Resources */,
 				774C57142E77BAED003034DC /* data2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +277,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -296,6 +302,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -310,6 +318,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -334,6 +343,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

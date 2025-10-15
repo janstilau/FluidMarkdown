@@ -240,6 +240,7 @@ static AMXMarkdownTextView* _caculateContentView;
         NSMutableAttributedString *newSafeAttrStr = [self markdowmMutableAttributedStringFromValue:newSafeContent];
         
         if (newSafeAttrStr) {
+            newSafeAttrStr = [AMXMarkdownHelper restoreWhitespaceForAttributedString:newSafeAttrStr originalString:newSafeContent];
             if (!self.safeMarkdownAttrStr) {
                 self.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
             }
@@ -260,6 +261,7 @@ static AMXMarkdownTextView* _caculateContentView;
     if (self.safeRawStringIndex < self.preloadMarkdownRawText.length) {
         NSString *remainingContent = [self.preloadMarkdownRawText substringFromIndex:self.safeRawStringIndex];
         NSMutableAttributedString *remainingAttrStr = [self markdowmMutableAttributedStringFromValue:remainingContent];
+        remainingAttrStr = [AMXMarkdownHelper restoreWhitespaceForAttributedString:remainingAttrStr originalString:remainingContent];
         if (remainingAttrStr) {
             [self.preloadMarkdownAttrStr appendAttributedString:remainingAttrStr];
         }

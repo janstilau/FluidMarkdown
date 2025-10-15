@@ -284,6 +284,26 @@ NS_ASSUME_NONNULL_BEGIN
  * @param config 自定义样式配置
  */
 + (void)transformBlockQuote:(AMTextStyles*)defaultStyle customStyle:(AMXMarkdownStyleConfig*)config;
+
+// MARK: - 空白字符恢复工具方法
+
+/**
+ * 恢复被 CFStringTrimWhitespace 移除的头尾空白字符
+ * 
+ * 该方法用于将被 trim 处理移除的头尾空白字符重新添加到富文本字符串中
+ * 
+ * @param trimmedAttrString 已被 trim 处理的富文本字符串
+ * @param originalString 原始的 Markdown 字符串
+ * @return 恢复了头尾空白字符的富文本字符串
+ * 
+ * @note 使用场景:
+ *       • 当需要保持原始文本的空白字符结构时
+ *       • 避免 CFStringTrimWhitespace 对数学公式等特殊内容的影响
+ *       • 手动控制空白字符的处理时机
+ */
++ (NSMutableAttributedString *)restoreWhitespaceForAttributedString:(NSMutableAttributedString *)trimmedAttrString
+                                                     originalString:(NSString *)originalString;
+
 @end
 
 NS_ASSUME_NONNULL_END

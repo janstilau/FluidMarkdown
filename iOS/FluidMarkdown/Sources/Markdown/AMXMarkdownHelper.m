@@ -507,4 +507,67 @@ AMStyleProvider AMCustomProvider(void) {
         [defaultStyle.blockQuoteAttributes.paragraphStyleAttributes addEntriesFromDictionary:@{CMParagraphStyleAttributeParagraphSpacing:@(spaceConfig.paragraphSpacing),CMParagraphStyleAttributeParagraphSpacingBefore:@(spaceConfig.paragraphSpacingBefore)}];
     }
 }
+
+// MARK: - 空白字符恢复工具方法
+
++ (NSMutableAttributedString *)restoreWhitespaceForAttributedString:(NSMutableAttributedString *)trimmedAttrString
+                                                     originalString:(NSString *)originalString {
+    if (!trimmedAttrString || !originalString) {
+        return trimmedAttrString;
+    }
+    
+    NSString *trimmedString = trimmedAttrString.string;
+    
+    // 如果 trimmed 字符串和原始字符串相同，说明没有被 trim，直接返回
+    if ([trimmedString isEqualToString:originalString]) {
+        return trimmedAttrString;
+    }
+    
+    // 查找原始字符串中的前导空白字符
+    NSString *leadingWhitespace = @"";
+    NSInteger leadingIndex = 0;
+    while (leadingIndex < originalString.length) {
+        unichar ch = [originalString characterAtIndex:leadingIndex];
+        if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:ch]) {
+            leadingWhitespace = [leadingWhitespace stringByAppendingString:[NSString stringWithCharacters:&ch length:1]];
+            leadingIndex++;
+        } else {
+            break;
+        }
+    }
+    
+    // 查找原始字符串中的尾随空白字符
+    NSString *trailingWhitespace = @"";
+    NSInteger trailingIndex = originalString.length - 1;
+    while (trailingIndex >= 0) {
+        unichar ch = [originalString characterAtIndex:trailingIndex];
+        if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:ch]) {
+            trailingWhitespace = [[NSString stringWithCharacters:&ch length:1] stringByAppendingString:trailingWhitespace];
+            trailingIndex--;
+        } else {
+            break;
+        }
+    }
+    
+    // 创建结果富文本字符串
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
+    
+    // 添加前导空白字符（使用普通文本属性）
+    if (leadingWhitespace.length > 0) {
+        NSAttributedString *leadingAttrString = [[NSAttributedString alloc] initWithString:leadingWhitespace];
+        [result appendAttributedString:leadingAttrString];
+    }
+    
+    // 添加原有的富文本内容
+    [result appendAttributedString:trimmedAttrString];
+    
+    // 添加尾随空白字符（使用普通文本属性）
+    if (trailingWhitespace.length > 0) {
+        NSAttributedString *trailingAttrString = [[NSAttributedString alloc] initWithString:trailingWhitespace];
+        [result appendAttributedString:trailingAttrString];
+    }
+    
+    return result;
+}
+
 @end
