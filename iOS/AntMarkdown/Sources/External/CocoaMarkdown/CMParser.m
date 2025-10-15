@@ -75,7 +75,7 @@
 
 - (instancetype)initWithDocument:(CMDocument *)document delegate:(id<CMParserDelegate>)delegate
 {
-    NSParameterAssert(document);
+//    NSParameterAssert(document);
     NSParameterAssert(delegate);
     
     if ((self = [super init])) {

@@ -28,6 +28,9 @@ static AMXMarkdownTextView* _caculateContentView;
 @property (atomic, strong) NSMutableArray    *clickableLocationObjs;
 @property (atomic, strong) NSMutableDictionary    *cacheImgDic;
 @property (atomic, strong) NSMutableString *preloadMarkdownRawText;
+// 安全渲染优化相关属性
+@property (atomic, strong) NSMutableAttributedString *safeMarkdownAttrStr;  // 安全的已渲染富文本
+@property (atomic, assign) NSInteger safeRawStringIndex;                    // 安全的原始字符串索引
 @end
 
 @implementation AMXMarkdownTextView
@@ -101,6 +104,9 @@ static AMXMarkdownTextView* _caculateContentView;
     // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
     self.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
     self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:content];
+    // 初始化安全渲染优化相关属性
+    self.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+    self.safeRawStringIndex = 0;
     [self startTimer];
 }
 - (void)startStreamingWithContent:(NSString*)content printIndex:(NSInteger)printIndex
@@ -128,10 +134,88 @@ static AMXMarkdownTextView* _caculateContentView;
     // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
     self.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
     self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:content];
+    // 初始化安全渲染优化相关属性
+    self.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+    self.safeRawStringIndex = 0;
     [self renderCompleteContent:[content substringToIndex:printIndex]];
     self.timerCountIndex = printIndex;
     [self startTimer];
 }
+
+#pragma mark - 安全索引查找方法
+
+/**
+ * 查找安全的 rawString 索引位置
+ * 安全位置定义为：标题行（#, ##, ###）的起始位置，但需要排除代码块内的 # 注释
+ * @param rawString 原始 Markdown 字符串
+ * @return 安全索引位置，如果没有找到则返回 0
+ */
+- (NSInteger)findSafeRawStringIndex:(NSString *)rawString fromIndex:(NSInteger)startIndex {
+    if (!rawString || rawString.length == 0 || startIndex >= rawString.length) {
+        return startIndex;
+    }
+    
+    NSArray<NSString *> *lines = [rawString componentsSeparatedByString:@"\n"];
+    NSInteger currentIndex = 0;
+    NSInteger lastSafeIndex = startIndex; // 默认返回起始位置
+    BOOL inCodeBlock = NO;
+    
+    for (NSString *line in lines) {
+        // 检查是否进入或退出代码块
+        if ([line hasPrefix:@"```"]) {
+            inCodeBlock = !inCodeBlock;
+        }
+        
+        // 如果当前位置大于等于起始位置，且不在代码块内，检查是否为标题行
+        if (currentIndex >= startIndex && !inCodeBlock && [self isHeaderLine:line]) {
+            lastSafeIndex = currentIndex;
+        }
+        
+        // 更新当前索引（包括换行符）
+        currentIndex += line.length + 1; // +1 for \n
+    }
+    
+    return lastSafeIndex;
+}
+
+/**
+ * 判断是否为标题行
+ * @param line 待检查的行
+ * @return YES 如果是标题行，NO 否则
+ */
+- (BOOL)isHeaderLine:(NSString *)line {
+    NSString *trimmedLine = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    // 检查是否以 # 开头
+    if (![trimmedLine hasPrefix:@"#"]) {
+        return NO;
+    }
+    
+    // 找到连续的 # 符号的结束位置
+    NSInteger hashCount = 0;
+    for (NSInteger i = 0; i < trimmedLine.length; i++) {
+        if ([trimmedLine characterAtIndex:i] == '#') {
+            hashCount++;
+        } else {
+            break;
+        }
+    }
+    
+    // Markdown 标题最多支持 6 级
+    if (hashCount > 6) {
+        return NO;
+    }
+    
+    // 检查 # 符号后面是否有空格（如果还有内容的话）
+    if (trimmedLine.length > hashCount) {
+        unichar nextChar = [trimmedLine characterAtIndex:hashCount];
+        return [[NSCharacterSet whitespaceCharacterSet] characterIsMember:nextChar];
+    }
+    
+    // 如果只有 # 符号，也认为是标题行
+    return YES;
+}
+
 - (void)addStreamContent:(NSString *)text
 {
     if (self.state != AMXMarkdownPrintStateRunning && self.state != AMXMarkdownPrintStatePaused) {
@@ -140,14 +224,47 @@ static AMXMarkdownTextView* _caculateContentView;
     if (text.length <= 0) {
         return;
     }
-    // 先维护原始 Markdown 文本，再整体重建富文本，实现“每次都渲染完整文档”
+    
+    // 先维护原始 Markdown 文本
     if (!self.preloadMarkdownRawText) {
         self.preloadMarkdownRawText = [NSMutableString string];
     }
     [self.preloadMarkdownRawText appendString:text];
     
-    // 重新构建整份富文本
-    self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:self.preloadMarkdownRawText];
+    // 使用安全索引优化渲染：从当前安全位置开始查找新的安全位置
+    NSInteger newSafeIndex = [self findSafeRawStringIndex:self.preloadMarkdownRawText fromIndex:self.safeRawStringIndex];
+    
+    if (newSafeIndex > self.safeRawStringIndex) {
+        // 找到了新的安全位置，累加渲染新的安全内容
+        NSString *newSafeContent = [self.preloadMarkdownRawText substringWithRange:NSMakeRange(self.safeRawStringIndex, newSafeIndex - self.safeRawStringIndex)];
+        NSMutableAttributedString *newSafeAttrStr = [self markdowmMutableAttributedStringFromValue:newSafeContent];
+        
+        if (newSafeAttrStr) {
+            if (!self.safeMarkdownAttrStr) {
+                self.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+            }
+            [self.safeMarkdownAttrStr appendAttributedString:newSafeAttrStr];
+        }
+        self.safeRawStringIndex = newSafeIndex;
+    }
+    
+    // 构建完整的富文本：安全部分 + 新渲染部分
+    if (!self.preloadMarkdownAttrStr) {
+        self.preloadMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+    }
+    
+    // 使用已缓存的安全富文本作为基础
+    [self.preloadMarkdownAttrStr setAttributedString:self.safeMarkdownAttrStr];
+    
+    // 如果有安全索引之后的内容，渲染并追加
+    if (self.safeRawStringIndex < self.preloadMarkdownRawText.length) {
+        NSString *remainingContent = [self.preloadMarkdownRawText substringFromIndex:self.safeRawStringIndex];
+        NSMutableAttributedString *remainingAttrStr = [self markdowmMutableAttributedStringFromValue:remainingContent];
+        if (remainingAttrStr) {
+            [self.preloadMarkdownAttrStr appendAttributedString:remainingAttrStr];
+        }
+    }
+    
     // 如果处于暂停状态，恢复计时器以继续渲染
     if (self.state == AMXMarkdownPrintStatePaused) {
         [self resume];
@@ -207,6 +324,9 @@ static AMXMarkdownTextView* _caculateContentView;
     self.clickableLocationObjs = nil;
     // 清理原始 Markdown 文本缓冲
     self.preloadMarkdownRawText = nil;
+    // 清理安全渲染优化相关属性
+    self.safeMarkdownAttrStr = nil;
+    self.safeRawStringIndex = 0;
     self.state = AMXMarkdownPrintStateStopped;
 }
 
@@ -246,7 +366,6 @@ static AMXMarkdownTextView* _caculateContentView;
     
     __weak typeof(self) weakSelf = self;
     if (attrStr.string.length > 0) {
-        NSLog(@"self: %@, attr: %@, length: %ld", self, attrStr.string, attrStr.length);
         [AMXMarkdownHelper setImageAttachListener:attrStr delegate:weakSelf];
     }else {
         NSLog(@"ignore for null attrStr");
@@ -301,6 +420,7 @@ static AMXMarkdownTextView* _caculateContentView;
     if (value.length <= 0) {
         return NSMutableAttributedString.new;
     }
+    NSLog(@"当前渲染: %@", value);
     if (!self.nativeStyles) {
         AMXMarkdownStyleConfig* style = [[AMXRenderService shared] getMarkdownStyleWithId:self.styleId];
         self.nativeStyles = [AMXMarkdownTextView XRMarkdownStyle2AMTextStyle:style textView:self];

@@ -92,7 +92,7 @@
 
 - (void)parserDidEndDocument:(CMParser *)parser
 {
-    CFStringTrimWhitespace((__bridge CFMutableStringRef)_buffer.mutableString);
+//    CFStringTrimWhitespace((__bridge CFMutableStringRef)_buffer.mutableString);
 }
 
 - (void)parser:(CMParser *)parser foundText:(NSString *)text

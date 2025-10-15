@@ -36,51 +36,36 @@
 其解的存在性与光滑性至今仍是未解决的“千禧年七大难题”之一。
 
 
-\[
-\rho \left( \frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u} \right)
- = -\nabla p + \mu \nabla^2 \mathbf{u} + \mathbf{f}
-\]
+\[\rho \left( \frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u} \right)
+ = -\nabla p + \mu \nabla^2 \mathbf{u} + \mathbf{f}\]
 
 - **含义**：
   - \(\rho\) 为流体密度，\(\mathbf{u}\) 为速度矢量，\(p\) 为压强，\(\mu\) 为动力粘度，\(\mathbf{f}\) 为外力矢量；
   - 左侧表示流体微团的加速度（局部导数+对流项），右侧为压强梯度、粘性力与外力的合力。
 
 
-### 2. **量子力学：薛定谔方程（含时形式）
-**
+### 2. **量子力学：薛定谔方程（含时形式）**
 描述微观粒子运动状态随时间变化的基本方程，揭示了量子世界的波粒二象性。
 
 
-\[i\hbar \frac{\partial}{\partial t} \Psi(\mathbf{r}, t)
- = \hat{H} \Psi(\mathbf{r}, t)\]
+\[i\hbar \frac{\partial}{\partial t} \Psi(\mathbf{r}, t) = \hat{H} \Psi(\mathbf{r}, t)\]
 
 - **拓展**：若哈密顿算符 \(\hat{H} = -\frac{\hbar^2}{2m} \nabla^2 + V(\mathbf{r}, t)\)
 （非相对论单粒子），则方程可写为：
-  \[
-  i\hbar \frac{\partial \Psi}{\partial t} = -\frac{\hbar^2}{2m} \nabla^2 \Psi + V \Psi
-  \]
+  \[i\hbar \frac{\partial \Psi}{\partial t} = -\frac{\hbar^2}{2m} \nabla^2 \Psi + V \Psi\]
   其中 \(\hbar\) 为约化普朗克常数，\(m\) 为粒子质量，\(V\) 为势能函数，\(\Psi\)为波函数。
 
 
-### 3. **微分几何：高斯-博内定理（Gauss-Bonnet Theorem）
-**
+### 3. **微分几何：高斯-博内定理（Gauss-Bonnet Theorem）**
 揭示曲面的局部几何（曲率）与整体拓扑（欧拉示性数）之间的深刻联系，
 是微分几何与拓扑学的桥梁。
 
-\[
-\iint_M K \,
- dA + \int_{\partial M} k_g \, ds = 2\pi \chi(M)
-\]
+\[\iint_M K \, dA + \int_{\partial M} k_g \, ds = 2\pi \chi(M)\]
 
 - **含义**：
-  - \(M\) 为紧致二维黎曼流形，
-\(K\) 为高斯曲率，\(k_g\) 为边界 \(\partial M\)
- 的测地曲率，\(\chi(M)\) 为欧拉示性数；
+  - \(M\) 为紧致二维黎曼流形，\(K\) 为高斯曲率，\(k_g\) 为边界 \(\partial M\)的测地曲率，\(\chi(M)\) 为欧拉示性数；
   - 例如，
-对闭合光滑曲面（如球面），\(\partial M = \emptyset\)
-，则 \(\iint_M K \, dA = 2\pi \chi(M)\)
-（球面 \(\chi=2\)，故积分结果为 \(4\pi\)）
-。
+对闭合光滑曲面（如球面），\(\partial M = \emptyset\)，则 \(\iint_M K \, dA = 2\pi \chi(M)\)（球面 \(\chi=2\)，故积分结果为 \(4\pi\)）。
 
 
 ### 4. **数论：黎曼ζ函数的函数方程**
@@ -89,35 +74,23 @@
 “黎曼假设”即断言其非平凡零点的实部均为 \(\frac{1}{2}\)
 。
 
-\[
-\zeta(s) = 2^s \pi^{s-1} \sin\left( \frac{\pi s}{2} \right)
- \Gamma(1-s) \zeta(1-s)
-\]
+\[\zeta(s) = 2^s \pi^{s-1} \sin\left( \frac{\pi s}{2} \right)\Gamma(1-s) \zeta(1-s)\]
 
 - **背景**：
 
-  - \(\Gamma(s)\) 为伽马函数，该方程揭示了 \(\zeta(s)\)
- 在 \(s\) 与 \(1-s\) 之间的对称性，例如可将 \(s\)
- 在右半平面的取值延拓到整个复平面。
+  - \(\Gamma(s)\) 为伽马函数，该方程揭示了 \(\zeta(s)\)在 \(s\) 与 \(1-s\) 之间的对称性，例如可将 \(s\)在右半平面的取值延拓到整个复平面。
 
 
-### 5. **广义相对论：爱因斯坦场方程（Einstein Field Equations）
-**
+### 5. **广义相对论：爱因斯坦场方程（Einstein Field Equations）**
 描述时空曲率与物质能量动量分布之间的关系，是广义相对论的数学基石，
 其核心思想为“物质告诉时空如何弯曲，时空告诉物质如何运动”。
 
 
-\[
-G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}
-
-\]
+\[G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}\]
 
 - **符号说明**：
-  - \(G_{\mu\nu}\)
- 为爱因斯坦张量（描述时空曲率），\(g_{\mu\nu}\)
- 为度规张量，\(\Lambda\) 为宇宙学常数；
-  - \(T_{\mu\nu}\)
- 为能量-动量张量，\(G\) 为万有引力常数，\(c\) 为光速；
+  - \(G_{\mu\nu}\)为爱因斯坦张量（描述时空曲率），\(g_{\mu\nu}\)为度规张量，\(\Lambda\) 为宇宙学常数；
+  - \(T_{\mu\nu}\)为能量-动量张量，\(G\) 为万有引力常数，\(c\) 为光速；
 
   - 方程左侧刻画时空几何，右侧刻画物质分布，通过等效原理将引力几何化。
 

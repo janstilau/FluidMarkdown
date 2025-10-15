@@ -119,7 +119,6 @@
  */
 // - 每次传入的都是 从开头到当前进度的完整文本
 - (void)setAttributedTextPartialUpdate_ant_mark:(NSAttributedString *)attributedText animated:(BOOL)animated {
-    NSLog(@"TextView 变化 %@", attributedText.string);
     const NSUInteger textLength = self.textStorage.length;
     
     /*
@@ -599,7 +598,7 @@
                         anim.fillMode = kCAFillModeBoth;
                         anim.duration = 0.15;  // 动画持续时间
                         anim.removedOnCompletion = YES;
-                        // 这里的 delegate, 是一个强引用 
+                        // 这里的 delegate, 是一个强引用
                         anim.delegate = [_AMAnimationDelegate delegateWithEnd:^(CAAnimation *anim, BOOL flag) {
                             @strongify(layer);
                             layer.isFadeComplete = YES;
