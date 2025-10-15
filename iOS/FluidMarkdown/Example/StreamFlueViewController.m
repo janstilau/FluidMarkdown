@@ -156,7 +156,7 @@
         return;
     }
     
-    NSInteger chunkSize = 2;
+    NSInteger chunkSize = 10;
     NSInteger remainingLength = self.fullContent.length - self.currentIndex;
     NSInteger actualChunkSize = MIN(chunkSize, remainingLength);
     

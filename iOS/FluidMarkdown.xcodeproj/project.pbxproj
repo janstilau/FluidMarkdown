@@ -11,6 +11,7 @@
 		06ACE9742E9D060C00454F57 /* data6.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9732E9D060400454F57 /* data6.txt */; };
 		06ACE9812E9F811A00454F57 /* data7.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9802E9F811A00454F57 /* data7.txt */; };
 		06ACE9832E9F865800454F57 /* dataxiaop2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9822E9F864F00454F57 /* dataxiaop2.txt */; };
+		06ACEA9E2E9F8E4000454F57 /* data5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACEA9D2E9F8E4000454F57 /* data5.txt */; };
 		06F3EB292E99143C00827F56 /* data4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06F3EB282E99143C00827F56 /* data4.txt */; };
 		774C570F2E77BAED003034DC /* highlightjs.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 774C570C2E77BAED003034DC /* highlightjs.bundle */; };
 		774C57102E77BAED003034DC /* data3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 774C570B2E77BAED003034DC /* data3.txt */; };
@@ -43,6 +44,7 @@
 		06ACE9732E9D060400454F57 /* data6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data6.txt; sourceTree = "<group>"; };
 		06ACE9802E9F811A00454F57 /* data7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data7.txt; sourceTree = "<group>"; };
 		06ACE9822E9F864F00454F57 /* dataxiaop2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dataxiaop2.txt; sourceTree = "<group>"; };
+		06ACEA9D2E9F8E4000454F57 /* data5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data5.txt; sourceTree = "<group>"; };
 		06F3EB282E99143C00827F56 /* data4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data4.txt; sourceTree = "<group>"; };
 		06F3EB872E9A529F00827F56 /* NSLayoutManager_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLayoutManager_zh.h; sourceTree = "<group>"; };
 		06F3EB882E9A529F00827F56 /* NSTextContainer_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTextContainer_zh.h; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		774C570E2E77BAED003034DC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				06ACEA9D2E9F8E4000454F57 /* data5.txt */,
 				06ACE9822E9F864F00454F57 /* dataxiaop2.txt */,
 				06ACE9712E9D044800454F57 /* dataxiaop.txt */,
 				06ACE9732E9D060400454F57 /* data6.txt */,
@@ -246,6 +249,7 @@
 				774C57132E77BAED003034DC /* AntMarkdown.bundle in Resources */,
 				06ACE9812E9F811A00454F57 /* data7.txt in Resources */,
 				774C57142E77BAED003034DC /* data2.txt in Resources */,
+				06ACEA9E2E9F8E4000454F57 /* data5.txt in Resources */,
 				06ACE9832E9F865800454F57 /* dataxiaop2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

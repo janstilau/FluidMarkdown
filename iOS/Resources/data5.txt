@@ -7,16 +7,19 @@
 \left\{
 \begin{aligned}
 \frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot 
-abla) \mathbf{u} &= -\frac{1}{ho} 
+abla) \mathbf{u} &= -\frac{1}{
+ho} 
 abla p + 
 u \Delta \mathbf{u} + \mathbf{f} \quad 	ext{（动量方程）} \
 
 abla \cdot \mathbf{u} &= 0 \quad 	ext{（连续性方程，不可压缩条件）}
 \end{aligned}
-ight.
+
+ight.
 \]  
 - **符号说明**：  
-  $\mathbf{u}(\mathbf{x},t)$ 为三维速度矢量场，$p(\mathbf{x},t)$ 为压强，$ho$ 为流体密度，$
+  $\mathbf{u}(\mathbf{x},t)$ 为三维速度矢量场，$p(\mathbf{x},t)$ 为压强，$
+ho$ 为流体密度，$
 u$ 为运动粘度，$\mathbf{f}$ 为单位质量外力，$
 abla$ 为梯度算子，$\Delta$ 为拉普拉斯算子。  
 - **复杂性**：非线性项 $(\mathbf{u} \cdot 
@@ -26,7 +29,8 @@ abla) \mathbf{u}$ 导致方程高度耦合，难以求得解析解，需依赖�
 ### 二、数论：黎曼ζ函数的函数方程
 黎曼ζ函数是解析数论的核心工具，其函数方程揭示了零点分布的对称性：  
 \[
-\zeta(s) = 2^s \pi^{s-1} \sin\left(\frac{\pi s}{2}ight) \Gamma(1-s) \zeta(1-s)
+\zeta(s) = 2^s \pi^{s-1} \sin\left(\frac{\pi s}{2}
+ight) \Gamma(1-s) \zeta(1-s)
 \]  
 - **背景**：  
   原始定义为 $\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s}$（$	ext{Re}(s) > 1$），通过解析延拓至整个复平面（除 $s=1$ 处的单极点）。  

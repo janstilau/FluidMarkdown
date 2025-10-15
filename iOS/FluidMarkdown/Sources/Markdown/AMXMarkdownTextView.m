@@ -363,18 +363,17 @@ static AMXMarkdownTextView* _caculateContentView;
     self.timer = nil;
 }
 - (void)timerRenderUI {
-    NSMutableAttributedString *attrStr = [self timerUpdateRenderAttrText];
-    self.markdownAttrStr = attrStr;
-    
-    __weak typeof(self) weakSelf = self;
-    if (attrStr.string.length > 0) {
-        [AMXMarkdownHelper setImageAttachListener:attrStr delegate:weakSelf];
-    }else {
-        NSLog(@"ignore for null attrStr");
-        return;
-    }
-    
     dispatch_async_on_main_queue(^{
+        NSMutableAttributedString *attrStr = [self timerUpdateRenderAttrText];
+        self.markdownAttrStr = attrStr;
+        
+        __weak typeof(self) weakSelf = self;
+        if (attrStr.string.length > 0) {
+            [AMXMarkdownHelper setImageAttachListener:attrStr delegate:weakSelf];
+        }else {
+            NSLog(@"ignore for null attrStr");
+            return;
+        }
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setAttributedTextPartialUpdate_ant_mark:attrStr animated:YES];
         [strongSelf updateSize];
