@@ -1,0 +1,454 @@
+概率论与数理统计测试
+本文档测试概率论、数理统计、随机过程等内容的LaTeX表示。
+
+# 概率论基础
+
+## 概率空间
+
+概率空间：$(\Omega, \mathcal{F}, P)$
+
+- 样本空间：$\Omega$
+- $\sigma$-代数：$\mathcal{F}$
+- 概率测度：$P: \mathcal{F} \to [0, 1]$
+
+## 概率公理
+
+柯尔莫哥洛夫公理：
+1. $P(A) \geq 0$ 对所有 $A \in \mathcal{F}$
+2. $P(\Omega) = 1$
+3. 对于可数个互不相交事件 $A_1, A_2, \ldots$：
+   $$P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$$
+
+## 条件概率
+
+$$P(A|B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
+
+乘法公式：$P(A \cap B) = P(A|B)P(B) = P(B|A)P(A)$
+
+全概率公式：
+$$P(A) = \sum_{i=1}^n P(A|B_i)P(B_i)$$
+
+其中 $\{B_1, B_2, \ldots, B_n\}$ 是 $\Omega$ 的一个分割
+
+## 贝叶斯定理
+
+$$P(B_i|A) = \frac{P(A|B_i)P(B_i)}{\sum_{j=1}^n P(A|B_j)P(B_j)}$$
+
+## 独立性
+
+事件独立：$P(A \cap B) = P(A)P(B)$
+
+条件独立：$P(A \cap B|C) = P(A|C)P(B|C)$
+
+# 随机变量
+
+## 分布函数
+
+累积分布函数：$F(x) = P(X \leq x)$
+
+性质：
+- 单调非递减
+- 右连续
+- $\lim_{x \to -\infty} F(x) = 0$，$\lim_{x \to +\infty} F(x) = 1$
+
+## 离散随机变量
+
+概率质量函数：$p(x) = P(X = x)$
+
+$$\sum_{x} p(x) = 1$$
+
+## 连续随机变量
+
+概率密度函数：$f(x)$，满足：
+$$F(x) = \int_{-\infty}^x f(t) dt$$
+
+$$\int_{-\infty}^{\infty} f(x) dx = 1$$
+
+$$P(a < X \leq b) = \int_a^b f(x) dx$$
+
+## 数学期望
+
+离散情况：$E[X] = \sum_{x} x \cdot p(x)$
+
+连续情况：$E[X] = \int_{-\infty}^{\infty} x f(x) dx$
+
+函数的期望：$E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) dx$
+
+## 方差
+
+$$\text{Var}(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2$$
+
+标准差：$\sigma = \sqrt{\text{Var}(X)}$
+
+## 矩
+
+$k$阶原点矩：$\mu_k' = E[X^k]$
+
+$k$阶中心矩：$\mu_k = E[(X - E[X])^k]$
+
+偏度：$\gamma_1 = \frac{\mu_3}{\sigma^3}$
+
+峰度：$\gamma_2 = \frac{\mu_4}{\sigma^4} - 3$
+
+## 矩生成函数
+
+$$M_X(t) = E[e^{tX}] = \int_{-\infty}^{\infty} e^{tx} f(x) dx$$
+
+性质：$\mu_k' = M_X^{(k)}(0)$
+
+## 特征函数
+
+$$\phi_X(t) = E[e^{itX}] = \int_{-\infty}^{\infty} e^{itx} f(x) dx$$
+
+逆变换：$f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \phi_X(t) e^{-itx} dt$
+
+# 常见分布
+
+## 离散分布
+
+### 伯努利分布
+
+$X \sim \text{Bernoulli}(p)$
+
+$$P(X = k) = p^k (1-p)^{1-k}, \quad k \in \{0, 1\}$$
+
+$E[X] = p$，$\text{Var}(X) = p(1-p)$
+
+### 二项分布
+
+$X \sim \text{Binomial}(n, p)$
+
+$$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
+
+$E[X] = np$，$\text{Var}(X) = np(1-p)$
+
+### 泊松分布
+
+$X \sim \text{Poisson}(\lambda)$
+
+$$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
+
+$E[X] = \lambda$，$\text{Var}(X) = \lambda$
+
+### 几何分布
+
+$X \sim \text{Geometric}(p)$
+
+$$P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
+
+$E[X] = \frac{1}{p}$，$\text{Var}(X) = \frac{1-p}{p^2}$
+
+### 负二项分布
+
+$X \sim \text{NegBinomial}(r, p)$
+
+$$P(X = k) = \binom{k+r-1}{k} p^r (1-p)^k, \quad k = 0, 1, 2, \ldots$$
+
+$E[X] = \frac{r(1-p)}{p}$，$\text{Var}(X) = \frac{r(1-p)}{p^2}$
+
+## 连续分布
+
+### 均匀分布
+
+$X \sim \text{Uniform}(a, b)$
+
+$$f(x) = \begin{cases}
+\frac{1}{b-a} & a \leq x \leq b \\
+0 & \text{其他}
+\end{cases}$$
+
+$E[X] = \frac{a+b}{2}$，$\text{Var}(X) = \frac{(b-a)^2}{12}$
+
+### 正态分布
+
+$X \sim \mathcal{N}(\mu, \sigma^2)$
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+
+$E[X] = \mu$，$\text{Var}(X) = \sigma^2$
+
+标准正态分布：$Z \sim \mathcal{N}(0, 1)$
+
+$$\phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$$
+
+$$\Phi(z) = \int_{-\infty}^z \phi(t) dt$$
+
+### 指数分布
+
+$X \sim \text{Exponential}(\lambda)$
+
+$$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
+
+$E[X] = \frac{1}{\lambda}$，$\text{Var}(X) = \frac{1}{\lambda^2}$
+
+无记忆性：$P(X > s+t | X > s) = P(X > t)$
+
+### 伽马分布
+
+$X \sim \text{Gamma}(\alpha, \beta)$
+
+$$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x > 0$$
+
+$E[X] = \frac{\alpha}{\beta}$，$\text{Var}(X) = \frac{\alpha}{\beta^2}$
+
+### 贝塔分布
+
+$X \sim \text{Beta}(\alpha, \beta)$
+
+$$f(x) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1}, \quad 0 < x < 1$$
+
+$E[X] = \frac{\alpha}{\alpha + \beta}$，$\text{Var}(X) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$
+
+### 卡方分布
+
+$X \sim \chi^2(n)$
+
+$$f(x) = \frac{1}{2^{n/2}\Gamma(n/2)} x^{n/2-1} e^{-x/2}, \quad x > 0$$
+
+$E[X] = n$，$\text{Var}(X) = 2n$
+
+### t分布
+
+$X \sim t(n)$
+
+$$f(x) = \frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)} \left(1 + \frac{x^2}{n}\right)^{-(n+1)/2}$$
+
+$E[X] = 0$ (当 $n > 1$)，$\text{Var}(X) = \frac{n}{n-2}$ (当 $n > 2$)
+
+### F分布
+
+$X \sim F(m, n)$
+
+$$f(x) = \frac{\Gamma((m+n)/2)}{\Gamma(m/2)\Gamma(n/2)} \left(\frac{m}{n}\right)^{m/2} \frac{x^{m/2-1}}{(1 + \frac{m}{n}x)^{(m+n)/2}}, \quad x > 0$$
+
+# 多元随机变量
+
+## 联合分布
+
+联合分布函数：$F(x, y) = P(X \leq x, Y \leq y)$
+
+联合密度函数：$f(x, y)$，满足：
+$$F(x, y) = \int_{-\infty}^x \int_{-\infty}^y f(u, v) dv du$$
+
+## 边际分布
+
+边际密度：
+$$f_X(x) = \int_{-\infty}^{\infty} f(x, y) dy$$
+$$f_Y(y) = \int_{-\infty}^{\infty} f(x, y) dx$$
+
+## 条件分布
+
+条件密度：
+$$f_{Y|X}(y|x) = \frac{f(x, y)}{f_X(x)}$$
+
+## 独立性
+
+随机变量独立：$f(x, y) = f_X(x) f_Y(y)$
+
+## 协方差和相关系数
+
+协方差：$\text{Cov}(X, Y) = E[(X - E[X])(Y - E[Y])] = E[XY] - E[X]E[Y]$
+
+相关系数：$\rho_{XY} = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}$
+
+## 多元正态分布
+
+$\vec{X} \sim \mathcal{N}(\vec{\mu}, \Sigma)$
+
+$$f(\vec{x}) = \frac{1}{(2\pi)^{k/2}|\Sigma|^{1/2}} \exp\left(-\frac{1}{2}(\vec{x} - \vec{\mu})^T \Sigma^{-1} (\vec{x} - \vec{\mu})\right)$$
+
+其中 $\vec{\mu}$ 是均值向量，$\Sigma$ 是协方差矩阵
+
+# 极限定理
+
+## 大数定律
+
+### 弱大数定律（辛钦定律）
+
+设 $X_1, X_2, \ldots$ 独立同分布，$E[X_i] = \mu$，则：
+$$\frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{P} \mu$$
+
+### 强大数定律
+
+$$P\left(\lim_{n \to \infty} \frac{1}{n}\sum_{i=1}^n X_i = \mu\right) = 1$$
+
+## 中心极限定理
+
+### 林德伯格-列维定理
+
+设 $X_1, X_2, \ldots$ 独立同分布，$E[X_i] = \mu$，$\text{Var}(X_i) = \sigma^2 < \infty$，则：
+$$\frac{\sum_{i=1}^n X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} \mathcal{N}(0, 1)$$
+
+### 棣莫弗-拉普拉斯定理
+
+设 $S_n \sim \text{Binomial}(n, p)$，则：
+$$\frac{S_n - np}{\sqrt{np(1-p)}} \xrightarrow{d} \mathcal{N}(0, 1)$$
+
+# 数理统计
+
+## 统计量
+
+设 $X_1, X_2, \ldots, X_n$ 是样本，统计量是样本的函数 $T = T(X_1, X_2, \ldots, X_n)$
+
+样本均值：$\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$
+
+样本方差：$S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2$
+
+样本标准差：$S = \sqrt{S^2}$
+
+## 抽样分布
+
+### 正态总体的抽样分布
+
+设 $X_1, \ldots, X_n \sim \mathcal{N}(\mu, \sigma^2)$
+
+1. $\bar{X} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right)$
+
+2. $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)$
+
+3. $\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t(n-1)$
+
+4. $\bar{X}$ 与 $S^2$ 相互独立
+
+## 参数估计
+
+### 点估计
+
+矩估计法：令样本矩等于总体矩
+$$\frac{1}{n}\sum_{i=1}^n X_i^k = E[X^k]$$
+
+最大似然估计：
+$$\hat{\theta} = \arg\max_\theta L(\theta) = \arg\max_\theta \prod_{i=1}^n f(x_i; \theta)$$
+
+对数似然：$\ell(\theta) = \ln L(\theta) = \sum_{i=1}^n \ln f(x_i; \theta)$
+
+似然方程：$\frac{\partial \ell(\theta)}{\partial \theta} = 0$
+
+### 估计量的性质
+
+无偏性：$E[\hat{\theta}] = \theta$
+
+有效性：在所有无偏估计中方差最小
+
+一致性：$\hat{\theta}_n \xrightarrow{P} \theta$
+
+### 克拉默-拉奥下界
+
+$$\text{Var}(\hat{\theta}) \geq \frac{1}{nI(\theta)}$$
+
+其中费雪信息：$I(\theta) = E\left[\left(\frac{\partial \ln f(X; \theta)}{\partial \theta}\right)^2\right]$
+
+### 区间估计
+
+置信区间：$P(\theta_L \leq \theta \leq \theta_U) = 1 - \alpha$
+
+正态总体均值的置信区间（$\sigma^2$ 已知）：
+$$\bar{X} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}$$
+
+正态总体均值的置信区间（$\sigma^2$ 未知）：
+$$\bar{X} \pm t_{\alpha/2}(n-1) \frac{S}{\sqrt{n}}$$
+
+## 假设检验
+
+### 基本概念
+
+原假设：$H_0$
+
+备择假设：$H_1$
+
+第一类错误：拒绝真的 $H_0$，概率为 $\alpha$
+
+第二类错误：接受假的 $H_0$，概率为 $\beta$
+
+功效：$1 - \beta$
+
+### 单个正态总体均值的检验
+
+$H_0: \mu = \mu_0$ vs $H_1: \mu \neq \mu_0$
+
+$\sigma^2$ 已知时，检验统计量：
+$$Z = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} \sim \mathcal{N}(0, 1)$$
+
+$\sigma^2$ 未知时，检验统计量：
+$$T = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \sim t(n-1)$$
+
+### 两个正态总体均值的检验
+
+$H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 \neq \mu_2$
+
+方差相等时：
+$$T = \frac{\bar{X}_1 - \bar{X}_2}{S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t(n_1 + n_2 - 2)$$
+
+其中合并方差：$S_p^2 = \frac{(n_1-1)S_1^2 + (n_2-1)S_2^2}{n_1 + n_2 - 2}$
+
+### 卡方检验
+
+拟合优度检验：
+$$\chi^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i} \sim \chi^2(k-1-r)$$
+
+其中 $O_i$ 是观测频数，$E_i$ 是期望频数，$r$ 是估计参数个数
+
+独立性检验：
+$$\chi^2 = \sum_{i=1}^r \sum_{j=1}^c \frac{(O_{ij} - E_{ij})^2}{E_{ij}} \sim \chi^2((r-1)(c-1))$$
+
+# 随机过程
+
+## 基本概念
+
+随机过程：$\{X(t), t \in T\}$
+
+状态空间：$S$
+
+参数集：$T$
+
+## 平稳过程
+
+严平稳：有限维分布不随时间平移而改变
+
+宽平稳（弱平稳）：
+- $E[X(t)] = \mu$（常数）
+- $\text{Cov}(X(s), X(t)) = R(|s-t|)$
+
+## 马尔可夫过程
+
+马尔可夫性：
+$$P(X_{n+1} = j | X_n = i, X_{n-1} = i_{n-1}, \ldots, X_0 = i_0) = P(X_{n+1} = j | X_n = i)$$
+
+转移概率：$p_{ij} = P(X_{n+1} = j | X_n = i)$
+
+转移矩阵：$P = (p_{ij})$
+
+$n$ 步转移概率：$p_{ij}^{(n)} = (P^n)_{ij}$
+
+## 泊松过程
+
+计数过程：$\{N(t), t \geq 0\}$
+
+泊松过程的性质：
+1. $N(0) = 0$
+2. 独立增量
+3. $N(t+s) - N(s) \sim \text{Poisson}(\lambda t)$
+
+到达时间间隔：$T_i \sim \text{Exponential}(\lambda)$
+
+## 布朗运动
+
+标准布朗运动 $\{B(t), t \geq 0\}$：
+1. $B(0) = 0$
+2. 独立增量
+3. $B(t) - B(s) \sim \mathcal{N}(0, t-s)$
+4. 路径连续
+
+几何布朗运动：$S(t) = S(0) e^{(\mu - \sigma^2/2)t + \sigma B(t)}$
+
+## 随机微分方程
+
+伊藤积分：$\int_0^t f(s) dB(s)$
+
+伊藤引理：若 $f(t, x)$ 二次可微，则：
+$$df(t, X(t)) = \frac{\partial f}{\partial t} dt + \frac{\partial f}{\partial x} dX(t) + \frac{1}{2} \frac{\partial^2 f}{\partial x^2} (dX(t))^2$$
+
+随机微分方程：$dX(t) = \mu(t, X(t)) dt + \sigma(t, X(t)) dB(t)$
+
+Black-Scholes方程：
+$$\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + rS\frac{\partial V}{\partial S} - rV = 0$$

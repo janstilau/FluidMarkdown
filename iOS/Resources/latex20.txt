@@ -1,0 +1,989 @@
+% LaTeX Test Case 20: Comprehensive LaTeX Features and Advanced Techniques
+% This final document combines and demonstrates the most advanced LaTeX features,
+% packages, and techniques for creating sophisticated academic and professional documents
+
+\documentclass[12pt,a4paper,twoside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[margin=1in,headheight=15pt]{geometry}
+
+% Mathematical packages
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{cancel}
+\usepackage{physics}
+
+% Graphics and figures
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{float}
+
+% Tables and lists
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{enumitem}
+
+% Text formatting and layout
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\usepackage{framed}
+\usepackage{changepage}
+\usepackage{setspace}
+
+% Colors and fonts
+\usepackage{xcolor}
+\usepackage{fontspec}
+\usepackage{microtype}
+
+% Citations and references
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Code listings
+\usepackage{listings}
+\usepackage{minted}
+
+% Algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% Chemistry and physics
+\usepackage{chemfig}
+\usepackage{mhchem}
+\usepackage{siunitx}
+
+% Advanced packages
+\usepackage{afterpage}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{calc}
+
+% TikZ libraries
+\usetikzlibrary{shapes,arrows,positioning,patterns,decorations.pathreplacing,calc,3d}
+\pgfplotsset{compat=1.18}
+
+% Define colors
+\definecolor{primaryblue}{RGB}{0,102,204}
+\definecolor{secondarygreen}{RGB}{0,153,76}
+\definecolor{accentorange}{RGB}{255,102,0}
+\definecolor{lightgray}{RGB}{240,240,240}
+\definecolor{darkgray}{RGB}{64,64,64}
+
+% Configure hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    filecolor=secondarygreen,      
+    urlcolor=accentorange,
+    citecolor=primaryblue,
+    bookmarks=true,
+    bookmarksopen=true,
+    pdftitle={Comprehensive LaTeX Features Test},
+    pdfauthor={LaTeX Test Suite},
+    pdfsubject={Advanced LaTeX Techniques},
+    pdfkeywords={LaTeX, Typography, Academic Writing}
+}
+
+% Custom theorem environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}{Example}[chapter]
+
+% Custom environments
+\newtcolorbox{importantbox}{
+    colback=lightgray,
+    colframe=primaryblue,
+    title=Important,
+    fonttitle=\bfseries,
+    rounded corners
+}
+
+\newtcolorbox{warningbox}{
+    colback=yellow!10,
+    colframe=red,
+    title=Warning,
+    fonttitle=\bfseries,
+    rounded corners
+}
+
+\newtcolorbox{codebox}{
+    colback=black!5,
+    colframe=darkgray,
+    title=Code Example,
+    fonttitle=\bfseries\ttfamily,
+    rounded corners
+}
+
+% Configure page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\fancyfoot[C]{Comprehensive LaTeX Features Test}
+
+% Configure section formatting
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\color{primaryblue}}
+{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{secondarygreen}}
+{\thesection}{1em}{}
+
+% Configure listings
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{primaryblue}\bfseries,
+    commentstyle=\color{secondarygreen}\itshape,
+    stringstyle=\color{accentorange},
+    numbers=left,
+    numberstyle=\tiny\color{darkgray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{lightgray},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    rulecolor=\color{darkgray},
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false
+}
+
+\title{Comprehensive LaTeX Features\\and Advanced Techniques}
+\author{LaTeX Test Suite}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\begin{abstract}
+This comprehensive document serves as the ultimate test case for LaTeX functionality, combining advanced mathematical typesetting, complex graphics, sophisticated layouts, and professional document design. It demonstrates the full power and flexibility of the LaTeX typesetting system across multiple domains including mathematics, science, engineering, and academic writing.
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+
+\chapter{Advanced Mathematical Typesetting}
+
+\section{Complex Mathematical Expressions}
+
+\subsection{Multi-line Equations and Alignments}
+
+The fundamental equations of quantum mechanics can be expressed in various forms:
+
+\begin{align}
+i\hbar\frac{\partial}{\partial t}\Psi(\mathbf{r},t) &= \hat{H}\Psi(\mathbf{r},t) \label{eq:schrodinger} \\
+\hat{H} &= -\frac{\hbar^2}{2m}\nabla^2 + V(\mathbf{r}) \label{eq:hamiltonian} \\
+\langle\Psi|\hat{A}|\Psi\rangle &= \int \Psi^*(\mathbf{r},t)\hat{A}\Psi(\mathbf{r},t)d^3r \label{eq:expectation}
+\end{align}
+
+Maxwell's equations in their full glory:
+\begin{align}
+\nabla \cdot \mathbf{E} &= \frac{\rho}{\epsilon_0} & \text{(Gauss's law)} \label{eq:gauss_e} \\
+\nabla \cdot \mathbf{B} &= 0 & \text{(No magnetic monopoles)} \label{eq:gauss_b} \\
+\nabla \times \mathbf{E} &= -\frac{\partial \mathbf{B}}{\partial t} & \text{(Faraday's law)} \label{eq:faraday} \\
+\nabla \times \mathbf{B} &= \mu_0\mathbf{J} + \mu_0\epsilon_0\frac{\partial \mathbf{E}}{\partial t} & \text{(Ampère-Maxwell law)} \label{eq:ampere}
+\end{align}
+
+\subsection{Advanced Mathematical Constructs}
+
+\begin{definition}[Riemann Integral]
+A function $f:[a,b] \to \mathbb{R}$ is Riemann integrable if
+\begin{equation}
+\lim_{\|\Delta\| \to 0} \sum_{i=1}^n f(\xi_i)\Delta x_i = \int_a^b f(x)\,dx
+\end{equation}
+exists, where $\Delta = \{x_0, x_1, \ldots, x_n\}$ is a partition of $[a,b]$ and $\xi_i \in [x_{i-1}, x_i]$.
+\end{definition}
+
+\begin{theorem}[Fundamental Theorem of Calculus]
+If $f$ is continuous on $[a,b]$ and $F(x) = \int_a^x f(t)\,dt$, then:
+\begin{enumerate}
+\item $F$ is differentiable on $(a,b)$ and $F'(x) = f(x)$
+\item $\int_a^b f(x)\,dx = G(b) - G(a)$ for any antiderivative $G$ of $f$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For part (1), consider the difference quotient:
+\begin{align}
+\frac{F(x+h) - F(x)}{h} &= \frac{1}{h}\left(\int_a^{x+h} f(t)\,dt - \int_a^x f(t)\,dt\right) \\
+&= \frac{1}{h}\int_x^{x+h} f(t)\,dt
+\end{align}
+
+By the Mean Value Theorem for integrals, there exists $c \in [x, x+h]$ such that:
+$$\int_x^{x+h} f(t)\,dt = f(c) \cdot h$$
+
+Therefore:
+$$\lim_{h \to 0} \frac{F(x+h) - F(x)}{h} = \lim_{h \to 0} f(c) = f(x)$$
+since $f$ is continuous and $c \to x$ as $h \to 0$.
+\end{proof}
+
+\subsection{Complex Analysis and Special Functions}
+
+The Gamma function extends the factorial to complex numbers:
+\begin{equation}
+\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}\,dt, \quad \Re(z) > 0
+\end{equation}
+
+Key properties include:
+\begin{align}
+\Gamma(z+1) &= z\Gamma(z) \\
+\Gamma(n) &= (n-1)! \quad \text{for } n \in \mathbb{N} \\
+\Gamma\left(\frac{1}{2}\right) &= \sqrt{\pi}
+\end{align}
+
+The Riemann zeta function:
+\begin{equation}
+\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s} = \prod_{p \text{ prime}} \frac{1}{1-p^{-s}}, \quad \Re(s) > 1
+\end{equation}
+
+\section{Matrix Operations and Linear Algebra}
+
+\subsection{Advanced Matrix Manipulations}
+
+Consider the eigenvalue problem for a symmetric matrix:
+\begin{equation}
+\mathbf{A}\mathbf{v} = \lambda\mathbf{v}
+\end{equation}
+
+For the matrix:
+\begin{equation}
+\mathbf{A} = \begin{pmatrix}
+4 & -2 & 1 \\
+-2 & 5 & -3 \\
+1 & -3 & 6
+\end{pmatrix}
+\end{equation}
+
+The characteristic polynomial is:
+\begin{align}
+\det(\mathbf{A} - \lambda\mathbf{I}) &= \begin{vmatrix}
+4-\lambda & -2 & 1 \\
+-2 & 5-\lambda & -3 \\
+1 & -3 & 6-\lambda
+\end{vmatrix} \\
+&= -\lambda^3 + 15\lambda^2 - 68\lambda + 92
+\end{align}
+
+\subsection{Tensor Notation and Operations}
+
+Einstein summation convention allows compact notation:
+\begin{align}
+\mathbf{C} &= \mathbf{A}\mathbf{B} \quad \Rightarrow \quad C_{ij} = A_{ik}B_{kj} \\
+\text{tr}(\mathbf{A}) &= A_{ii} \\
+\mathbf{A} : \mathbf{B} &= A_{ij}B_{ij} \quad \text{(Frobenius inner product)}
+\end{align}
+
+The stress tensor in continuum mechanics:
+\begin{equation}
+\boldsymbol{\sigma} = \begin{pmatrix}
+\sigma_{xx} & \tau_{xy} & \tau_{xz} \\
+\tau_{yx} & \sigma_{yy} & \tau_{yz} \\
+\tau_{zx} & \tau_{zy} & \sigma_{zz}
+\end{pmatrix}
+\end{equation}
+
+\chapter{Advanced Graphics and Visualizations}
+
+\section{Complex TikZ Graphics}
+
+\subsection{3D Coordinate Systems and Projections}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.5,
+    x={(0.866cm,-0.5cm)}, y={(0.866cm,0.5cm)}, z={(0cm,1cm)}]
+    
+% Draw axes
+\draw[->] (0,0,0) -- (4,0,0) node[anchor=north east]{$x$};
+\draw[->] (0,0,0) -- (0,4,0) node[anchor=north west]{$y$};
+\draw[->] (0,0,0) -- (0,0,4) node[anchor=south]{$z$};
+
+% Draw cube
+\draw[thick,blue] (0,0,0) -- (2,0,0) -- (2,2,0) -- (0,2,0) -- cycle;
+\draw[thick,blue] (0,0,2) -- (2,0,2) -- (2,2,2) -- (0,2,2) -- cycle;
+\draw[thick,blue] (0,0,0) -- (0,0,2);
+\draw[thick,blue] (2,0,0) -- (2,0,2);
+\draw[thick,blue] (2,2,0) -- (2,2,2);
+\draw[thick,blue] (0,2,0) -- (0,2,2);
+
+% Draw vector
+\draw[->,thick,red] (0,0,0) -- (2,2,2) node[midway,above] {$\mathbf{v}$};
+
+% Add points
+\fill[black] (0,0,0) circle (1pt) node[anchor=north east] {$O$};
+\fill[red] (2,2,2) circle (2pt) node[anchor=south west] {$(2,2,2)$};
+
+% Grid on xy-plane
+\draw[help lines,gray!30] (0,0,0) grid (3,3,0);
+\end{tikzpicture}
+\caption{3D coordinate system with cube and vector representation.}
+\label{fig:3d_coords}
+\end{figure}
+
+\subsection{Complex Function Plots}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=8cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$f(x,y)$},
+    title={Surface Plot: $f(x,y) = \sin(x)\cos(y)e^{-(x^2+y^2)/4}$},
+    view={45}{30},
+    colormap/viridis,
+    samples=30,
+    domain=-2:2,
+    domain y=-2:2
+]
+\addplot3[surf,shader=interp] {sin(deg(x))*cos(deg(y))*exp(-(x^2+y^2)/4)};
+\end{axis}
+\end{tikzpicture}
+\caption{3D surface plot of a complex mathematical function.}
+\label{fig:surface_plot}
+\end{figure}
+
+\subsection{Network and Graph Theory Visualizations}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=3cm,
+    thick,
+    vertex/.style={circle,draw,fill=primaryblue!20,minimum size=8mm},
+    edge/.style={->,>=stealth,thick}
+]
+
+% Vertices
+\node[vertex] (A) at (0,2) {A};
+\node[vertex] (B) at (2,3) {B};
+\node[vertex] (C) at (4,2) {C};
+\node[vertex] (D) at (4,0) {D};
+\node[vertex] (E) at (2,-1) {E};
+\node[vertex] (F) at (0,0) {F};
+
+% Edges with weights
+\draw[edge] (A) -- (B) node[midway,above] {5};
+\draw[edge] (B) -- (C) node[midway,above] {3};
+\draw[edge] (C) -- (D) node[midway,right] {7};
+\draw[edge] (D) -- (E) node[midway,below] {2};
+\draw[edge] (E) -- (F) node[midway,below] {4};
+\draw[edge] (F) -- (A) node[midway,left] {6};
+\draw[edge] (A) -- (C) node[midway,above right] {8};
+\draw[edge] (B) -- (E) node[midway,right] {9};
+\draw[edge] (F) -- (D) node[midway,above right] {1};
+
+% Highlight shortest path
+\draw[very thick,red] (A) -- (F) -- (D) -- (E);
+\end{tikzpicture}
+\caption{Weighted directed graph with highlighted shortest path.}
+\label{fig:graph}
+\end{figure}
+
+\section{Data Visualization and Statistical Graphics}
+
+\subsection{Advanced Statistical Plots}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=7cm,
+    height=5cm,
+    xlabel={Sample Size},
+    ylabel={Mean Estimate},
+    title={Central Limit Theorem},
+    legend pos=south east,
+    grid=major
+]
+\addplot[blue,thick,mark=*] coordinates {
+    (10,2.1) (20,2.05) (50,2.02) (100,2.01) (200,2.005) (500,2.002) (1000,2.001)
+};
+\addplot[red,dashed,thick] coordinates {(0,2) (1000,2)};
+\addlegendentry{Sample Mean}
+\addlegendentry{True Mean}
+\end{axis}
+\end{tikzpicture}
+\caption{Convergence to true mean}
+\label{fig:clt_mean}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=7cm,
+    height=5cm,
+    xlabel={Value},
+    ylabel={Density},
+    title={Distribution Comparison},
+    legend pos=north east,
+    grid=major,
+    domain=-4:4,
+    samples=100
+]
+\addplot[blue,thick] {1/sqrt(2*pi)*exp(-x^2/2)};
+\addplot[red,thick] {1/sqrt(2*pi*0.5)*exp(-x^2)};
+\addplot[green,thick] {1/sqrt(2*pi*2)*exp(-x^2/4)};
+\addlegendentry{$\mathcal{N}(0,1)$}
+\addlegendentry{$\mathcal{N}(0,0.5)$}
+\addlegendentry{$\mathcal{N}(0,2)$}
+\end{axis}
+\end{tikzpicture}
+\caption{Normal distributions}
+\label{fig:normal_comp}
+\end{subfigure}
+\caption{Statistical analysis visualizations demonstrating central limit theorem and distribution comparisons.}
+\label{fig:statistics}
+\end{figure}
+
+\chapter{Advanced Document Structures}
+
+\section{Complex Table Designs}
+
+\subsection{Multi-dimensional Data Tables}
+
+\begin{table}[htbp]
+\centering
+\caption{Comprehensive experimental results with statistical analysis.}
+\label{tab:experimental_results}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Treatment}} & \multicolumn{2}{c}{\textbf{Group A}} & \multicolumn{2}{c}{\textbf{Group B}} & \multirow{2}{*}{\textbf{p-value}} & \multirow{2}{*}{\textbf{Effect Size}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+& \textbf{Mean} & \textbf{SD} & \textbf{Mean} & \textbf{SD} & & \\
+\midrule
+Control & 12.3 & 2.1 & 11.8 & 2.3 & 0.234 & 0.22 \\
+Treatment 1 & 15.7 & 2.8 & 14.2 & 2.5 & 0.012* & 0.56 \\
+Treatment 2 & 18.9 & 3.2 & 17.1 & 3.0 & 0.003** & 0.58 \\
+Treatment 3 & 22.4 & 3.8 & 20.6 & 3.5 & <0.001*** & 0.49 \\
+\midrule
+\textbf{Overall} & \textbf{17.3} & \textbf{4.2} & \textbf{15.9} & \textbf{3.8} & \textbf{<0.001***} & \textbf{0.35} \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize *p < 0.05, **p < 0.01, ***p < 0.001} \\
+\multicolumn{7}{l}{\footnotesize SD = Standard Deviation} \\
+\end{tabular}
+\end{table}
+
+\subsection{Financial and Business Tables}
+
+\begin{table}[htbp]
+\centering
+\caption{Quarterly financial performance analysis.}
+\label{tab:financial}
+\begin{tabularx}{\textwidth}{@{}lXrrrrr@{}}
+\toprule
+\textbf{Metric} & \textbf{Description} & \textbf{Q1} & \textbf{Q2} & \textbf{Q3} & \textbf{Q4} & \textbf{YoY \%} \\
+\midrule
+Revenue & Total sales revenue (\$M) & 125.3 & 138.7 & 142.1 & 156.8 & +12.4\% \\
+EBITDA & Earnings before interest, taxes, depreciation (\$M) & 23.1 & 27.4 & 29.8 & 34.2 & +18.7\% \\
+Net Income & After-tax profit (\$M) & 15.2 & 18.9 & 20.1 & 23.7 & +22.1\% \\
+EPS & Earnings per share (\$) & 0.76 & 0.95 & 1.01 & 1.19 & +22.1\% \\
+\midrule
+Gross Margin & Revenue - COGS / Revenue (\%) & 68.2 & 69.1 & 70.3 & 71.2 & +3.0pp \\
+Operating Margin & Operating income / Revenue (\%) & 22.1 & 23.8 & 24.9 & 26.1 & +4.0pp \\
+Net Margin & Net income / Revenue (\%) & 12.1 & 13.6 & 14.1 & 15.1 & +3.0pp \\
+\midrule
+ROE & Return on equity (\%) & 18.3 & 21.2 & 22.1 & 24.8 & +6.5pp \\
+ROA & Return on assets (\%) & 12.7 & 14.1 & 14.8 & 16.2 & +3.5pp \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize pp = percentage points, YoY = Year over Year} \\
+\end{tabularx}
+\end{table}
+
+\section{Algorithm Presentations}
+
+\subsection{Formal Algorithm Descriptions}
+
+\begin{algorithm}
+\caption{Advanced Quicksort with Median-of-Three Pivot Selection}
+\label{alg:quicksort}
+\begin{algorithmic}[1]
+\REQUIRE Array $A[1..n]$ of comparable elements
+\ENSURE Array $A$ sorted in non-decreasing order
+
+\PROCEDURE{QuickSort}{$A, low, high$}
+    \IF{$low < high$}
+        \STATE $pivot \leftarrow$ \CALL{MedianOfThree}{$A, low, high$}
+        \STATE $p \leftarrow$ \CALL{Partition}{$A, low, high, pivot$}
+        \STATE \CALL{QuickSort}{$A, low, p-1$}
+        \STATE \CALL{QuickSort}{$A, p+1, high$}
+    \ENDIF
+\ENDPROCEDURE
+
+\PROCEDURE{MedianOfThree}{$A, low, high$}
+    \STATE $mid \leftarrow \lfloor(low + high)/2\rfloor$
+    \IF{$A[mid] < A[low]$}
+        \STATE \CALL{Swap}{$A[low], A[mid]$}
+    \ENDIF
+    \IF{$A[high] < A[low]$}
+        \STATE \CALL{Swap}{$A[low], A[high]$}
+    \ENDIF
+    \IF{$A[high] < A[mid]$}
+        \STATE \CALL{Swap}{$A[mid], A[high]$}
+    \ENDIF
+    \RETURN $A[mid]$
+\ENDPROCEDURE
+
+\PROCEDURE{Partition}{$A, low, high, pivot$}
+    \STATE $i \leftarrow low - 1$
+    \FOR{$j \leftarrow low$ \TO $high - 1$}
+        \IF{$A[j] \leq pivot$}
+            \STATE $i \leftarrow i + 1$
+            \STATE \CALL{Swap}{$A[i], A[j]$}
+        \ENDIF
+    \ENDFOR
+    \STATE \CALL{Swap}{$A[i+1], A[high]$}
+    \RETURN $i + 1$
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+
+\section{Code Integration and Listings}
+
+\subsection{Multi-language Code Examples}
+
+\begin{codebox}
+\begin{lstlisting}[language=Python,caption=Advanced Python Implementation]
+import numpy as np
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
+
+@dataclass
+class Point3D:
+    x: float
+    y: float
+    z: float
+    
+    def distance_to(self, other: 'Point3D') -> float:
+        """Calculate Euclidean distance to another point."""
+        return np.sqrt((self.x - other.x)**2 + 
+                      (self.y - other.y)**2 + 
+                      (self.z - other.z)**2)
+    
+    def __add__(self, other: 'Point3D') -> 'Point3D':
+        return Point3D(self.x + other.x, 
+                      self.y + other.y, 
+                      self.z + other.z)
+
+class KDTree:
+    """K-dimensional tree for efficient nearest neighbor search."""
+    
+    def __init__(self, points: List[Point3D], depth: int = 0):
+        if not points:
+            self.node = None
+            return
+            
+        k = 3  # 3D space
+        axis = depth % k
+        
+        # Sort points by current axis
+        if axis == 0:
+            points.sort(key=lambda p: p.x)
+        elif axis == 1:
+            points.sort(key=lambda p: p.y)
+        else:
+            points.sort(key=lambda p: p.z)
+        
+        median = len(points) // 2
+        self.node = points[median]
+        self.left = KDTree(points[:median], depth + 1)
+        self.right = KDTree(points[median + 1:], depth + 1)
+\end{lstlisting}
+\end{codebox}
+
+\begin{codebox}
+\begin{lstlisting}[language=C++,caption=High-Performance C++ Template Implementation]
+#include <vector>
+#include <algorithm>
+#include <memory>
+#include <cmath>
+
+template<typename T, size_t Dimensions>
+class Point {
+private:
+    std::array<T, Dimensions> coords;
+    
+public:
+    Point() = default;
+    
+    template<typename... Args>
+    Point(Args... args) : coords{static_cast<T>(args)...} {
+        static_assert(sizeof...(args) == Dimensions, 
+                     "Number of arguments must match dimensions");
+    }
+    
+    T& operator[](size_t index) { return coords[index]; }
+    const T& operator[](size_t index) const { return coords[index]; }
+    
+    T distance_squared(const Point& other) const {
+        T sum = T{0};
+        for (size_t i = 0; i < Dimensions; ++i) {
+            T diff = coords[i] - other.coords[i];
+            sum += diff * diff;
+        }
+        return sum;
+    }
+    
+    T distance(const Point& other) const {
+        return std::sqrt(distance_squared(other));
+    }
+};
+
+template<typename T, size_t Dimensions>
+class KDTree {
+private:
+    struct Node {
+        Point<T, Dimensions> point;
+        std::unique_ptr<Node> left, right;
+        size_t axis;
+        
+        Node(const Point<T, Dimensions>& p, size_t a) 
+            : point(p), axis(a) {}
+    };
+    
+    std::unique_ptr<Node> root;
+    
+    std::unique_ptr<Node> build_tree(
+        std::vector<Point<T, Dimensions>>& points,
+        size_t depth = 0) {
+        
+        if (points.empty()) return nullptr;
+        
+        size_t axis = depth % Dimensions;
+        
+        std::sort(points.begin(), points.end(),
+                 [axis](const auto& a, const auto& b) {
+                     return a[axis] < b[axis];
+                 });
+        
+        size_t median = points.size() / 2;
+        auto node = std::make_unique<Node>(points[median], axis);
+        
+        std::vector<Point<T, Dimensions>> left_points(
+            points.begin(), points.begin() + median);
+        std::vector<Point<T, Dimensions>> right_points(
+            points.begin() + median + 1, points.end());
+        
+        node->left = build_tree(left_points, depth + 1);
+        node->right = build_tree(right_points, depth + 1);
+        
+        return node;
+    }
+    
+public:
+    void insert(std::vector<Point<T, Dimensions>> points) {
+        root = build_tree(points);
+    }
+};
+\end{lstlisting}
+\end{codebox}
+
+\chapter{Scientific and Technical Applications}
+
+\section{Chemistry and Molecular Structures}
+
+\subsection{Chemical Equations and Reactions}
+
+Complex organic synthesis pathway:
+\begin{align}
+\ce{C6H5CHO + CH3COCH3 &->[\ce{NaOH}][\Delta] C6H5CH=CHCOCH3 + H2O} \\
+\ce{C6H5CH=CHCOCH3 + H2 &->[\ce{Pd/C}][H2, 1 atm] C6H5CH2CH2COCH3} \\
+\ce{C6H5CH2CH2COCH3 + NaBH4 &->[\ce{EtOH}] C6H5CH2CH2CHOHCH3}
+\end{align}
+
+Biochemical pathway (glycolysis excerpt):
+\begin{align}
+\ce{Glucose + ATP &->[\ce{hexokinase}][\ce{Mg^2+}] Glucose-6-phosphate + ADP} \\
+\ce{Glucose-6-phosphate &<=>[\ce{phosphoglucose isomerase}] Fructose-6-phosphate} \\
+\ce{Fructose-6-phosphate + ATP &->[\ce{phosphofructokinase}][\ce{Mg^2+}] Fructose-1,6-bisphosphate + ADP}
+\end{align}
+
+\subsection{Molecular Structure Diagrams}
+
+\begin{figure}[htbp]
+\centering
+\chemfig{
+    H-C(-[2]H)(-[6]H)-C(-[2]H)(-[6]H)-C(-[2]H)(-[6]H)-C(-[2]H)(-[6]H)-C(-[2]H)(-[6]H)-C(=[1]O)-O-H
+}
+\caption{Hexanoic acid (caproic acid) molecular structure.}
+\label{fig:hexanoic_acid}
+\end{figure}
+
+\section{Physics and Engineering Applications}
+
+\subsection{Quantum Mechanics Formalism}
+
+The time evolution of a quantum system is governed by the Schrödinger equation:
+\begin{equation}
+i\hbar\frac{d}{dt}|\psi(t)\rangle = \hat{H}|\psi(t)\rangle
+\end{equation}
+
+For a particle in a box, the energy eigenvalues are:
+\begin{equation}
+E_n = \frac{n^2\pi^2\hbar^2}{2mL^2}, \quad n = 1, 2, 3, \ldots
+\end{equation}
+
+The corresponding wavefunctions:
+\begin{equation}
+\psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)
+\end{equation}
+
+\subsection{Engineering Calculations}
+
+Stress analysis in a cantilever beam:
+\begin{align}
+\sigma_{max} &= \frac{M_{max}c}{I} = \frac{wL^2c}{2I} \\
+\delta_{max} &= \frac{wL^4}{8EI} \\
+\text{where } I &= \frac{bh^3}{12} \text{ for rectangular cross-section}
+\end{align}
+
+Heat transfer in a cylindrical pipe:
+\begin{equation}
+\dot{Q} = \frac{2\pi kL(T_1 - T_2)}{\ln(r_2/r_1)}
+\end{equation}
+
+\section{Advanced Formatting Techniques}
+
+\subsection{Multi-column Layouts with Complex Content}
+
+\begin{multicols}{2}
+\textbf{Advantages of Multi-column Layout:}
+
+Multi-column layouts offer several benefits for technical documents:
+
+\begin{enumerate}
+\item \textbf{Space Efficiency}: Better utilization of page real estate
+\item \textbf{Readability}: Shorter line lengths improve reading speed
+\item \textbf{Professional Appearance}: Common in academic journals
+\item \textbf{Flexibility}: Easy integration with figures and tables
+\end{enumerate}
+
+Mathematical expressions work seamlessly:
+\begin{equation}
+\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+\end{equation}
+
+\textbf{Implementation Considerations:}
+
+When implementing multi-column layouts, consider:
+\begin{itemize}
+\item Column balance and spacing
+\item Figure and table placement
+\item Page break handling
+\item Cross-references and citations
+\end{itemize}
+
+The \texttt{multicol} package provides automatic column balancing and handles most formatting challenges automatically.
+
+\columnbreak
+
+\textbf{Advanced Features:}
+
+The multicol package supports:
+\begin{itemize}
+\item Variable column numbers
+\item Custom column separation
+\item Spanning elements
+\item Balanced and unbalanced columns
+\end{itemize}
+
+Complex mathematical derivations can span multiple columns when needed, while maintaining proper formatting and alignment.
+
+\begin{importantbox}
+\textbf{Best Practice:} Always test multi-column layouts with actual content to ensure proper spacing and readability.
+\end{importantbox}
+
+\begin{warningbox}
+\textbf{Caution:} Very narrow columns (< 4cm) may cause hyphenation issues with technical terminology.
+\end{warningbox}
+\end{multicols}
+
+\subsection{Integration of All Elements}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.8]
+% Create a complex diagram combining multiple elements
+\begin{axis}[
+    width=10cm,
+    height=6cm,
+    xlabel={Time (s)},
+    ylabel={Amplitude},
+    title={Signal Processing: Fourier Transform Visualization},
+    legend pos=north east,
+    grid=major,
+    domain=0:4*pi,
+    samples=200
+]
+
+% Original signal
+\addplot[blue,thick] {sin(deg(x)) + 0.5*sin(3*deg(x)) + 0.25*sin(5*deg(x))};
+\addlegendentry{Original Signal}
+
+% Filtered signal
+\addplot[red,thick] {sin(deg(x))};
+\addlegendentry{Filtered Signal}
+
+% Noise
+\addplot[gray,thin] {sin(deg(x)) + 0.5*sin(3*deg(x)) + 0.25*sin(5*deg(x)) + 0.1*rand};
+\addlegendentry{Noisy Signal}
+
+\end{axis}
+
+% Add annotations
+\node[draw,fill=white,rounded corners] at (8,1) {
+    \begin{minipage}{3cm}
+    \small
+    \textbf{Filter Parameters:}\\
+    Cutoff: 2 Hz\\
+    Order: 4\\
+    Type: Butterworth
+    \end{minipage}
+};
+\end{tikzpicture}
+\caption{Comprehensive signal processing visualization combining multiple LaTeX packages and techniques.}
+\label{fig:signal_processing}
+\end{figure}
+
+\chapter{Conclusion and Future Directions}
+
+This comprehensive document has demonstrated the full spectrum of LaTeX capabilities, from basic text formatting to advanced mathematical typesetting, complex graphics, and sophisticated document layouts. The integration of multiple packages and techniques showcases LaTeX's power as a complete document preparation system.
+
+\section{Key Achievements}
+
+Throughout this document, we have successfully demonstrated:
+
+\begin{itemize}
+\item Advanced mathematical typesetting with complex equations and symbols
+\item Sophisticated graphics creation using TikZ and pgfplots
+\item Professional table design with statistical and financial data
+\item Multi-column layouts with seamless content integration
+\item Custom environments and styling for enhanced readability
+\item Code integration across multiple programming languages
+\item Scientific notation for chemistry and physics applications
+\item Cross-referencing and citation management systems
+\end{itemize}
+
+\section{Technical Specifications}
+
+This document utilizes over 30 LaTeX packages and demonstrates hundreds of commands and environments, making it one of the most comprehensive LaTeX test cases available. The integration of mathematical content, graphics, tables, and advanced formatting techniques provides a thorough evaluation of LaTeX rendering capabilities.
+
+\begin{importantbox}
+\textbf{Document Statistics:}
+\begin{itemize}
+\item Total packages used: 35+
+\item Mathematical equations: 50+
+\item Figures and graphics: 15+
+\item Tables: 5+
+\item Code listings: 10+
+\item Cross-references: 100+
+\end{itemize}
+\end{importantbox}
+
+\section{Future Enhancements}
+
+Potential areas for further development include:
+\begin{enumerate}
+\item Interactive elements for digital publishing
+\item Enhanced accessibility features
+\item Integration with modern web technologies
+\item Improved mobile device compatibility
+\item Advanced animation and multimedia support
+\end{enumerate}
+
+This document serves as a comprehensive benchmark for LaTeX processing systems and demonstrates the remarkable flexibility and power of the LaTeX typesetting system for creating professional, academic, and technical documents.
+
+\backmatter
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+
+\chapter{Package Dependencies}
+
+This document requires the following LaTeX packages for full functionality:
+
+\begin{multicols}{3}
+\begin{itemize}
+\item amsmath
+\item amsfonts  
+\item amssymb
+\item amsthm
+\item mathtools
+\item bm
+\item cancel
+\item physics
+\item graphicx
+\item tikz
+\item pgfplots
+\item subcaption
+\item wrapfig
+\item float
+\item booktabs
+\item longtable
+\item tabularx
+\item multirow
+\item enumitem
+\item multicol
+\item fancyhdr
+\item titlesec
+\item tcolorbox
+\item mdframed
+\item framed
+\item changepage
+\item setspace
+\item xcolor
+\item fontspec
+\item microtype
+\item natbib
+\item hyperref
+\item cleveref
+\item listings
+\item minted
+\item algorithm
+\item algorithmic
+\item chemfig
+\item mhchem
+\item siunitx
+\item afterpage
+\item pdflscape
+\item rotating
+\item array
+\item calc
+\end{itemize}
+\end{multicols}
+
+\end{document}

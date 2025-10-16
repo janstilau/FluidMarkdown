@@ -1,0 +1,101 @@
+基础数学表达式和符号测试
+本文档测试基本的数学表达式、上下标、分数、根号等基础LaTeX数学功能。
+
+# 基本数学表达式
+
+行内数学：这是一个简单的方程 $x + y = z$，以及 $a^2 + b^2 = c^2$。
+
+块级数学表达式：
+$$E = mc^2$$
+
+$$\sum_{i=1}^{n} x_i = x_1 + x_2 + \cdots + x_n$$
+
+# 上标和下标
+
+上标：$x^2$, $e^{-x}$, $2^{10}$, $x^{y^z}$
+
+下标：$x_1$, $a_{ij}$, $\log_2 x$, $x_{i,j}$
+
+组合：$x_1^2$, $a_{i,j}^{(k)}$, $\sum_{i=1}^{\infty} \frac{1}{i^2}$
+
+# 分数
+
+简单分数：$\frac{1}{2}$, $\frac{a}{b}$, $\frac{x+1}{x-1}$
+
+复杂分数：$\frac{\frac{a}{b}}{\frac{c}{d}} = \frac{ad}{bc}$
+
+连分数：$\frac{1}{1+\frac{1}{1+\frac{1}{1+\cdots}}}$
+
+# 根号
+
+平方根：$\sqrt{2}$, $\sqrt{x+y}$, $\sqrt{\frac{a}{b}}$
+
+n次根：$\sqrt[3]{8}$, $\sqrt[n]{x}$, $\sqrt[4]{\frac{x^2+1}{y}}$
+
+嵌套根号：$\sqrt{1+\sqrt{2+\sqrt{3}}}$
+
+# 基本运算符
+
+加减乘除：$a + b - c \times d \div e$
+
+点乘：$\vec{a} \cdot \vec{b}$
+
+叉乘：$\vec{a} \times \vec{b}$
+
+正负号：$\pm$, $\mp$
+
+# 比较符号
+
+等号：$=$, $\neq$, $\equiv$, $\approx$, $\cong$
+
+不等号：$<$, $>$, $\leq$, $\geq$, $\ll$, $\gg$
+
+包含关系：$\subset$, $\supset$, $\subseteq$, $\supseteq$
+
+# 希腊字母
+
+小写：$\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\zeta$, $\eta$, $\theta$, $\iota$, $\kappa$, $\lambda$, $\mu$, $\nu$, $\xi$, $\pi$, $\rho$, $\sigma$, $\tau$, $\upsilon$, $\phi$, $\chi$, $\psi$, $\omega$
+
+大写：$\Alpha$, $\Beta$, $\Gamma$, $\Delta$, $\Epsilon$, $\Zeta$, $\Eta$, $\Theta$, $\Iota$, $\Kappa$, $\Lambda$, $\Mu$, $\Nu$, $\Xi$, $\Pi$, $\Rho$, $\Sigma$, $\Tau$, $\Upsilon$, $\Phi$, $\Chi$, $\Psi$, $\Omega$
+
+变体：$\varepsilon$, $\vartheta$, $\varpi$, $\varrho$, $\varsigma$, $\varphi$
+
+# 特殊符号
+
+无穷：$\infty$
+
+偏导数：$\partial$
+
+梯度：$\nabla$
+
+积分：$\int$, $\iint$, $\iiint$
+
+求和：$\sum$, $\prod$
+
+极限：$\lim$
+
+# 函数
+
+三角函数：$\sin x$, $\cos x$, $\tan x$, $\cot x$, $\sec x$, $\csc x$
+
+反三角函数：$\arcsin x$, $\arccos x$, $\arctan x$
+
+双曲函数：$\sinh x$, $\cosh x$, $\tanh x$
+
+对数函数：$\log x$, $\ln x$, $\lg x$
+
+指数函数：$\exp x$
+
+# 复杂表达式示例
+
+二次公式：
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+欧拉公式：
+$$e^{i\pi} + 1 = 0$$
+
+泰勒级数：
+$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n$$
+
+积分示例：
+$$\int_0^{\infty} e^{-x^2} dx = \frac{\sqrt{\pi}}{2}$$

@@ -39,7 +39,7 @@ static AMXMarkdownTextView* _caculateContentView;
         // 这是一个串行队列. 这个 Queue 主要是用于这个 TextView 的内部 Timer.
         self.queue = dispatch_queue_create("AMXMarkdownWidget", DISPATCH_QUEUE_SERIAL);
         // typingSpeed 表示多久更新一次 UI, 内容是不断地可以拼接的, 但是显示有着固定的频率, 不会
-        self.typingSpeed = 0.025;
+        self.typingSpeed = 0.05;
         self.chunkSize = 1;
         self.cacheImgDic = NSMutableDictionary.new;
         self.state = AMXMarkdownPrintStateInitial;

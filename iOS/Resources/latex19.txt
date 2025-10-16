@@ -1,0 +1,463 @@
+% LaTeX Test Case 19: Advanced Document Layouts and Page Design
+% This document tests multi-column layouts, page design elements,
+% advanced formatting, custom page layouts, and complex document structures
+
+\documentclass[11pt,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in,headheight=14pt]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\usepackage{framed}
+\usepackage{changepage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{minipage}
+
+% Configure fancy headers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\fancyfoot[C]{Advanced Document Layouts Test}
+
+% Custom section formatting
+\titleformat{\section}
+{\Large\bfseries\color{blue}}
+{\thesection}{1em}{}
+[\titlerule]
+
+\titleformat{\subsection}
+{\large\bfseries\color{red}}
+{\thesubsection}{1em}{}
+
+% Define custom colors
+\definecolor{lightblue}{RGB}{173,216,230}
+\definecolor{lightgreen}{RGB}{144,238,144}
+\definecolor{lightyellow}{RGB}{255,255,224}
+\definecolor{lightgray}{RGB}{211,211,211}
+
+% Custom environments
+\newenvironment{important}
+{\begin{tcolorbox}[colback=lightyellow,colframe=orange,title=Important]}
+{\end{tcolorbox}}
+
+\newenvironment{note}
+{\begin{mdframed}[backgroundcolor=lightblue,linecolor=blue]}
+{\end{mdframed}}
+
+\title{Advanced Document Layouts and Page Design}
+\author{LaTeX Test Suite}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document demonstrates advanced layout techniques in LaTeX, including multi-column text, custom page designs, specialized environments, and complex document structures. It showcases various methods for creating professional-looking documents with sophisticated formatting.
+\end{abstract}
+
+\tableofcontents
+
+\section{Multi-Column Layouts}
+
+\subsection{Basic Two-Column Layout}
+
+\begin{multicols}{2}
+Multi-column layouts are essential for many document types, particularly newspapers, magazines, and academic journals. The multicol package provides flexible column management with automatic balancing.
+
+This text flows naturally across columns, with LaTeX handling the column breaks automatically. The package ensures that columns are balanced in height when possible, creating a professional appearance.
+
+Column breaks can be forced using specific commands, and the spacing between columns can be adjusted. The package also handles figures and tables that span multiple columns.
+
+Mathematical expressions work seamlessly in multi-column environments:
+\begin{equation}
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+\end{equation}
+
+Lists and other environments are also supported:
+\begin{itemize}
+\item First item in multi-column list
+\item Second item with longer text that may wrap
+\item Third item demonstrating flow
+\end{itemize}
+
+The multicol package automatically handles page breaks and ensures that content flows smoothly from one page to the next while maintaining column balance.
+\end{multicols}
+
+\subsection{Three-Column Layout}
+
+\begin{multicols}{3}
+Three-column layouts are commonly used in newsletters, brochures, and reference materials. The narrower columns require careful attention to hyphenation and word spacing.
+
+Short paragraphs work best in narrow columns. Long words may cause spacing issues, so hyphenation becomes more important.
+
+Mathematical notation:
+$f(x) = x^2 + 2x + 1$
+
+Bullet points:
+• Item one
+• Item two  
+• Item three
+
+The key to successful three-column layout is maintaining readability while maximizing information density.
+
+Column separation can be adjusted using \texttt{\textbackslash columnsep} to improve readability and visual appeal.
+
+Figures and tables require special consideration in narrow columns, often needing to span multiple columns for clarity.
+\end{multicols}
+
+\section{Custom Page Layouts}
+
+\subsection{Adjusting Margins and Spacing}
+
+\begin{adjustwidth}{2cm}{1cm}
+This paragraph demonstrates adjusted margins using the changepage package. The left margin is increased by 2cm and the right margin by 1cm, creating an indented block of text.
+
+This technique is useful for:
+\begin{itemize}
+\item Highlighting important sections
+\item Creating visual hierarchy
+\item Formatting quotes or excerpts
+\item Separating different types of content
+\end{itemize}
+
+The adjustwidth environment can be nested and combined with other formatting elements to create sophisticated layouts.
+\end{adjustwidth}
+
+\subsection{Colored Backgrounds and Frames}
+
+\begin{tcolorbox}[colback=lightgreen,colframe=green,title=Success Message]
+This is an example of a colored box with a title. The tcolorbox package provides extensive customization options for creating attractive information boxes, warnings, and highlighted content.
+
+Features include:
+\begin{itemize}
+\item Customizable colors for background and border
+\item Optional titles and subtitles
+\item Rounded corners and shadow effects
+\item Breakable boxes that span pages
+\item Integration with mathematical content
+\end{itemize}
+\end{tcolorbox}
+
+\begin{important}
+This uses a custom environment defined in the preamble. Custom environments allow for consistent formatting throughout the document and easy modification of styles.
+\end{important}
+
+\begin{note}
+This note environment uses the mdframed package for a different styling approach. Both packages offer unique advantages for different design requirements.
+\end{note}
+
+\section{Advanced Text Formatting}
+
+\subsection{Drop Caps and Special Initials}
+
+\lettrine{T}{his paragraph} demonstrates a drop cap (lettrine) at the beginning. Drop caps are traditional typographic elements used to mark the beginning of chapters or important sections in books and magazines.
+
+The lettrine package provides various options for customizing the appearance of drop caps, including size, font, and positioning relative to the surrounding text.
+
+\subsection{Text in Boxes and Frames}
+
+\fbox{\parbox{0.8\textwidth}{
+This text is contained within a framed box using the \texttt{\textbackslash fbox} and \texttt{\textbackslash parbox} commands. This technique is useful for creating callout boxes, sidebars, or highlighting important information.
+
+The box width can be adjusted, and the content can include multiple paragraphs, lists, and even mathematical expressions like $E = mc^2$.
+}}
+
+\vspace{1em}
+
+\begin{framed}
+The framed environment provides another approach to boxing content. It automatically handles page breaks and provides consistent spacing around the framed content.
+
+This environment is particularly useful for:
+\begin{enumerate}
+\item Code listings
+\item Important definitions
+\item Theorems and proofs
+\item Exercise problems
+\end{enumerate}
+\end{framed}
+
+\section{Complex Layout Examples}
+
+\subsection{Mixed Column and Full-Width Content}
+
+\begin{multicols}{2}
+This section demonstrates mixing multi-column text with full-width elements. The text flows in two columns, but we can break out of the column format for special content.
+
+Regular paragraph text continues in the two-column format, maintaining readability while maximizing space usage. Mathematical expressions and lists work normally within the column environment.
+
+\columnbreak
+
+The \texttt{\textbackslash columnbreak} command forces a column break at a specific point, allowing for manual control over column content distribution when automatic balancing isn't sufficient.
+
+This is particularly useful when you need to align content across columns or when you have content that works better with manual positioning.
+\end{multicols}
+
+\begin{tcolorbox}[colback=lightgray,colframe=black,width=\textwidth,title=Full-Width Information Box]
+This box spans the full width of the page, breaking out of the multi-column format. It's useful for:
+\begin{itemize}
+\item Important announcements
+\item Section summaries
+\item Tables or figures that need full width
+\item Transition elements between sections
+\end{itemize}
+\end{tcolorbox}
+
+\begin{multicols}{2}
+After the full-width element, we return to the two-column format. The transition is seamless, and the text continues to flow naturally.
+
+This flexibility allows for sophisticated document layouts that combine the space efficiency of multi-column text with the impact of full-width elements when needed.
+\end{multicols}
+
+\subsection{Sidebar Layouts}
+
+\begin{minipage}[t]{0.7\textwidth}
+This demonstrates a sidebar layout using minipage environments. The main content occupies 70\% of the page width, while the sidebar takes the remaining 30\%.
+
+This layout is common in:
+\begin{itemize}
+\item Academic papers with margin notes
+\item Technical documentation
+\item Newsletters and magazines
+\item Instructional materials
+\end{itemize}
+
+The minipage environment ensures that content is properly aligned and that page breaks are handled correctly.
+
+Mathematical content works normally:
+\begin{equation}
+\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+\end{equation}
+
+Lists and other environments are fully supported within the minipage structure.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.25\textwidth}
+\begin{tcolorbox}[colback=lightyellow,colframe=orange,title=Sidebar]
+\small
+This sidebar contains supplementary information, definitions, or related content that supports the main text.
+
+\textbf{Key Points:}
+\begin{itemize}
+\item Flexible width
+\item Independent formatting
+\item Synchronized with main content
+\end{itemize}
+
+\textbf{Formula:}
+$a^2 + b^2 = c^2$
+
+\textbf{Note:}
+Sidebars can contain any LaTeX content including figures, tables, and complex formatting.
+\end{tcolorbox}
+\end{minipage}
+
+\section{Specialized Environments}
+
+\subsection{Theorem-like Environments with Custom Styling}
+
+\begin{tcolorbox}[colback=lightblue,colframe=blue,title=Theorem 1]
+\textbf{Fundamental Theorem of Calculus:} If $f$ is continuous on $[a,b]$ and $F$ is an antiderivative of $f$ on $[a,b]$, then:
+$$\int_a^b f(x) \, dx = F(b) - F(a)$$
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=lightgreen,colframe=green,title=Proof]
+Let $F(x) = \int_a^x f(t) \, dt$. By the definition of the derivative:
+$$F'(x) = \lim_{h \to 0} \frac{F(x+h) - F(x)}{h} = \lim_{h \to 0} \frac{1}{h} \int_x^{x+h} f(t) \, dt$$
+
+By the Mean Value Theorem for integrals, there exists $c \in [x, x+h]$ such that:
+$$\int_x^{x+h} f(t) \, dt = f(c) \cdot h$$
+
+Therefore: $F'(x) = \lim_{h \to 0} f(c) = f(x)$ (since $f$ is continuous).
+\end{tcolorbox}
+
+\subsection{Code Listings with Custom Formatting}
+
+\begin{tcolorbox}[colback=black,coltext=white,title=Python Code Example]
+\texttt{\small
+def fibonacci(n):\\
+\hspace{1em}if n <= 1:\\
+\hspace{2em}return n\\
+\hspace{1em}else:\\
+\hspace{2em}return fibonacci(n-1) + fibonacci(n-2)\\
+\\
+\# Calculate first 10 Fibonacci numbers\\
+for i in range(10):\\
+\hspace{1em}print(f"F(\{i\}) = \{fibonacci(i)\}")
+}
+\end{tcolorbox}
+
+\section{Page Design Elements}
+
+\subsection{Headers and Footers}
+
+This document uses the fancyhdr package to create custom headers and footers. The headers show:
+\begin{itemize}
+\item Page numbers on the outer edges
+\item Section names on the left pages (even pages)
+\item Subsection names on the right pages (odd pages)
+\end{itemize}
+
+The footer contains a consistent document identifier across all pages.
+
+\subsection{Section Formatting}
+
+Custom section formatting has been applied using the titlesec package:
+\begin{itemize}
+\item Sections use large blue text with underlines
+\item Subsections use medium red text
+\item Custom spacing and alignment
+\end{itemize}
+
+\section{Landscape and Rotated Content}
+
+\afterpage{
+\clearpage
+\begin{landscape}
+\section*{Landscape Page Example}
+
+This page is in landscape orientation, useful for wide tables, large figures, or content that benefits from horizontal layout.
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Month} & \textbf{Jan} & \textbf{Feb} & \textbf{Mar} & \textbf{Apr} & \textbf{May} & \textbf{Jun} & \textbf{Jul} & \textbf{Aug} & \textbf{Sep} & \textbf{Oct} \\
+\hline
+Sales (\$000) & 125 & 138 & 142 & 156 & 168 & 175 & 182 & 178 & 165 & 159 \\
+\hline
+Growth (\%) & -- & 10.4 & 2.9 & 9.9 & 7.7 & 4.2 & 4.0 & -2.2 & -7.3 & -3.6 \\
+\hline
+Target (\$000) & 120 & 135 & 140 & 150 & 165 & 170 & 180 & 175 & 160 & 155 \\
+\hline
+Variance & +5 & +3 & +2 & +6 & +3 & +5 & +2 & +3 & +5 & +4 \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{2cm}
+
+\begin{multicols}{3}
+Even in landscape orientation, multi-column layouts work effectively. This allows for efficient use of the increased horizontal space while maintaining readability.
+
+The landscape environment automatically handles page breaks and ensures that the rotated content is properly positioned within the document flow.
+
+Mathematical expressions continue to work normally in landscape mode:
+$$\int_0^{2\pi} \sin^2(x) \, dx = \pi$$
+
+Lists and other formatting elements are fully supported:
+\begin{enumerate}
+\item First landscape item
+\item Second landscape item
+\item Third landscape item
+\end{enumerate}
+
+Complex layouts can be created by combining landscape orientation with other formatting techniques demonstrated in this document.
+
+The key advantage of landscape pages is the ability to present wide content without compromising readability or requiring font size reduction.
+\end{multicols}
+
+\end{landscape}
+\clearpage
+}
+
+\section{Advanced Spacing and Alignment}
+
+\subsection{Vertical Spacing Control}
+
+Normal paragraph spacing is used here for comparison.
+
+\vspace{2cm}
+
+This paragraph has 2cm of vertical space above it, demonstrating explicit spacing control.
+
+\vspace{1cm}
+
+Smaller spacing (1cm) creates different visual relationships between content blocks.
+
+\subsection{Horizontal Alignment Variations}
+
+\begin{center}
+This text is centered using the center environment. It's useful for titles, important statements, or content that benefits from symmetric positioning.
+\end{center}
+
+\begin{flushright}
+This text is right-aligned using the flushright environment. Right alignment is less common but can be effective for signatures, dates, or special emphasis.
+\end{flushright}
+
+\begin{flushleft}
+This text is explicitly left-aligned using the flushleft environment. While left alignment is the default, the explicit environment can be useful in certain contexts or when overriding other alignment settings.
+\end{flushleft}
+
+\section{Integration Examples}
+
+\subsection{Combining Multiple Techniques}
+
+\begin{tcolorbox}[colback=lightyellow,colframe=orange,title=Complex Layout Example]
+\begin{multicols}{2}
+This example combines multiple layout techniques:
+\begin{itemize}
+\item Colored background box
+\item Multi-column text within the box
+\item Mathematical expressions: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$
+\item Custom formatting and spacing
+\end{itemize}
+
+The combination creates sophisticated layouts suitable for professional documents, educational materials, and technical publications.
+
+\columnbreak
+
+The second column continues the content while maintaining the visual coherence of the overall design. This approach allows for maximum flexibility in document layout while ensuring readability and professional appearance.
+
+Complex mathematical expressions work seamlessly:
+\begin{align}
+\nabla^2 \phi &= 0 \\
+\frac{\partial^2 \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} &= 0
+\end{align}
+\end{multicols}
+\end{tcolorbox}
+
+\subsection{Responsive Design Principles}
+
+While LaTeX is primarily designed for print, many of the layout principles demonstrated here translate to responsive design concepts:
+
+\begin{itemize}
+\item Flexible column layouts adapt to different page sizes
+\item Consistent spacing creates visual rhythm
+\item Hierarchical formatting guides reader attention
+\item Balanced content distribution improves readability
+\end{itemize}
+
+\section{Conclusion}
+
+This document has demonstrated advanced layout techniques in LaTeX, including:
+
+\begin{multicols}{2}
+\begin{itemize}
+\item Multi-column text layouts
+\item Custom page designs and margins
+\item Colored backgrounds and frames
+\item Complex environment combinations
+\item Specialized formatting for different content types
+\item Integration of multiple layout techniques
+\end{itemize}
+
+These techniques enable the creation of professional, visually appealing documents that effectively communicate complex information while maintaining readability and aesthetic appeal.
+
+The flexibility of LaTeX's layout system allows for virtually unlimited customization while ensuring consistent, high-quality output across different document types and purposes.
+\end{multicols}
+
+\end{document}

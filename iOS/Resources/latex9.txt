@@ -1,0 +1,379 @@
+微分方程和数学建模测试
+本文档测试常微分方程、偏微分方程、数学建模中的LaTeX表示。
+
+# 常微分方程基础
+
+## 基本概念
+
+微分方程的一般形式：
+$$F(x, y, y', y'', \ldots, y^{(n)}) = 0$$
+
+阶数：方程中出现的最高阶导数的阶数
+
+线性微分方程：关于$y$及其各阶导数是线性的
+
+齐次方程：不含自由项的线性方程
+
+## 一阶微分方程
+
+### 可分离变量方程
+
+$$\frac{dy}{dx} = f(x)g(y)$$
+
+分离变量：$\frac{dy}{g(y)} = f(x)dx$
+
+积分：$\int \frac{dy}{g(y)} = \int f(x)dx + C$
+
+### 齐次方程
+
+$$\frac{dy}{dx} = f\left(\frac{y}{x}\right)$$
+
+令$v = \frac{y}{x}$，则$y = vx$，$\frac{dy}{dx} = v + x\frac{dv}{dx}$
+
+方程变为：$v + x\frac{dv}{dx} = f(v)$
+
+即：$x\frac{dv}{dx} = f(v) - v$
+
+### 一阶线性方程
+
+$$\frac{dy}{dx} + P(x)y = Q(x)$$
+
+积分因子：$\mu(x) = e^{\int P(x)dx}$
+
+通解：$y = \frac{1}{\mu(x)}\left[\int \mu(x)Q(x)dx + C\right]$
+
+### 伯努利方程
+
+$$\frac{dy}{dx} + P(x)y = Q(x)y^n$$
+
+令$v = y^{1-n}$，方程化为线性方程：
+$$\frac{dv}{dx} + (1-n)P(x)v = (1-n)Q(x)$$
+
+### 全微分方程
+
+$$M(x,y)dx + N(x,y)dy = 0$$
+
+可积条件：$\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$
+
+存在函数$u(x,y)$使得：$du = M dx + N dy$
+
+通解：$u(x,y) = C$
+
+## 高阶线性微分方程
+
+### 二阶齐次线性方程
+
+$$y'' + p(x)y' + q(x)y = 0$$
+
+如果$y_1, y_2$是两个线性无关解，则通解为：
+$$y = C_1 y_1 + C_2 y_2$$
+
+朗斯基行列式：
+$$W(y_1, y_2) = \begin{vmatrix}
+y_1 & y_2 \\
+y_1' & y_2'
+\end{vmatrix} = y_1 y_2' - y_1' y_2$$
+
+### 常系数齐次线性方程
+
+$$ay'' + by' + cy = 0$$
+
+特征方程：$ar^2 + br + c = 0$
+
+判别式：$\Delta = b^2 - 4ac$
+
+通解形式：
+- $\Delta > 0$：$y = C_1 e^{r_1 x} + C_2 e^{r_2 x}$
+- $\Delta = 0$：$y = (C_1 + C_2 x)e^{rx}$
+- $\Delta < 0$：$y = e^{\alpha x}(C_1 \cos\beta x + C_2 \sin\beta x)$
+
+其中$r_{1,2} = \frac{-b \pm \sqrt{\Delta}}{2a}$，$\alpha = -\frac{b}{2a}$，$\beta = \frac{\sqrt{-\Delta}}{2a}$
+
+### 非齐次线性方程
+
+$$y'' + py' + qy = f(x)$$
+
+通解 = 齐次方程通解 + 非齐次方程特解
+
+$$y = y_h + y_p$$
+
+### 常数变易法
+
+设齐次方程通解为$y_h = C_1 y_1 + C_2 y_2$
+
+令特解$y_p = u_1(x)y_1 + u_2(x)y_2$
+
+其中$u_1, u_2$满足：
+$$\begin{cases}
+u_1' y_1 + u_2' y_2 = 0 \\
+u_1' y_1' + u_2' y_2' = f(x)
+\end{cases}$$
+
+解得：
+$$u_1' = -\frac{y_2 f(x)}{W}, \quad u_2' = \frac{y_1 f(x)}{W}$$
+
+### 待定系数法
+
+对于特殊形式的$f(x)$，可设特解的形式：
+
+- $f(x) = P_n(x)$：设$y_p = x^k Q_n(x)$
+- $f(x) = e^{\alpha x} P_n(x)$：设$y_p = x^k e^{\alpha x} Q_n(x)$
+- $f(x) = e^{\alpha x}[P_n(x)\cos\beta x + R_m(x)\sin\beta x]$：设$y_p = x^k e^{\alpha x}[Q_l(x)\cos\beta x + S_l(x)\sin\beta x]$
+
+其中$k$是$\alpha$（或$\alpha \pm i\beta$）作为特征根的重数，$l = \max\{n, m\}$
+
+## 微分方程组
+
+### 线性微分方程组
+
+$$\frac{d\vec{x}}{dt} = A\vec{x} + \vec{f}(t)$$
+
+其中$\vec{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}$，$A$是$n \times n$常数矩阵
+
+### 齐次线性方程组
+
+$$\frac{d\vec{x}}{dt} = A\vec{x}$$
+
+如果$A$有$n$个线性无关的特征向量，则通解为：
+$$\vec{x} = \sum_{i=1}^n C_i \vec{v}_i e^{\lambda_i t}$$
+
+其中$\lambda_i$是特征值，$\vec{v}_i$是对应的特征向量
+
+### 复特征值情况
+
+设$\lambda = \alpha \pm i\beta$，对应特征向量$\vec{v} = \vec{u} \pm i\vec{w}$
+
+则实解为：
+$$\vec{x}_1 = e^{\alpha t}(\vec{u}\cos\beta t - \vec{w}\sin\beta t)$$
+$$\vec{x}_2 = e^{\alpha t}(\vec{w}\cos\beta t + \vec{u}\sin\beta t)$$
+
+# 偏微分方程
+
+## 基本概念
+
+偏微分方程的一般形式：
+$$F(x, y, u, u_x, u_y, u_{xx}, u_{xy}, u_{yy}, \ldots) = 0$$
+
+阶数：方程中出现的最高阶偏导数的阶数
+
+线性：关于$u$及其偏导数是线性的
+
+## 一阶偏微分方程
+
+### 线性一阶偏微分方程
+
+$$a(x,y)u_x + b(x,y)u_y = c(x,y,u)$$
+
+特征方程：$\frac{dx}{a} = \frac{dy}{b} = \frac{du}{c}$
+
+### 拟线性方程
+
+$$a(x,y,u)u_x + b(x,y,u)u_y = c(x,y,u)$$
+
+## 二阶线性偏微分方程
+
+一般形式：
+$$Au_{xx} + Bu_{xy} + Cu_{yy} + Du_x + Eu_y + Fu = G$$
+
+分类（根据判别式$\Delta = B^2 - 4AC$）：
+- $\Delta > 0$：双曲型
+- $\Delta = 0$：抛物型  
+- $\Delta < 0$：椭圆型
+
+## 典型方程
+
+### 波动方程（双曲型）
+
+$$\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}$$
+
+达朗贝尔解：
+$$u(x,t) = \frac{1}{2}[f(x+ct) + f(x-ct)] + \frac{1}{2c}\int_{x-ct}^{x+ct} g(s)ds$$
+
+其中$f(x) = u(x,0)$，$g(x) = u_t(x,0)$
+
+### 热传导方程（抛物型）
+
+$$\frac{\partial u}{\partial t} = k \frac{\partial^2 u}{\partial x^2}$$
+
+分离变量解：
+$$u(x,t) = \sum_{n=1}^{\infty} A_n e^{-k\lambda_n^2 t} \sin\left(\frac{n\pi x}{L}\right)$$
+
+### 拉普拉斯方程（椭圆型）
+
+$$\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0$$
+
+极坐标形式：
+$$\frac{\partial^2 u}{\partial r^2} + \frac{1}{r}\frac{\partial u}{\partial r} + \frac{1}{r^2}\frac{\partial^2 u}{\partial \theta^2} = 0$$
+
+## 分离变量法
+
+设$u(x,t) = X(x)T(t)$，代入偏微分方程：
+
+对于热传导方程：
+$$\frac{T'}{kT} = \frac{X''}{X} = -\lambda$$
+
+得到：
+$$T' + k\lambda T = 0$$
+$$X'' + \lambda X = 0$$
+
+## 傅里叶级数解法
+
+### 傅里叶级数
+
+$$f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left(a_n \cos\frac{n\pi x}{L} + b_n \sin\frac{n\pi x}{L}\right)$$
+
+系数：
+$$a_n = \frac{1}{L}\int_{-L}^L f(x)\cos\frac{n\pi x}{L}dx$$
+$$b_n = \frac{1}{L}\int_{-L}^L f(x)\sin\frac{n\pi x}{L}dx$$
+
+### 复数形式
+
+$$f(x) = \sum_{n=-\infty}^{\infty} c_n e^{in\pi x/L}$$
+
+其中：$c_n = \frac{1}{2L}\int_{-L}^L f(x)e^{-in\pi x/L}dx$
+
+## 格林函数法
+
+### 格林第一恒等式
+
+$$\int_V (u\nabla^2 v + \nabla u \cdot \nabla v) dV = \oint_S u \frac{\partial v}{\partial n} dS$$
+
+### 格林第二恒等式
+
+$$\int_V (u\nabla^2 v - v\nabla^2 u) dV = \oint_S \left(u \frac{\partial v}{\partial n} - v \frac{\partial u}{\partial n}\right) dS$$
+
+### 格林函数
+
+满足：$\nabla^2 G(\vec{r}, \vec{r}') = -\delta(\vec{r} - \vec{r}')$
+
+泊松方程$\nabla^2 u = -f$的解：
+$$u(\vec{r}) = \int_V G(\vec{r}, \vec{r}') f(\vec{r}') dV'$$
+
+# 数学建模
+
+## 人口增长模型
+
+### 马尔萨斯模型
+
+$$\frac{dP}{dt} = rP$$
+
+解：$P(t) = P_0 e^{rt}$
+
+### 逻辑增长模型
+
+$$\frac{dP}{dt} = rP\left(1 - \frac{P}{K}\right)$$
+
+解：$P(t) = \frac{K}{1 + \left(\frac{K}{P_0} - 1\right)e^{-rt}}$
+
+## 传染病模型
+
+### SIR模型
+
+$$\frac{dS}{dt} = -\beta SI$$
+$$\frac{dI}{dt} = \beta SI - \gamma I$$
+$$\frac{dR}{dt} = \gamma I$$
+
+其中$S + I + R = N$（总人口）
+
+基本再生数：$R_0 = \frac{\beta N}{\gamma}$
+
+## 捕食者-被捕食者模型
+
+### Lotka-Volterra方程
+
+$$\frac{dx}{dt} = ax - bxy$$
+$$\frac{dy}{dt} = -cy + dxy$$
+
+其中$x$是被捕食者数量，$y$是捕食者数量
+
+守恒量：$H = d x + b y - c \ln x - a \ln y$
+
+## 化学反应动力学
+
+### 一级反应
+
+$$\frac{d[A]}{dt} = -k[A]$$
+
+解：$[A](t) = [A]_0 e^{-kt}$
+
+### 二级反应
+
+$$\frac{d[A]}{dt} = -k[A]^2$$
+
+解：$\frac{1}{[A](t)} = \frac{1}{[A]_0} + kt$
+
+### 可逆反应
+
+$$A \rightleftharpoons B$$
+
+$$\frac{d[A]}{dt} = -k_1[A] + k_2[B]$$
+
+平衡常数：$K = \frac{k_1}{k_2} = \frac{[B]_{eq}}{[A]_{eq}}$
+
+## 物理中的微分方程
+
+### 简谐振动
+
+$$m\frac{d^2x}{dt^2} + kx = 0$$
+
+解：$x(t) = A\cos(\omega t + \phi)$，其中$\omega = \sqrt{\frac{k}{m}}$
+
+### 阻尼振动
+
+$$m\frac{d^2x}{dt^2} + c\frac{dx}{dt} + kx = 0$$
+
+特征方程：$mr^2 + cr + k = 0$
+
+判别式：$\Delta = c^2 - 4mk$
+
+- 过阻尼（$\Delta > 0$）：$x = C_1 e^{r_1 t} + C_2 e^{r_2 t}$
+- 临界阻尼（$\Delta = 0$）：$x = (C_1 + C_2 t)e^{-ct/2m}$
+- 欠阻尼（$\Delta < 0$）：$x = e^{-ct/2m}(C_1 \cos\omega_d t + C_2 \sin\omega_d t)$
+
+其中$\omega_d = \frac{\sqrt{4mk - c^2}}{2m}$
+
+### 受迫振动
+
+$$m\frac{d^2x}{dt^2} + c\frac{dx}{dt} + kx = F_0 \cos\omega t$$
+
+稳态解：$x_p = A\cos(\omega t - \phi)$
+
+其中：
+$$A = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega^2)^2 + (2\gamma\omega)^2}}$$
+
+$$\tan\phi = \frac{2\gamma\omega}{\omega_0^2 - \omega^2}$$
+
+$\omega_0 = \sqrt{k/m}$，$\gamma = c/(2m)$
+
+## 经济学中的微分方程
+
+### 索洛增长模型
+
+$$\frac{dk}{dt} = sf(k) - (n + \delta)k$$
+
+其中$k$是人均资本，$s$是储蓄率，$n$是人口增长率，$\delta$是折旧率
+
+### 价格调整模型
+
+$$\frac{dp}{dt} = \alpha[D(p) - S(p)]$$
+
+其中$D(p)$是需求函数，$S(p)$是供给函数，$\alpha > 0$是调整速度
+
+## 数值方法
+
+### 欧拉方法
+
+$$y_{n+1} = y_n + hf(x_n, y_n)$$
+
+### 改进欧拉方法
+
+$$y_{n+1} = y_n + \frac{h}{2}[f(x_n, y_n) + f(x_{n+1}, y_n + hf(x_n, y_n))]$$
+
+### 龙格-库塔方法
+
+四阶龙格-库塔：
+$$k_1 = hf(x_n, y_n)$$
+$$k_2 = hf(x_n + h/2, y_n + k_1/2)$$
+$$k_3 = hf(x_n + h/2, y_n + k_2/2)$$
+$$k_4 = hf(x_n + h, y_n + k_3)$$
+$$y_{n+1} = y_n + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4)$$

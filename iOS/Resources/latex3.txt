@@ -1,0 +1,214 @@
+集合论、逻辑和离散数学测试
+本文档测试集合论符号、逻辑运算符、离散数学结构等LaTeX功能。
+
+# 集合论
+
+## 基本集合符号
+
+空集：$\emptyset$ 或 $\varnothing$
+
+自然数集：$\mathbb{N}$
+
+整数集：$\mathbb{Z}$
+
+有理数集：$\mathbb{Q}$
+
+实数集：$\mathbb{R}$
+
+复数集：$\mathbb{C}$
+
+## 集合关系
+
+属于：$x \in A$
+
+不属于：$x \notin A$
+
+包含：$A \subset B$, $A \subseteq B$
+
+真包含：$A \subsetneq B$
+
+不包含：$A \not\subset B$
+
+## 集合运算
+
+并集：$A \cup B$
+
+交集：$A \cap B$
+
+差集：$A \setminus B$ 或 $A - B$
+
+补集：$A^c$ 或 $\overline{A}$
+
+对称差：$A \triangle B = (A \setminus B) \cup (B \setminus A)$
+
+笛卡尔积：$A \times B$
+
+## 集合的表示
+
+列举法：$A = \{1, 2, 3, 4, 5\}$
+
+描述法：$B = \{x \mid x \in \mathbb{R}, x^2 < 4\}$
+
+区间表示：$[a, b]$, $(a, b)$, $[a, b)$, $(a, b]$
+
+无穷区间：$(-\infty, a]$, $[a, +\infty)$, $(-\infty, +\infty)$
+
+# 逻辑符号
+
+## 命题逻辑
+
+否定：$\neg p$ 或 $\lnot p$
+
+合取（与）：$p \land q$
+
+析取（或）：$p \lor q$
+
+蕴含：$p \rightarrow q$ 或 $p \Rightarrow q$
+
+等价：$p \leftrightarrow q$ 或 $p \Leftrightarrow q$
+
+异或：$p \oplus q$
+
+## 谓词逻辑
+
+全称量词：$\forall x \in D, P(x)$
+
+存在量词：$\exists x \in D, P(x)$
+
+唯一存在：$\exists! x \in D, P(x)$
+
+## 逻辑等价
+
+德摩根定律：
+$$\neg(p \land q) \equiv \neg p \lor \neg q$$
+$$\neg(p \lor q) \equiv \neg p \land \neg q$$
+
+分配律：
+$$p \land (q \lor r) \equiv (p \land q) \lor (p \land r)$$
+$$p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$$
+
+# 数论
+
+## 整除性
+
+整除：$a \mid b$（读作"a整除b"）
+
+不整除：$a \nmid b$
+
+最大公约数：$\gcd(a, b)$ 或 $(a, b)$
+
+最小公倍数：$\text{lcm}(a, b)$ 或 $[a, b]$
+
+## 同余
+
+同余关系：$a \equiv b \pmod{n}$
+
+不同余：$a \not\equiv b \pmod{n}$
+
+## 素数
+
+素数集合：$\mathbb{P} = \{2, 3, 5, 7, 11, 13, \ldots\}$
+
+算术基本定理：
+$$n = p_1^{a_1} p_2^{a_2} \cdots p_k^{a_k}$$
+
+# 组合数学
+
+## 排列组合
+
+排列：$P(n, r) = \frac{n!}{(n-r)!}$
+
+组合：$C(n, r) = \binom{n}{r} = \frac{n!}{r!(n-r)!}$
+
+二项式定理：
+$$(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k$$
+
+## 递推关系
+
+斐波那契数列：
+$$F_n = F_{n-1} + F_{n-2}, \quad F_0 = 0, F_1 = 1$$
+
+卡塔兰数：
+$$C_n = \frac{1}{n+1}\binom{2n}{n} = \frac{(2n)!}{(n+1)!n!}$$
+
+# 图论
+
+## 基本概念
+
+顶点集：$V(G)$
+
+边集：$E(G)$
+
+度数：$\deg(v)$
+
+握手定理：
+$$\sum_{v \in V} \deg(v) = 2|E|$$
+
+## 特殊图
+
+完全图：$K_n$
+
+完全二部图：$K_{m,n}$
+
+路径图：$P_n$
+
+环图：$C_n$
+
+## 图的性质
+
+连通性：图$G$是连通的当且仅当任意两个顶点之间都存在路径
+
+欧拉路径：存在欧拉路径当且仅当图连通且恰有0个或2个奇度顶点
+
+哈密顿路径：经过每个顶点恰好一次的路径
+
+# 概率论基础
+
+## 基本概念
+
+样本空间：$\Omega$
+
+事件：$A \subseteq \Omega$
+
+概率：$P(A)$，满足：
+- $P(\Omega) = 1$
+- $P(A) \geq 0$
+- $P(A \cup B) = P(A) + P(B)$（当$A \cap B = \emptyset$时）
+
+## 条件概率
+
+条件概率：$P(A|B) = \frac{P(A \cap B)}{P(B)}$
+
+贝叶斯定理：
+$$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$$
+
+## 独立性
+
+事件独立：$P(A \cap B) = P(A)P(B)$
+
+# 抽象代数预览
+
+## 群论
+
+群$(G, \cdot)$满足：
+- 封闭性：$\forall a, b \in G, a \cdot b \in G$
+- 结合律：$(a \cdot b) \cdot c = a \cdot (b \cdot c)$
+- 单位元：$\exists e \in G, \forall a \in G, e \cdot a = a \cdot e = a$
+- 逆元：$\forall a \in G, \exists a^{-1} \in G, a \cdot a^{-1} = a^{-1} \cdot a = e$
+
+## 环和域
+
+环$(R, +, \cdot)$是一个加法群，乘法满足结合律和分配律
+
+域是一个交换环，其中每个非零元素都有乘法逆元
+
+# 拓扑学基础
+
+开集：$U \subseteq X$是开集
+
+闭集：$F \subseteq X$是闭集
+
+邻域：点$x$的邻域$N(x)$
+
+连续函数：$f: X \to Y$在点$x_0$连续当且仅当
+$$\forall \epsilon > 0, \exists \delta > 0, d(x, x_0) < \delta \Rightarrow d(f(x), f(x_0)) < \epsilon$$

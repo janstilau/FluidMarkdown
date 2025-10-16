@@ -1,0 +1,706 @@
+% LaTeX Test Case 15: Code Listings and Verbatim Environments
+% This document tests various code display environments including verbatim, listings,
+% algorithm environments, and different programming language syntax highlighting
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{fancyvrb}
+
+% Define colors for syntax highlighting
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Configure listings package
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Code Listings and Verbatim Environments Test}
+\author{LaTeX Test Suite}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic Verbatim Environment}
+
+The \texttt{verbatim} environment preserves all formatting, spaces, and special characters:
+
+\begin{verbatim}
+This is verbatim text where
+    all formatting is preserved
+    including   multiple spaces
+Special characters: $%#&{}^_~\
+LaTeX commands are not processed: \textbf{bold}
+Code example:
+    for i in range(10):
+        print(f"Number: {i}")
+\end{verbatim}
+
+\section{Inline Verbatim}
+
+Inline verbatim text can be created with \verb|\verb| command: \verb|$special#characters%| and \verb|printf("Hello, World!\n");|
+
+Alternative delimiters: \verb+\textbf{not bold}+ and \verb*|spaces are visible|
+
+\section{Python Code Examples}
+
+\subsection{Basic Python Functions}
+
+\begin{lstlisting}[language=Python, caption=Factorial Function]
+def factorial(n):
+    """
+    Calculate the factorial of a non-negative integer.
+    
+    Args:
+        n (int): Non-negative integer
+        
+    Returns:
+        int: Factorial of n
+    """
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    elif n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+# Test the function
+for i in range(6):
+    print(f"{i}! = {factorial(i)}")
+\end{lstlisting}
+
+\subsection{Object-Oriented Python}
+
+\begin{lstlisting}[language=Python, caption=Binary Search Tree Implementation]
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+    
+    def insert(self, val):
+        """Insert a value into the BST."""
+        if not self.root:
+            self.root = TreeNode(val)
+        else:
+            self._insert_recursive(self.root, val)
+    
+    def _insert_recursive(self, node, val):
+        if val < node.val:
+            if node.left is None:
+                node.left = TreeNode(val)
+            else:
+                self._insert_recursive(node.left, val)
+        elif val > node.val:
+            if node.right is None:
+                node.right = TreeNode(val)
+            else:
+                self._insert_recursive(node.right, val)
+    
+    def search(self, val):
+        """Search for a value in the BST."""
+        return self._search_recursive(self.root, val)
+    
+    def _search_recursive(self, node, val):
+        if node is None or node.val == val:
+            return node
+        
+        if val < node.val:
+            return self._search_recursive(node.left, val)
+        else:
+            return self._search_recursive(node.right, val)
+    
+    def inorder_traversal(self):
+        """Return inorder traversal of the BST."""
+        result = []
+        self._inorder_recursive(self.root, result)
+        return result
+    
+    def _inorder_recursive(self, node, result):
+        if node:
+            self._inorder_recursive(node.left, result)
+            result.append(node.val)
+            self._inorder_recursive(node.right, result)
+
+# Example usage
+bst = BinarySearchTree()
+values = [50, 30, 70, 20, 40, 60, 80]
+for val in values:
+    bst.insert(val)
+
+print("Inorder traversal:", bst.inorder_traversal())
+print("Search for 40:", bst.search(40) is not None)
+print("Search for 90:", bst.search(90) is not None)
+\end{lstlisting}
+
+\section{C++ Code Examples}
+
+\subsection{Template Programming}
+
+\begin{lstlisting}[language=C++, caption=Generic Stack Implementation]
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+
+template<typename T>
+class Stack {
+private:
+    std::vector<T> elements;
+
+public:
+    // Push element onto stack
+    void push(const T& element) {
+        elements.push_back(element);
+    }
+    
+    // Pop element from stack
+    void pop() {
+        if (empty()) {
+            throw std::runtime_error("Stack is empty");
+        }
+        elements.pop_back();
+    }
+    
+    // Get top element
+    T& top() {
+        if (empty()) {
+            throw std::runtime_error("Stack is empty");
+        }
+        return elements.back();
+    }
+    
+    const T& top() const {
+        if (empty()) {
+            throw std::runtime_error("Stack is empty");
+        }
+        return elements.back();
+    }
+    
+    // Check if stack is empty
+    bool empty() const {
+        return elements.empty();
+    }
+    
+    // Get stack size
+    size_t size() const {
+        return elements.size();
+    }
+};
+
+// Example usage
+int main() {
+    Stack<int> intStack;
+    Stack<std::string> stringStack;
+    
+    // Test integer stack
+    intStack.push(10);
+    intStack.push(20);
+    intStack.push(30);
+    
+    std::cout << "Integer stack size: " << intStack.size() << std::endl;
+    std::cout << "Top element: " << intStack.top() << std::endl;
+    
+    intStack.pop();
+    std::cout << "After pop, top element: " << intStack.top() << std::endl;
+    
+    // Test string stack
+    stringStack.push("Hello");
+    stringStack.push("World");
+    
+    std::cout << "String stack top: " << stringStack.top() << std::endl;
+    
+    return 0;
+}
+\end{lstlisting}
+
+\section{JavaScript Code Examples}
+
+\begin{lstlisting}[language=JavaScript, caption=Asynchronous Programming with Promises]
+// Promise-based HTTP client
+class HttpClient {
+    constructor(baseURL = '') {
+        this.baseURL = baseURL;
+    }
+    
+    async get(url, options = {}) {
+        try {
+            const response = await fetch(this.baseURL + url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                ...options
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error('GET request failed:', error);
+            throw error;
+        }
+    }
+    
+    async post(url, data, options = {}) {
+        try {
+            const response = await fetch(this.baseURL + url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                body: JSON.stringify(data),
+                ...options
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error('POST request failed:', error);
+            throw error;
+        }
+    }
+}
+
+// Usage example with async/await
+async function fetchUserData(userId) {
+    const client = new HttpClient('https://api.example.com');
+    
+    try {
+        const user = await client.get(`/users/${userId}`);
+        const posts = await client.get(`/users/${userId}/posts`);
+        
+        return {
+            user,
+            posts,
+            fullProfile: {
+                ...user,
+                postCount: posts.length,
+                recentPosts: posts.slice(0, 5)
+            }
+        };
+    } catch (error) {
+        console.error('Failed to fetch user data:', error);
+        return null;
+    }
+}
+
+// Promise chaining example
+function processUserData(userId) {
+    return fetchUserData(userId)
+        .then(data => {
+            if (!data) {
+                throw new Error('No user data available');
+            }
+            return data.fullProfile;
+        })
+        .then(profile => {
+            console.log(`User: ${profile.name}`);
+            console.log(`Posts: ${profile.postCount}`);
+            return profile;
+        })
+        .catch(error => {
+            console.error('Error processing user data:', error);
+            return null;
+        });
+}
+\end{lstlisting}
+
+\section{Java Code Examples}
+
+\begin{lstlisting}[language=Java, caption=Generic Repository Pattern]
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+
+// Generic entity interface
+interface Entity {
+    Long getId();
+    void setId(Long id);
+}
+
+// Generic repository interface
+interface Repository<T extends Entity> {
+    T save(T entity);
+    Optional<T> findById(Long id);
+    List<T> findAll();
+    void deleteById(Long id);
+    boolean existsById(Long id);
+}
+
+// In-memory repository implementation
+public class InMemoryRepository<T extends Entity> implements Repository<T> {
+    private final Map<Long, T> storage = new ConcurrentHashMap<>();
+    private Long nextId = 1L;
+    
+    @Override
+    public T save(T entity) {
+        if (entity.getId() == null) {
+            entity.setId(nextId++);
+        }
+        storage.put(entity.getId(), entity);
+        return entity;
+    }
+    
+    @Override
+    public Optional<T> findById(Long id) {
+        return Optional.ofNullable(storage.get(id));
+    }
+    
+    @Override
+    public List<T> findAll() {
+        return new ArrayList<>(storage.values());
+    }
+    
+    @Override
+    public void deleteById(Long id) {
+        storage.remove(id);
+    }
+    
+    @Override
+    public boolean existsById(Long id) {
+        return storage.containsKey(id);
+    }
+    
+    public List<T> findByPredicate(java.util.function.Predicate<T> predicate) {
+        return storage.values().stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+}
+
+// Example entity
+class User implements Entity {
+    private Long id;
+    private String name;
+    private String email;
+    private int age;
+    
+    public User(String name, String email, int age) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
+    
+    // Getters and setters
+    @Override
+    public Long getId() { return id; }
+    
+    @Override
+    public void setId(Long id) { this.id = id; }
+    
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+    
+    @Override
+    public String toString() {
+        return String.format("User{id=%d, name='%s', email='%s', age=%d}", 
+                           id, name, email, age);
+    }
+}
+
+// Usage example
+class RepositoryExample {
+    public static void main(String[] args) {
+        InMemoryRepository<User> userRepo = new InMemoryRepository<>();
+        
+        // Create and save users
+        User user1 = userRepo.save(new User("Alice", "alice@example.com", 25));
+        User user2 = userRepo.save(new User("Bob", "bob@example.com", 30));
+        User user3 = userRepo.save(new User("Charlie", "charlie@example.com", 35));
+        
+        // Find all users
+        System.out.println("All users:");
+        userRepo.findAll().forEach(System.out::println);
+        
+        // Find users by age
+        System.out.println("\nUsers over 28:");
+        userRepo.findByPredicate(user -> user.getAge() > 28)
+                .forEach(System.out::println);
+        
+        // Find by ID
+        Optional<User> foundUser = userRepo.findById(2L);
+        foundUser.ifPresent(user -> 
+            System.out.println("\nFound user: " + user));
+    }
+}
+\end{lstlisting}
+
+\section{Algorithm Pseudocode}
+
+\begin{algorithm}
+\caption{Quicksort Algorithm}
+\begin{algorithmic}[1]
+\REQUIRE Array $A[1..n]$ of comparable elements
+\ENSURE Array $A$ sorted in non-decreasing order
+
+\PROCEDURE{QuickSort}{$A, low, high$}
+    \IF{$low < high$}
+        \STATE $pivot \gets$ \CALL{Partition}{$A, low, high$}
+        \STATE \CALL{QuickSort}{$A, low, pivot - 1$}
+        \STATE \CALL{QuickSort}{$A, pivot + 1, high$}
+    \ENDIF
+\ENDPROCEDURE
+
+\PROCEDURE{Partition}{$A, low, high$}
+    \STATE $pivot \gets A[high]$
+    \STATE $i \gets low - 1$
+    \FOR{$j \gets low$ \TO $high - 1$}
+        \IF{$A[j] \leq pivot$}
+            \STATE $i \gets i + 1$
+            \STATE \CALL{Swap}{$A[i], A[j]$}
+        \ENDIF
+    \ENDFOR
+    \STATE \CALL{Swap}{$A[i + 1], A[high]$}
+    \RETURN $i + 1$
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Dijkstra's Shortest Path Algorithm}
+\begin{algorithmic}[1]
+\REQUIRE Graph $G = (V, E)$ with non-negative edge weights, source vertex $s$
+\ENSURE Shortest distances from $s$ to all vertices
+
+\PROCEDURE{Dijkstra}{$G, s$}
+    \STATE Initialize distance array $dist[1..n]$ with $\infty$
+    \STATE $dist[s] \gets 0$
+    \STATE Initialize priority queue $Q$ with all vertices
+    \STATE Initialize visited set $S \gets \emptyset$
+    
+    \WHILE{$Q \neq \emptyset$}
+        \STATE $u \gets$ vertex in $Q$ with minimum $dist[u]$
+        \STATE Remove $u$ from $Q$
+        \STATE Add $u$ to $S$
+        
+        \FOR{each neighbor $v$ of $u$}
+            \IF{$v \notin S$}
+                \STATE $alt \gets dist[u] + weight(u, v)$
+                \IF{$alt < dist[v]$}
+                    \STATE $dist[v] \gets alt$
+                    \STATE $previous[v] \gets u$
+                \ENDIF
+            \ENDIF
+        \ENDFOR
+    \ENDWHILE
+    
+    \RETURN $dist, previous$
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+
+\section{SQL Code Examples}
+
+\begin{lstlisting}[language=SQL, caption=Complex Database Queries]
+-- Create tables
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    title VARCHAR(200) NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER REFERENCES posts(id),
+    user_id INTEGER REFERENCES users(id),
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Complex query with joins and aggregations
+SELECT 
+    u.username,
+    u.email,
+    COUNT(DISTINCT p.id) as post_count,
+    COUNT(DISTINCT c.id) as comment_count,
+    AVG(LENGTH(p.content)) as avg_post_length,
+    MAX(p.created_at) as last_post_date
+FROM users u
+LEFT JOIN posts p ON u.id = p.user_id
+LEFT JOIN comments c ON u.id = c.user_id
+WHERE u.is_active = TRUE
+    AND u.created_at >= '2023-01-01'
+GROUP BY u.id, u.username, u.email
+HAVING COUNT(DISTINCT p.id) > 0
+ORDER BY post_count DESC, comment_count DESC
+LIMIT 10;
+
+-- Window function example
+SELECT 
+    p.title,
+    p.created_at,
+    u.username,
+    ROW_NUMBER() OVER (PARTITION BY u.id ORDER BY p.created_at DESC) as post_rank,
+    LAG(p.created_at) OVER (PARTITION BY u.id ORDER BY p.created_at) as prev_post_date,
+    COUNT(*) OVER (PARTITION BY u.id) as user_total_posts
+FROM posts p
+JOIN users u ON p.user_id = u.id
+WHERE p.created_at >= CURRENT_DATE - INTERVAL '30 days'
+ORDER BY u.username, p.created_at DESC;
+
+-- Common Table Expression (CTE) example
+WITH user_stats AS (
+    SELECT 
+        u.id,
+        u.username,
+        COUNT(p.id) as post_count,
+        AVG(LENGTH(p.content)) as avg_content_length
+    FROM users u
+    LEFT JOIN posts p ON u.id = p.user_id
+    GROUP BY u.id, u.username
+),
+active_users AS (
+    SELECT *
+    FROM user_stats
+    WHERE post_count >= 5
+)
+SELECT 
+    au.username,
+    au.post_count,
+    au.avg_content_length,
+    CASE 
+        WHEN au.avg_content_length > 1000 THEN 'Long-form writer'
+        WHEN au.avg_content_length > 500 THEN 'Medium writer'
+        ELSE 'Short-form writer'
+    END as writer_type
+FROM active_users au
+ORDER BY au.post_count DESC;
+\end{lstlisting}
+
+\section{Fancy Verbatim Examples}
+
+Using the \texttt{fancyvrb} package for enhanced verbatim environments:
+
+\begin{Verbatim}[frame=single, numbers=left, numbersep=3pt]
+#!/bin/bash
+
+# Script to backup database
+DB_NAME="myapp_production"
+BACKUP_DIR="/backups/$(date +%Y-%m-%d)"
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+
+# Create backup directory
+mkdir -p "$BACKUP_DIR"
+
+# Perform database dump
+pg_dump "$DB_NAME" > "$BACKUP_DIR/backup_$TIMESTAMP.sql"
+
+# Compress the backup
+gzip "$BACKUP_DIR/backup_$TIMESTAMP.sql"
+
+echo "Backup completed: $BACKUP_DIR/backup_$TIMESTAMP.sql.gz"
+\end{Verbatim}
+
+\begin{Verbatim}[frame=leftline, framerule=2pt, rulecolor=\color{blue}]
+# Python configuration file
+DATABASE_CONFIG = {
+    'host': 'localhost',
+    'port': 5432,
+    'database': 'myapp',
+    'user': 'dbuser',
+    'password': 'secure_password'
+}
+
+REDIS_CONFIG = {
+    'host': 'localhost',
+    'port': 6379,
+    'db': 0
+}
+
+# Application settings
+DEBUG = False
+SECRET_KEY = 'your-secret-key-here'
+ALLOWED_HOSTS = ['example.com', 'www.example.com']
+\end{Verbatim}
+
+\section{Mixed Code and Mathematics}
+
+Sometimes we need to combine code with mathematical notation:
+
+The time complexity of the binary search algorithm is $O(\log n)$:
+
+\begin{lstlisting}[language=Python, caption=Binary Search with Complexity Analysis]
+def binary_search(arr, target):
+    """
+    Binary search implementation.
+    Time complexity: O(log n)
+    Space complexity: O(1)
+    """
+    left, right = 0, len(arr) - 1
+    
+    while left <= right:  # At most log₂(n) iterations
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1  # Eliminate left half
+        else:
+            right = mid - 1  # Eliminate right half
+    
+    return -1  # Target not found
+
+# The recurrence relation for binary search is:
+# T(n) = T(n/2) + O(1)
+# By the Master Theorem: T(n) = O(log n)
+\end{lstlisting}
+
+The mathematical analysis shows that each iteration reduces the search space by half, leading to the logarithmic time complexity: $T(n) = T(n/2) + \Theta(1) = \Theta(\log n)$.
+
+\end{document}

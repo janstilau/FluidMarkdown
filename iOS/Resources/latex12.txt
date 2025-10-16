@@ -1,0 +1,277 @@
+% LaTeX Test Case 12: Lists and Enumeration
+% This document tests various list environments including itemize, enumerate, description
+% nested lists, custom counters, and advanced list formatting options
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\title{Lists and Enumeration Test}
+\author{LaTeX Test Suite}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic Itemize Lists}
+
+Simple bulleted list:
+\begin{itemize}
+\item First item in the list
+\item Second item with more text content
+\item Third item
+\item Fourth item with \textbf{bold} and \textit{italic} formatting
+\end{itemize}
+
+\section{Basic Enumerate Lists}
+
+Numbered list:
+\begin{enumerate}
+\item First numbered item
+\item Second numbered item
+\item Third numbered item with mathematical expression: $E = mc^2$
+\item Fourth item with inline code: \texttt{printf("Hello World");}
+\end{enumerate}
+
+\section{Description Lists}
+
+Definition-style list:
+\begin{description}
+\item[Algorithm] A step-by-step procedure for solving a problem
+\item[Data Structure] A way of organizing and storing data efficiently
+\item[Complexity] A measure of computational resources required
+\item[Recursion] A programming technique where a function calls itself
+\item[Polymorphism] The ability of objects to take multiple forms
+\end{description}
+
+\section{Nested Lists}
+
+Multi-level itemized list:
+\begin{itemize}
+\item Top level item one
+    \begin{itemize}
+    \item Second level item A
+    \item Second level item B
+        \begin{itemize}
+        \item Third level item i
+        \item Third level item ii
+        \item Third level item iii
+        \end{itemize}
+    \item Second level item C
+    \end{itemize}
+\item Top level item two
+\item Top level item three
+    \begin{itemize}
+    \item Another second level item
+    \end{itemize}
+\end{itemize}
+
+Multi-level enumerated list:
+\begin{enumerate}
+\item First main point
+    \begin{enumerate}
+    \item Sub-point 1.1
+    \item Sub-point 1.2
+        \begin{enumerate}
+        \item Sub-sub-point 1.2.1
+        \item Sub-sub-point 1.2.2
+        \end{enumerate}
+    \item Sub-point 1.3
+    \end{enumerate}
+\item Second main point
+\item Third main point
+    \begin{enumerate}
+    \item Sub-point 3.1
+    \item Sub-point 3.2
+    \end{enumerate}
+\end{enumerate}
+
+\section{Mixed Nested Lists}
+
+Combination of different list types:
+\begin{enumerate}
+\item Numbered item with bullet sub-items:
+    \begin{itemize}
+    \item Bullet point A
+    \item Bullet point B
+    \end{itemize}
+\item Another numbered item with descriptions:
+    \begin{description}
+    \item[Term 1] Definition of term 1
+    \item[Term 2] Definition of term 2
+    \end{description}
+\item Final numbered item
+\end{enumerate}
+
+\section{Custom List Formatting}
+
+Custom itemize symbols:
+\begin{itemize}
+\item[$\bullet$] Default bullet
+\item[$\circ$] Open circle
+\item[$\diamond$] Diamond
+\item[$\star$] Star
+\item[$\triangleright$] Triangle
+\item[$\checkmark$] Checkmark
+\item[$\rightarrow$] Arrow
+\end{itemize}
+
+Custom enumerate styles:
+\begin{enumerate}[(a)]
+\item Lowercase letters
+\item Second item
+\item Third item
+\end{enumerate}
+
+\begin{enumerate}[(I)]
+\item Roman numerals
+\item Second item
+\item Third item
+\end{enumerate}
+
+\begin{enumerate}[1)]
+\item Numbers with parenthesis
+\item Second item
+\item Third item
+\end{enumerate}
+
+\section{Compact Lists}
+
+Normal spacing list:
+\begin{itemize}
+\item Item one
+\item Item two
+\item Item three
+\end{itemize}
+
+Compact list with reduced spacing:
+\begin{itemize}[noitemsep,topsep=0pt]
+\item Compact item one
+\item Compact item two
+\item Compact item three
+\end{itemize}
+
+\section{Lists with Custom Counters}
+
+Starting from a specific number:
+\begin{enumerate}
+\setcounter{enumi}{5}
+\item This is item 6
+\item This is item 7
+\item This is item 8
+\end{enumerate}
+
+Continuing previous numbering:
+\begin{enumerate}[resume]
+\item This continues from item 9
+\item This is item 10
+\item This is item 11
+\end{enumerate}
+
+\section{Horizontal Lists}
+
+Inline enumeration: (1) First item, (2) Second item, (3) Third item, (4) Fourth item.
+
+\section{Lists with Mathematical Content}
+
+Mathematical itemize:
+\begin{itemize}
+\item Linear equations: $ax + b = 0$
+\item Quadratic equations: $ax^2 + bx + c = 0$
+\item Cubic equations: $ax^3 + bx^2 + cx + d = 0$
+\item Exponential functions: $f(x) = a \cdot b^x$
+\item Logarithmic functions: $f(x) = \log_a(x)$
+\item Trigonometric functions: $\sin(x), \cos(x), \tan(x)$
+\end{itemize}
+
+Mathematical enumerate with formulas:
+\begin{enumerate}
+\item Pythagorean theorem: $a^2 + b^2 = c^2$
+\item Euler's identity: $e^{i\pi} + 1 = 0$
+\item Newton's second law: $F = ma$
+\item Einstein's mass-energy equivalence: $E = mc^2$
+\item Schrödinger equation: $i\hbar\frac{\partial}{\partial t}\Psi = \hat{H}\Psi$
+\end{enumerate}
+
+\section{Lists with Code Examples}
+
+Programming concepts:
+\begin{description}
+\item[Variables] \texttt{int x = 5; float y = 3.14;}
+\item[Functions] \texttt{def factorial(n): return 1 if n <= 1 else n * factorial(n-1)}
+\item[Classes] \texttt{class Rectangle: def \_\_init\_\_(self, width, height):}
+\item[Loops] \texttt{for i in range(10): print(i)}
+\item[Conditionals] \texttt{if x > 0: print("positive")}
+\end{description}
+
+\section{Multi-paragraph List Items}
+
+Lists with detailed explanations:
+\begin{enumerate}
+\item \textbf{Introduction to Algorithms}
+
+    Algorithms are fundamental to computer science and programming. They provide step-by-step instructions for solving computational problems efficiently.
+    
+    Key characteristics include correctness, efficiency, and clarity. Good algorithms should produce correct results for all valid inputs.
+
+\item \textbf{Data Structures}
+
+    Data structures organize and store data in computer memory. Common examples include arrays, linked lists, stacks, queues, trees, and graphs.
+    
+    The choice of data structure significantly impacts the performance of algorithms that operate on the data.
+
+\item \textbf{Complexity Analysis}
+
+    Complexity analysis helps evaluate algorithm performance in terms of time and space requirements.
+    
+    Big O notation provides a mathematical framework for describing algorithmic complexity: $O(1), O(\log n), O(n), O(n \log n), O(n^2), O(2^n)$.
+
+\end{enumerate}
+
+\section{Theorem-like Lists}
+
+Mathematical definitions and theorems:
+\begin{enumerate}
+\item \textbf{Definition (Group):} A group $(G, \cdot)$ is a set $G$ with a binary operation $\cdot$ such that:
+    \begin{itemize}
+    \item Closure: $\forall a, b \in G, a \cdot b \in G$
+    \item Associativity: $\forall a, b, c \in G, (a \cdot b) \cdot c = a \cdot (b \cdot c)$
+    \item Identity: $\exists e \in G$ such that $\forall a \in G, e \cdot a = a \cdot e = a$
+    \item Inverse: $\forall a \in G, \exists a^{-1} \in G$ such that $a \cdot a^{-1} = a^{-1} \cdot a = e$
+    \end{itemize}
+
+\item \textbf{Theorem (Fundamental Theorem of Calculus):} If $f$ is continuous on $[a,b]$, then:
+    \begin{enumerate}
+    \item $F(x) = \int_a^x f(t) dt$ is differentiable on $(a,b)$ and $F'(x) = f(x)$
+    \item $\int_a^b f(x) dx = F(b) - F(a)$ where $F$ is any antiderivative of $f$
+    \end{enumerate}
+\end{enumerate}
+
+\section{Checklist Style}
+
+Task completion list:
+\begin{itemize}
+\item[$\square$] Plan project structure
+\item[$\boxtimes$] Set up development environment
+\item[$\boxtimes$] Write initial code
+\item[$\square$] Implement unit tests
+\item[$\square$] Code review
+\item[$\square$] Deploy to production
+\end{itemize}
+
+\section{Bibliography Style Lists}
+
+References format:
+\begin{enumerate}
+\item Knuth, D. E. (1997). \textit{The Art of Computer Programming, Volume 1: Fundamental Algorithms}. Addison-Wesley Professional.
+
+\item Cormen, T. H., Leiserson, C. E., Rivest, R. L., \& Stein, C. (2009). \textit{Introduction to Algorithms}. MIT Press.
+
+\item Sedgewick, R., \& Wayne, K. (2011). \textit{Algorithms}. Addison-Wesley Professional.
+\end{enumerate}
+
+\end{document}

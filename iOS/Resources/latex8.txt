@@ -1,0 +1,300 @@
+复分析和高等数学函数测试
+本文档测试复数、复函数、特殊函数、变换等高等数学内容的LaTeX表示。
+
+# 复数理论
+
+## 复数表示
+
+代数形式：$z = a + bi$，其中$a, b \in \mathbb{R}$，$i^2 = -1$
+
+实部和虚部：$\text{Re}(z) = a$，$\text{Im}(z) = b$
+
+复共轭：$\overline{z} = a - bi$
+
+模长：$|z| = \sqrt{a^2 + b^2} = \sqrt{z\overline{z}}$
+
+## 复数的几何表示
+
+极坐标形式：$z = r(\cos\theta + i\sin\theta) = re^{i\theta}$
+
+其中：$r = |z|$，$\theta = \arg(z)$
+
+欧拉公式：$e^{i\theta} = \cos\theta + i\sin\theta$
+
+棣莫弗定理：$(re^{i\theta})^n = r^n e^{in\theta}$
+
+## 复数运算
+
+加法：$(a + bi) + (c + di) = (a + c) + (b + d)i$
+
+乘法：$(a + bi)(c + di) = (ac - bd) + (ad + bc)i$
+
+除法：$\frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{c^2 + d^2} = \frac{ac + bd}{c^2 + d^2} + \frac{bc - ad}{c^2 + d^2}i$
+
+## 复数的幂和根
+
+$n$次方：$z^n = r^n e^{in\theta}$
+
+$n$次根：$\sqrt[n]{z} = \sqrt[n]{r} e^{i(\theta + 2\pi k)/n}$，$k = 0, 1, 2, \ldots, n-1$
+
+单位根：$\omega_n = e^{2\pi i/n}$
+
+# 复函数
+
+## 复函数的定义
+
+$f: \mathbb{C} \to \mathbb{C}$，$f(z) = u(x, y) + iv(x, y)$
+
+其中$z = x + iy$，$u, v: \mathbb{R}^2 \to \mathbb{R}$
+
+## 复函数的极限和连续性
+
+极限：$\lim_{z \to z_0} f(z) = w_0$
+
+连续性：$\lim_{z \to z_0} f(z) = f(z_0)$
+
+## 复导数
+
+$$f'(z_0) = \lim_{z \to z_0} \frac{f(z) - f(z_0)}{z - z_0}$$
+
+## 柯西-黎曼方程
+
+函数$f(z) = u + iv$在点$z_0$可导的充要条件是$u, v$在对应点可微且满足：
+
+$$\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}, \quad \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}$$
+
+## 解析函数
+
+在区域$D$内处处可导的函数称为在$D$内解析的函数。
+
+调和函数：满足拉普拉斯方程$\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0$
+
+# 复积分
+
+## 复积分定义
+
+$$\int_C f(z) dz = \int_C (u + iv)(dx + idy) = \int_C (u dx - v dy) + i\int_C (v dx + u dy)$$
+
+## 柯西定理
+
+若$f(z)$在简单闭曲线$C$及其内部解析，则：
+$$\oint_C f(z) dz = 0$$
+
+## 柯西积分公式
+
+若$f(z)$在简单闭曲线$C$及其内部解析，$z_0$在$C$内部，则：
+$$f(z_0) = \frac{1}{2\pi i} \oint_C \frac{f(z)}{z - z_0} dz$$
+
+高阶导数公式：
+$$f^{(n)}(z_0) = \frac{n!}{2\pi i} \oint_C \frac{f(z)}{(z - z_0)^{n+1}} dz$$
+
+# 级数展开
+
+## 泰勒级数
+
+$$f(z) = \sum_{n=0}^{\infty} \frac{f^{(n)}(z_0)}{n!}(z - z_0)^n$$
+
+## 洛朗级数
+
+$$f(z) = \sum_{n=-\infty}^{\infty} a_n(z - z_0)^n$$
+
+其中：
+$$a_n = \frac{1}{2\pi i} \oint_C \frac{f(z)}{(z - z_0)^{n+1}} dz$$
+
+## 常用函数的级数展开
+
+指数函数：$e^z = \sum_{n=0}^{\infty} \frac{z^n}{n!}$
+
+三角函数：
+$$\sin z = \sum_{n=0}^{\infty} \frac{(-1)^n z^{2n+1}}{(2n+1)!}$$
+$$\cos z = \sum_{n=0}^{\infty} \frac{(-1)^n z^{2n}}{(2n)!}$$
+
+双曲函数：
+$$\sinh z = \sum_{n=0}^{\infty} \frac{z^{2n+1}}{(2n+1)!}$$
+$$\cosh z = \sum_{n=0}^{\infty} \frac{z^{2n}}{(2n)!}$$
+
+对数函数：$\ln(1 + z) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1} z^n}{n}$
+
+# 留数理论
+
+## 奇点分类
+
+可去奇点：$\lim_{z \to z_0} (z - z_0)f(z) = 0$
+
+极点：$\lim_{z \to z_0} |f(z)| = \infty$，但$(z - z_0)^m f(z)$在$z_0$处解析
+
+本质奇点：既不是可去奇点也不是极点
+
+## 留数
+
+$$\text{Res}(f, z_0) = \frac{1}{2\pi i} \oint_C f(z) dz$$
+
+其中$C$是围绕$z_0$的简单闭曲线。
+
+## 留数定理
+
+$$\oint_C f(z) dz = 2\pi i \sum_{k} \text{Res}(f, z_k)$$
+
+其中$z_k$是$C$内部的所有奇点。
+
+## 留数计算
+
+简单极点：$\text{Res}(f, z_0) = \lim_{z \to z_0} (z - z_0)f(z)$
+
+$m$阶极点：
+$$\text{Res}(f, z_0) = \frac{1}{(m-1)!} \lim_{z \to z_0} \frac{d^{m-1}}{dz^{m-1}}[(z - z_0)^m f(z)]$$
+
+# 特殊函数
+
+## 伽马函数
+
+$$\Gamma(z) = \int_0^{\infty} t^{z-1} e^{-t} dt, \quad \text{Re}(z) > 0$$
+
+递推关系：$\Gamma(z+1) = z\Gamma(z)$
+
+特殊值：$\Gamma(n) = (n-1)!$，$\Gamma(1/2) = \sqrt{\pi}$
+
+## 贝塔函数
+
+$$B(x, y) = \int_0^1 t^{x-1}(1-t)^{y-1} dt$$
+
+与伽马函数的关系：$B(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$
+
+## 贝塞尔函数
+
+第一类贝塞尔函数：
+$$J_n(x) = \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(n+m)!} \left(\frac{x}{2}\right)^{n+2m}$$
+
+第二类贝塞尔函数：
+$$Y_n(x) = \frac{J_n(x)\cos(n\pi) - J_{-n}(x)}{\sin(n\pi)}$$
+
+## 勒让德多项式
+
+$$P_n(x) = \frac{1}{2^n n!} \frac{d^n}{dx^n}(x^2 - 1)^n$$
+
+正交性：$\int_{-1}^1 P_m(x)P_n(x) dx = \frac{2}{2n+1}\delta_{mn}$
+
+## 埃尔米特多项式
+
+$$H_n(x) = (-1)^n e^{x^2} \frac{d^n}{dx^n} e^{-x^2}$$
+
+生成函数：$e^{2xt - t^2} = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n$
+
+## 拉盖尔多项式
+
+$$L_n(x) = e^x \frac{d^n}{dx^n}(x^n e^{-x})$$
+
+正交性：$\int_0^{\infty} e^{-x} L_m(x) L_n(x) dx = \delta_{mn}$
+
+# 积分变换
+
+## 拉普拉斯变换
+
+$$\mathcal{L}\{f(t)\} = F(s) = \int_0^{\infty} f(t) e^{-st} dt$$
+
+逆变换：
+$$f(t) = \mathcal{L}^{-1}\{F(s)\} = \frac{1}{2\pi i} \int_{\gamma - i\infty}^{\gamma + i\infty} F(s) e^{st} ds$$
+
+## 常用拉普拉斯变换对
+
+$$\mathcal{L}\{1\} = \frac{1}{s}$$
+
+$$\mathcal{L}\{t^n\} = \frac{n!}{s^{n+1}}$$
+
+$$\mathcal{L}\{e^{at}\} = \frac{1}{s-a}$$
+
+$$\mathcal{L}\{\sin(at)\} = \frac{a}{s^2 + a^2}$$
+
+$$\mathcal{L}\{\cos(at)\} = \frac{s}{s^2 + a^2}$$
+
+## 拉普拉斯变换性质
+
+线性性：$\mathcal{L}\{af(t) + bg(t)\} = a\mathcal{L}\{f(t)\} + b\mathcal{L}\{g(t)\}$
+
+时移性质：$\mathcal{L}\{f(t-a)u(t-a)\} = e^{-as}F(s)$
+
+频移性质：$\mathcal{L}\{e^{at}f(t)\} = F(s-a)$
+
+微分性质：$\mathcal{L}\{f'(t)\} = sF(s) - f(0)$
+
+积分性质：$\mathcal{L}\left\{\int_0^t f(\tau) d\tau\right\} = \frac{F(s)}{s}$
+
+## 傅里叶变换
+
+$$\mathcal{F}\{f(t)\} = F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i\omega t} dt$$
+
+逆变换：
+$$f(t) = \mathcal{F}^{-1}\{F(\omega)\} = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{i\omega t} d\omega$$
+
+## 常用傅里叶变换对
+
+$$\mathcal{F}\{\delta(t)\} = 1$$
+
+$$\mathcal{F}\{1\} = 2\pi\delta(\omega)$$
+
+$$\mathcal{F}\{e^{-a|t|}\} = \frac{2a}{a^2 + \omega^2}$$
+
+$$\mathcal{F}\{\text{rect}(t)\} = \text{sinc}(\omega/2)$$
+
+其中$\text{rect}(t) = \begin{cases} 1 & |t| \leq 1/2 \\ 0 & |t| > 1/2 \end{cases}$，$\text{sinc}(x) = \frac{\sin x}{x}$
+
+## 傅里叶变换性质
+
+线性性：$\mathcal{F}\{af(t) + bg(t)\} = a\mathcal{F}\{f(t)\} + b\mathcal{F}\{g(t)\}$
+
+时移性质：$\mathcal{F}\{f(t-a)\} = e^{-i\omega a}F(\omega)$
+
+频移性质：$\mathcal{F}\{e^{i\omega_0 t}f(t)\} = F(\omega - \omega_0)$
+
+尺度变换：$\mathcal{F}\{f(at)\} = \frac{1}{|a|}F\left(\frac{\omega}{a}\right)$
+
+微分性质：$\mathcal{F}\{f'(t)\} = i\omega F(\omega)$
+
+卷积定理：$\mathcal{F}\{f * g\} = F(\omega)G(\omega)$
+
+# 椭圆函数
+
+## 椭圆积分
+
+第一类椭圆积分：
+$$K(k) = \int_0^{\pi/2} \frac{d\theta}{\sqrt{1 - k^2 \sin^2\theta}}$$
+
+第二类椭圆积分：
+$$E(k) = \int_0^{\pi/2} \sqrt{1 - k^2 \sin^2\theta} \, d\theta$$
+
+## 雅可比椭圆函数
+
+$$\text{sn}(u, k), \quad \text{cn}(u, k), \quad \text{dn}(u, k)$$
+
+基本关系：
+$$\text{sn}^2(u, k) + \text{cn}^2(u, k) = 1$$
+$$k^2 \text{sn}^2(u, k) + \text{dn}^2(u, k) = 1$$
+
+## 魏尔斯特拉斯椭圆函数
+
+$$\wp(z) = \frac{1}{z^2} + \sum_{\omega \neq 0} \left[\frac{1}{(z-\omega)^2} - \frac{1}{\omega^2}\right]$$
+
+其中求和遍历所有非零格点$\omega = 2m\omega_1 + 2n\omega_2$。
+
+微分方程：
+$$(\wp'(z))^2 = 4\wp^3(z) - g_2\wp(z) - g_3$$
+
+# 超几何函数
+
+## 超几何函数
+
+$$_2F_1(a, b; c; z) = \sum_{n=0}^{\infty} \frac{(a)_n (b)_n}{(c)_n} \frac{z^n}{n!}$$
+
+其中$(a)_n = a(a+1)(a+2)\cdots(a+n-1)$是Pochhammer符号。
+
+## 合流超几何函数
+
+$$_1F_1(a; c; z) = \sum_{n=0}^{\infty} \frac{(a)_n}{(c)_n} \frac{z^n}{n!}$$
+
+## 与特殊函数的关系
+
+$$e^z = {_0F_0}(;;z) = \sum_{n=0}^{\infty} \frac{z^n}{n!}$$
+
+$$(1-z)^{-a} = {_1F_0}(a;;z) = \sum_{n=0}^{\infty} (a)_n \frac{z^n}{n!}$$
+
+$$\sin z = z \cdot {_0F_1}\left(;\frac{3}{2};-\frac{z^2}{4}\right)$$

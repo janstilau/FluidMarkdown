@@ -13,6 +13,26 @@
 		06ACE9832E9F865800454F57 /* dataxiaop2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACE9822E9F864F00454F57 /* dataxiaop2.txt */; };
 		06ACEA9E2E9F8E4000454F57 /* data5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06ACEA9D2E9F8E4000454F57 /* data5.txt */; };
 		06E4F7172EA1001000A8AAF3 /* Pods_FluidMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A4A3071761626CB69EE8B4 /* Pods_FluidMarkdown.framework */; };
+		06E4FB1E2EA12CEA00A8AAF3 /* latex9.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB122EA12CEA00A8AAF3 /* latex9.txt */; };
+		06E4FB1F2EA12CEA00A8AAF3 /* latex20.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB1D2EA12CEA00A8AAF3 /* latex20.txt */; };
+		06E4FB202EA12CEA00A8AAF3 /* latex6.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB0F2EA12CEA00A8AAF3 /* latex6.txt */; };
+		06E4FB212EA12CEA00A8AAF3 /* latex13.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB162EA12CEA00A8AAF3 /* latex13.txt */; };
+		06E4FB222EA12CEA00A8AAF3 /* latex4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB0D2EA12CEA00A8AAF3 /* latex4.txt */; };
+		06E4FB232EA12CEA00A8AAF3 /* latex7.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB102EA12CEA00A8AAF3 /* latex7.txt */; };
+		06E4FB242EA12CEA00A8AAF3 /* latex12.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB152EA12CEA00A8AAF3 /* latex12.txt */; };
+		06E4FB252EA12CEA00A8AAF3 /* latex14.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB172EA12CEA00A8AAF3 /* latex14.txt */; };
+		06E4FB262EA12CEA00A8AAF3 /* latex11.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB142EA12CEA00A8AAF3 /* latex11.txt */; };
+		06E4FB272EA12CEA00A8AAF3 /* latex16.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB192EA12CEA00A8AAF3 /* latex16.txt */; };
+		06E4FB282EA12CEA00A8AAF3 /* latex19.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB1C2EA12CEA00A8AAF3 /* latex19.txt */; };
+		06E4FB292EA12CEA00A8AAF3 /* latex15.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB182EA12CEA00A8AAF3 /* latex15.txt */; };
+		06E4FB2A2EA12CEA00A8AAF3 /* latex5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB0E2EA12CEA00A8AAF3 /* latex5.txt */; };
+		06E4FB2B2EA12CEA00A8AAF3 /* latex18.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB1B2EA12CEA00A8AAF3 /* latex18.txt */; };
+		06E4FB2C2EA12CEA00A8AAF3 /* latex1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB0A2EA12CEA00A8AAF3 /* latex1.txt */; };
+		06E4FB2D2EA12CEA00A8AAF3 /* latex10.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB132EA12CEA00A8AAF3 /* latex10.txt */; };
+		06E4FB2E2EA12CEA00A8AAF3 /* latex8.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB112EA12CEA00A8AAF3 /* latex8.txt */; };
+		06E4FB2F2EA12CEA00A8AAF3 /* latex17.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB1A2EA12CEA00A8AAF3 /* latex17.txt */; };
+		06E4FB302EA12CEA00A8AAF3 /* latex2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB0B2EA12CEA00A8AAF3 /* latex2.txt */; };
+		06E4FB312EA12CEA00A8AAF3 /* latex3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06E4FB0C2EA12CEA00A8AAF3 /* latex3.txt */; };
 		06F3EB292E99143C00827F56 /* data4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06F3EB282E99143C00827F56 /* data4.txt */; };
 		774C570F2E77BAED003034DC /* highlightjs.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 774C570C2E77BAED003034DC /* highlightjs.bundle */; };
 		774C57102E77BAED003034DC /* data3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 774C570B2E77BAED003034DC /* data3.txt */; };
@@ -46,6 +66,26 @@
 		06ACE9802E9F811A00454F57 /* data7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data7.txt; sourceTree = "<group>"; };
 		06ACE9822E9F864F00454F57 /* dataxiaop2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dataxiaop2.txt; sourceTree = "<group>"; };
 		06ACEA9D2E9F8E4000454F57 /* data5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data5.txt; sourceTree = "<group>"; };
+		06E4FB0A2EA12CEA00A8AAF3 /* latex1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex1.txt; sourceTree = "<group>"; };
+		06E4FB0B2EA12CEA00A8AAF3 /* latex2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex2.txt; sourceTree = "<group>"; };
+		06E4FB0C2EA12CEA00A8AAF3 /* latex3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex3.txt; sourceTree = "<group>"; };
+		06E4FB0D2EA12CEA00A8AAF3 /* latex4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex4.txt; sourceTree = "<group>"; };
+		06E4FB0E2EA12CEA00A8AAF3 /* latex5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex5.txt; sourceTree = "<group>"; };
+		06E4FB0F2EA12CEA00A8AAF3 /* latex6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex6.txt; sourceTree = "<group>"; };
+		06E4FB102EA12CEA00A8AAF3 /* latex7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex7.txt; sourceTree = "<group>"; };
+		06E4FB112EA12CEA00A8AAF3 /* latex8.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex8.txt; sourceTree = "<group>"; };
+		06E4FB122EA12CEA00A8AAF3 /* latex9.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex9.txt; sourceTree = "<group>"; };
+		06E4FB132EA12CEA00A8AAF3 /* latex10.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex10.txt; sourceTree = "<group>"; };
+		06E4FB142EA12CEA00A8AAF3 /* latex11.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex11.txt; sourceTree = "<group>"; };
+		06E4FB152EA12CEA00A8AAF3 /* latex12.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex12.txt; sourceTree = "<group>"; };
+		06E4FB162EA12CEA00A8AAF3 /* latex13.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex13.txt; sourceTree = "<group>"; };
+		06E4FB172EA12CEA00A8AAF3 /* latex14.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex14.txt; sourceTree = "<group>"; };
+		06E4FB182EA12CEA00A8AAF3 /* latex15.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex15.txt; sourceTree = "<group>"; };
+		06E4FB192EA12CEA00A8AAF3 /* latex16.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex16.txt; sourceTree = "<group>"; };
+		06E4FB1A2EA12CEA00A8AAF3 /* latex17.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex17.txt; sourceTree = "<group>"; };
+		06E4FB1B2EA12CEA00A8AAF3 /* latex18.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex18.txt; sourceTree = "<group>"; };
+		06E4FB1C2EA12CEA00A8AAF3 /* latex19.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex19.txt; sourceTree = "<group>"; };
+		06E4FB1D2EA12CEA00A8AAF3 /* latex20.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = latex20.txt; sourceTree = "<group>"; };
 		06F3EB282E99143C00827F56 /* data4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data4.txt; sourceTree = "<group>"; };
 		06F3EB872E9A529F00827F56 /* NSLayoutManager_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSLayoutManager_zh.h; sourceTree = "<group>"; };
 		06F3EB882E9A529F00827F56 /* NSTextContainer_zh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTextContainer_zh.h; sourceTree = "<group>"; };
@@ -140,6 +180,26 @@
 		774C570E2E77BAED003034DC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				06E4FB0A2EA12CEA00A8AAF3 /* latex1.txt */,
+				06E4FB0B2EA12CEA00A8AAF3 /* latex2.txt */,
+				06E4FB0C2EA12CEA00A8AAF3 /* latex3.txt */,
+				06E4FB0D2EA12CEA00A8AAF3 /* latex4.txt */,
+				06E4FB0E2EA12CEA00A8AAF3 /* latex5.txt */,
+				06E4FB0F2EA12CEA00A8AAF3 /* latex6.txt */,
+				06E4FB102EA12CEA00A8AAF3 /* latex7.txt */,
+				06E4FB112EA12CEA00A8AAF3 /* latex8.txt */,
+				06E4FB122EA12CEA00A8AAF3 /* latex9.txt */,
+				06E4FB132EA12CEA00A8AAF3 /* latex10.txt */,
+				06E4FB142EA12CEA00A8AAF3 /* latex11.txt */,
+				06E4FB152EA12CEA00A8AAF3 /* latex12.txt */,
+				06E4FB162EA12CEA00A8AAF3 /* latex13.txt */,
+				06E4FB172EA12CEA00A8AAF3 /* latex14.txt */,
+				06E4FB182EA12CEA00A8AAF3 /* latex15.txt */,
+				06E4FB192EA12CEA00A8AAF3 /* latex16.txt */,
+				06E4FB1A2EA12CEA00A8AAF3 /* latex17.txt */,
+				06E4FB1B2EA12CEA00A8AAF3 /* latex18.txt */,
+				06E4FB1C2EA12CEA00A8AAF3 /* latex19.txt */,
+				06E4FB1D2EA12CEA00A8AAF3 /* latex20.txt */,
 				06ACEA9D2E9F8E4000454F57 /* data5.txt */,
 				06ACE9822E9F864F00454F57 /* dataxiaop2.txt */,
 				06ACE9712E9D044800454F57 /* dataxiaop.txt */,
@@ -266,6 +326,26 @@
 				774C57132E77BAED003034DC /* AntMarkdown.bundle in Resources */,
 				06ACE9812E9F811A00454F57 /* data7.txt in Resources */,
 				774C57142E77BAED003034DC /* data2.txt in Resources */,
+				06E4FB1E2EA12CEA00A8AAF3 /* latex9.txt in Resources */,
+				06E4FB1F2EA12CEA00A8AAF3 /* latex20.txt in Resources */,
+				06E4FB202EA12CEA00A8AAF3 /* latex6.txt in Resources */,
+				06E4FB212EA12CEA00A8AAF3 /* latex13.txt in Resources */,
+				06E4FB222EA12CEA00A8AAF3 /* latex4.txt in Resources */,
+				06E4FB232EA12CEA00A8AAF3 /* latex7.txt in Resources */,
+				06E4FB242EA12CEA00A8AAF3 /* latex12.txt in Resources */,
+				06E4FB252EA12CEA00A8AAF3 /* latex14.txt in Resources */,
+				06E4FB262EA12CEA00A8AAF3 /* latex11.txt in Resources */,
+				06E4FB272EA12CEA00A8AAF3 /* latex16.txt in Resources */,
+				06E4FB282EA12CEA00A8AAF3 /* latex19.txt in Resources */,
+				06E4FB292EA12CEA00A8AAF3 /* latex15.txt in Resources */,
+				06E4FB2A2EA12CEA00A8AAF3 /* latex5.txt in Resources */,
+				06E4FB2B2EA12CEA00A8AAF3 /* latex18.txt in Resources */,
+				06E4FB2C2EA12CEA00A8AAF3 /* latex1.txt in Resources */,
+				06E4FB2D2EA12CEA00A8AAF3 /* latex10.txt in Resources */,
+				06E4FB2E2EA12CEA00A8AAF3 /* latex8.txt in Resources */,
+				06E4FB2F2EA12CEA00A8AAF3 /* latex17.txt in Resources */,
+				06E4FB302EA12CEA00A8AAF3 /* latex2.txt in Resources */,
+				06E4FB312EA12CEA00A8AAF3 /* latex3.txt in Resources */,
 				06ACEA9E2E9F8E4000454F57 /* data5.txt in Resources */,
 				06ACE9832E9F865800454F57 /* dataxiaop2.txt in Resources */,
 			);
@@ -304,9 +384,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FluidMarkdown/Pods-FluidMarkdown-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FluidMarkdown/Pods-FluidMarkdown-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

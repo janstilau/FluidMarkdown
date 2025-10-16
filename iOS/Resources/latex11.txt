@@ -1,0 +1,219 @@
+% LaTeX Test Case 11: Text Formatting and Typography
+% This document tests various text formatting commands, font styles, sizes, and typography features
+% including emphasis, font families, text decorations, spacing, and special characters
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{soul}
+
+\title{Text Formatting and Typography Test}
+\author{LaTeX Test Suite}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic Text Emphasis}
+
+This is \textbf{bold text} and this is \textit{italic text}. We can also use \emph{emphasized text} which adapts to context.
+
+Alternative commands: \bf{bold}, \it{italic}, \em{emphasis}, \rm{roman}, \sf{sans serif}, \tt{typewriter}.
+
+\textsc{Small Caps Text} and \textsl{slanted text} provide additional emphasis options.
+
+\section{Font Families and Styles}
+
+\textrm{Roman family text} is the default.
+\textsf{Sans serif family text} for modern look.
+\texttt{Typewriter family text} for code.
+
+\textup{Upright shape}, \textit{Italic shape}, \textsl{Slanted shape}, \textsc{Small caps shape}.
+
+\textmd{Medium weight}, \textbf{Bold weight}.
+
+\section{Font Sizes}
+
+{\tiny Tiny text size}
+{\scriptsize Script size text}
+{\footnotesize Footnote size text}
+{\small Small text size}
+{\normalsize Normal text size}
+{\large Large text size}
+{\Large Larger text size}
+{\LARGE Even larger text size}
+{\huge Huge text size}
+{\Huge Hugest text size}
+
+\section{Text Decorations}
+
+\underline{Underlined text} and \overline{Overlined text}.
+
+Using soul package:
+\ul{Underlined with soul}
+\st{Strikethrough text}
+\hl{Highlighted text}
+
+\section{Text Colors}
+
+\textcolor{red}{Red text}
+\textcolor{blue}{Blue text}
+\textcolor{green}{Green text}
+\textcolor{purple}{Purple text}
+\textcolor{orange}{Orange text}
+
+{\color{red} This entire paragraph is in red color. We can change colors mid-sentence {\color{blue} like this blue part} and continue in red.}
+
+\section{Special Characters and Symbols}
+
+Quotation marks: ``double quotes'' and `single quotes'
+
+Dashes: hyphen-, en-dash--, em-dash---
+
+Special symbols: \copyright, \registered, \trademark, \pounds, \S, \P, \dag, \ddag
+
+Accented characters: \'{a}, \`{e}, \^{i}, \"{o}, \~{n}, \c{c}, \v{s}, \u{a}, \.{z}
+
+\section{Spacing and Alignment}
+
+Normal spacing between words.
+Extra\ space\ with\ backslash.
+\quad Quad space \qquad Double quad space
+
+\hspace{2cm} Horizontal space of 2cm.
+
+\vspace{1cm}
+Vertical space above this line.
+
+\section{Line Breaks and Paragraphs}
+
+This is the first paragraph with normal text flow.
+
+This is a new paragraph after a blank line.
+
+This line has a manual break\\
+and continues here.
+
+\noindent This paragraph has no indentation.
+
+\section{Text Alignment}
+
+\begin{center}
+This text is centered.
+Multiple lines can be centered
+in this environment.
+\end{center}
+
+\begin{flushleft}
+This text is left-aligned
+(flush left).
+\end{flushleft}
+
+\begin{flushright}
+This text is right-aligned
+(flush right).
+\end{flushright}
+
+\section{Verbatim Text}
+
+Inline verbatim: \verb|$special#characters%|
+
+\begin{verbatim}
+This is verbatim text where
+    all formatting is preserved
+    including   spaces and
+$pecial characters like \textbf{this}
+\end{verbatim}
+
+\section{Footnotes and Marginalia}
+
+This text has a footnote\footnote{This is a footnote with additional information.}.
+
+Another footnote example\footnote{Footnotes are automatically numbered and appear at the bottom of the page.}.
+
+\marginpar{Margin note} This text has a margin note.
+
+\section{Hyphenation and Line Breaking}
+
+Long words can be hyphenated automatically: supercalifragilisticexpialidocious.
+
+Manual hyphenation: su\-per\-cal\-i\-frag\-i\-lis\-tic\-ex\-pi\-al\-i\-do\-cious.
+
+Prevent hyphenation: \mbox{supercalifragilisticexpialidocious}.
+
+\section{Special Environments}
+
+\begin{quote}
+This is a quote environment for shorter quotations.
+It provides appropriate indentation and spacing.
+\end{quote}
+
+\begin{quotation}
+This is a quotation environment for longer quotations.
+It's similar to quote but with paragraph indentation.
+
+Multiple paragraphs can be included in quotations
+with proper formatting maintained.
+\end{quotation}
+
+\begin{verse}
+This is a verse environment\\
+For poetry and similar content\\
+Where line breaks are important\\
+And spacing is preserved.
+\end{verse}
+
+\section{Abstract Environment}
+
+\begin{abstract}
+This is an abstract environment typically used in academic papers.
+It provides a summary of the document content with appropriate
+formatting and spacing. The abstract is usually placed after
+the title and before the main content.
+\end{abstract}
+
+\section{Text Transformation}
+
+\uppercase{This text is in uppercase}
+\lowercase{THIS TEXT IS IN LOWERCASE}
+
+\section{Advanced Typography}
+
+Ligatures: fi, fl, ff, ffi, ffl (automatic in most fonts)
+
+Kerning adjustments: A\kern-0.1em V (tighter) vs AV (normal)
+
+\section{International Characters}
+
+European: àáâãäåæçèéêëìíîïñòóôõöøùúûüý
+
+Mathematical: αβγδεζηθικλμνξοπρστυφχψω
+
+Currency: \$, \pounds, €, ¥, ₹
+
+\section{Boxes and Frames}
+
+\fbox{This text is in a framed box}
+
+\framebox[3cm]{Fixed width frame}
+
+\makebox[4cm][c]{Centered in makebox}
+
+\parbox{5cm}{This is a paragraph box with fixed width. Text will wrap within the specified width automatically.}
+
+\section{Lengths and Measurements}
+
+Text with specific spacing: A\hspace{1pt}B\hspace{1mm}C\hspace{1cm}D\hspace{1in}E
+
+Vertical spacing examples:
+Line 1
+\vspace{5mm}
+Line 2 (5mm below)
+\vspace{1cm}
+Line 3 (1cm below)
+
+\end{document}

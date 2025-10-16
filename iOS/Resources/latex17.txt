@@ -1,0 +1,593 @@
+% LaTeX Test Case 17: Figures, Graphics, and Image Handling
+% This document tests various figure environments, image inclusion, graphics positioning,
+% captions, subfigures, and TikZ graphics creation
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+
+% TikZ libraries
+\usetikzlibrary{shapes,arrows,positioning,patterns,decorations.pathreplacing}
+\pgfplotsset{compat=1.18}
+
+\title{Figures, Graphics, and Image Handling Test}
+\author{LaTeX Test Suite}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic Figure Environment}
+
+\subsection{Simple Figure with Caption}
+
+\begin{figure}[htbp]
+\centering
+% Since we can't include actual image files, we'll create a placeholder
+\fbox{\parbox{6cm}{
+\centering
+\vspace{2cm}
+\textbf{IMAGE PLACEHOLDER}\\
+\textit{Sample Graph or Chart}\\
+\textit{(6cm × 4cm)}
+\vspace{2cm}
+}}
+\caption{A sample figure demonstrating basic figure environment usage with caption and label.}
+\label{fig:sample}
+\end{figure}
+
+Figure~\ref{fig:sample} shows a basic example of the figure environment. The figure is automatically numbered and can be referenced throughout the document.
+
+\subsection{Figure with Specific Positioning}
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{8cm}{
+\centering
+\vspace{1.5cm}
+\textbf{FORCED POSITION FIGURE}\\
+\textit{This figure uses [H] positioning}\\
+\textit{to appear exactly here}
+\vspace{1.5cm}
+}}
+\caption{Figure with forced positioning using the [H] option from the float package.}
+\label{fig:forced}
+\end{figure}
+
+\section{TikZ Graphics}
+
+\subsection{Basic Geometric Shapes}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+% Rectangle
+\draw[thick, blue] (0,0) rectangle (2,1.5);
+\node at (1,0.75) {Rectangle};
+
+% Circle
+\draw[thick, red] (3,0.75) circle (0.75);
+\node at (3,0.75) {Circle};
+
+% Triangle
+\draw[thick, green] (5,0) -- (6.5,0) -- (5.75,1.5) -- cycle;
+\node at (5.75,0.5) {Triangle};
+
+% Ellipse
+\draw[thick, purple] (8,0.75) ellipse (1 and 0.75);
+\node at (8,0.75) {Ellipse};
+\end{tikzpicture}
+\caption{Basic geometric shapes created with TikZ.}
+\label{fig:shapes}
+\end{figure}
+
+\subsection{Mathematical Function Plots}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=10cm,
+    height=6cm,
+    xlabel={$x$},
+    ylabel={$f(x)$},
+    title={Common Mathematical Functions},
+    legend pos=north west,
+    grid=major,
+    domain=-2*pi:2*pi,
+    samples=100
+]
+\addplot[blue, thick] {sin(deg(x))};
+\addlegendentry{$\sin(x)$}
+
+\addplot[red, thick] {cos(deg(x))};
+\addlegendentry{$\cos(x)$}
+
+\addplot[green, thick] {x/3};
+\addlegendentry{$\frac{x}{3}$}
+
+\addplot[purple, thick] {exp(x/4)};
+\addlegendentry{$e^{x/4}$}
+\end{axis}
+\end{tikzpicture}
+\caption{Plot of common mathematical functions using TikZ and pgfplots.}
+\label{fig:functions}
+\end{figure}
+
+\subsection{Flowchart and Diagrams}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=2cm,
+    auto,
+    thick,
+    main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries},
+    process/.style={rectangle,fill=orange!20,draw,font=\sffamily,minimum width=2cm},
+    decision/.style={diamond,fill=yellow!20,draw,font=\sffamily,aspect=2}
+]
+
+% Nodes
+\node[main node] (start) {Start};
+\node[process, below of=start] (input) {Input Data};
+\node[decision, below of=input] (check) {Valid?};
+\node[process, below left of=check, node distance=3cm] (error) {Show Error};
+\node[process, below right of=check, node distance=3cm] (process) {Process Data};
+\node[process, below of=process] (output) {Output Result};
+\node[main node, below of=output] (end) {End};
+
+% Arrows
+\draw[->] (start) -- (input);
+\draw[->] (input) -- (check);
+\draw[->] (check) -- node {No} (error);
+\draw[->] (check) -- node {Yes} (process);
+\draw[->] (error) |- (input);
+\draw[->] (process) -- (output);
+\draw[->] (output) -- (end);
+
+\end{tikzpicture}
+\caption{Simple flowchart created with TikZ showing a basic data processing workflow.}
+\label{fig:flowchart}
+\end{figure}
+
+\section{Mathematical Diagrams}
+
+\subsection{Coordinate System}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.2]
+% Axes
+\draw[->] (-3,0) -- (3,0) node[right] {$x$};
+\draw[->] (0,-3) -- (0,3) node[above] {$y$};
+
+% Grid
+\draw[help lines, color=gray!30] (-2.9,-2.9) grid (2.9,2.9);
+
+% Points
+\fill[red] (2,1) circle (2pt) node[above right] {$(2,1)$};
+\fill[blue] (-1,2) circle (2pt) node[above left] {$(-1,2)$};
+\fill[green] (-2,-1) circle (2pt) node[below left] {$(-2,-1)$};
+\fill[purple] (1,-2) circle (2pt) node[below right] {$(1,-2)$};
+
+% Origin
+\fill[black] (0,0) circle (2pt) node[below left] {$O$};
+
+% Quadrant labels
+\node at (1.5,1.5) {\textbf{I}};
+\node at (-1.5,1.5) {\textbf{II}};
+\node at (-1.5,-1.5) {\textbf{III}};
+\node at (1.5,-1.5) {\textbf{IV}};
+\end{tikzpicture}
+\caption{Coordinate system with quadrants and sample points.}
+\label{fig:coordinates}
+\end{figure}
+
+\subsection{Geometric Constructions}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.5]
+% Triangle
+\coordinate (A) at (0,0);
+\coordinate (B) at (4,0);
+\coordinate (C) at (2,3);
+
+% Draw triangle
+\draw[thick] (A) -- (B) -- (C) -- cycle;
+
+% Labels
+\node[below left] at (A) {$A$};
+\node[below right] at (B) {$B$};
+\node[above] at (C) {$C$};
+
+% Side lengths
+\node at (2,-0.3) {$c$};
+\node[rotate=60] at (1,1.5) {$b$};
+\node[rotate=-60] at (3,1.5) {$a$};
+
+% Angles
+\draw (0.5,0) arc (0:60:0.5);
+\node at (0.7,0.2) {$\alpha$};
+
+\draw (3.5,0) arc (180:120:0.5);
+\node at (3.3,0.2) {$\beta$};
+
+\draw (2,2.5) arc (240:300:0.5);
+\node at (2,2.3) {$\gamma$};
+
+% Height
+\draw[dashed] (C) -- (2,0);
+\draw (1.9,0) -- (1.9,0.1) -- (2.1,0.1) -- (2.1,0);
+\node[right] at (2.1,1.5) {$h$};
+\end{tikzpicture}
+\caption{Triangle with labeled sides, angles, and height.}
+\label{fig:triangle}
+\end{figure}
+
+\section{Data Visualization}
+
+\subsection{Bar Chart}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    width=10cm,
+    height=6cm,
+    xlabel={Programming Languages},
+    ylabel={Popularity (\%)},
+    title={Programming Language Popularity Survey},
+    symbolic x coords={Python,Java,JavaScript,C++,C\#,Go,Rust},
+    xtick=data,
+    x tick label style={rotate=45,anchor=east},
+    ymin=0,
+    ymax=30,
+    bar width=0.6cm,
+    fill=blue!50
+]
+\addplot coordinates {
+    (Python,25.2)
+    (Java,19.8)
+    (JavaScript,17.6)
+    (C++,12.4)
+    (C\#,8.9)
+    (Go,4.7)
+    (Rust,3.1)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Bar chart showing programming language popularity percentages.}
+\label{fig:barchart}
+\end{figure}
+
+\subsection{Pie Chart}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+% Data: Web 40%, Mobile 30%, Desktop 20%, Other 10%
+\def\angleA{144} % 40% of 360
+\def\angleB{108} % 30% of 360  
+\def\angleC{72}  % 20% of 360
+\def\angleD{36}  % 10% of 360
+
+% Pie slices
+\fill[blue!60] (0,0) -- (2,0) arc (0:\angleA:2) -- cycle;
+\fill[red!60] (0,0) -- (2*cos(\angleA),2*sin(\angleA)) arc (\angleA:\angleA+\angleB:2) -- cycle;
+\fill[green!60] (0,0) -- (2*cos(\angleA+\angleB),2*sin(\angleA+\angleB)) arc (\angleA+\angleB:\angleA+\angleB+\angleC:2) -- cycle;
+\fill[yellow!60] (0,0) -- (2*cos(\angleA+\angleB+\angleC),2*sin(\angleA+\angleB+\angleC)) arc (\angleA+\angleB+\angleC:360:2) -- cycle;
+
+% Labels
+\node at (1.3,0.5) {\textbf{Web 40\%}};
+\node at (-0.5,1.3) {\textbf{Mobile 30\%}};
+\node at (-1.3,-0.5) {\textbf{Desktop 20\%}};
+\node at (0.5,-1.3) {\textbf{Other 10\%}};
+
+% Border
+\draw[thick] (0,0) circle (2);
+\end{tikzpicture}
+\caption{Pie chart showing distribution of application types in development projects.}
+\label{fig:piechart}
+\end{figure}
+
+\section{Subfigures}
+
+\subsection{Multiple Related Figures}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+    width=6cm,
+    height=4cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    title={Linear Function},
+    grid=major
+]
+\addplot[blue, thick] {2*x + 1};
+\end{axis}
+\end{tikzpicture}
+\caption{$f(x) = 2x + 1$}
+\label{fig:linear}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+    width=6cm,
+    height=4cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    title={Quadratic Function},
+    grid=major
+]
+\addplot[red, thick] {x^2 - 2*x + 1};
+\end{axis}
+\end{tikzpicture}
+\caption{$g(x) = x^2 - 2x + 1$}
+\label{fig:quadratic}
+\end{subfigure}
+
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+    width=6cm,
+    height=4cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    title={Exponential Function},
+    grid=major
+]
+\addplot[green, thick] {exp(x/2)};
+\end{axis}
+\end{tikzpicture}
+\caption{$h(x) = e^{x/2}$}
+\label{fig:exponential}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+    width=6cm,
+    height=4cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    title={Logarithmic Function},
+    grid=major
+]
+\addplot[purple, thick] {ln(x)};
+\end{axis}
+\end{tikzpicture}
+\caption{$k(x) = \ln(x)$}
+\label{fig:logarithmic}
+\end{subfigure}
+
+\caption{Comparison of different types of mathematical functions: (a) linear, (b) quadratic, (c) exponential, and (d) logarithmic.}
+\label{fig:functions_comparison}
+\end{figure}
+
+\section{Wrapped Figures}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+% Simple tree structure
+\node[circle,draw] (root) at (0,0) {Root};
+\node[circle,draw] (left) at (-1.5,-1.5) {Left};
+\node[circle,draw] (right) at (1.5,-1.5) {Right};
+\node[circle,draw] (ll) at (-2.5,-3) {LL};
+\node[circle,draw] (lr) at (-0.5,-3) {LR};
+\node[circle,draw] (rl) at (0.5,-3) {RL};
+\node[circle,draw] (rr) at (2.5,-3) {RR};
+
+\draw (root) -- (left);
+\draw (root) -- (right);
+\draw (left) -- (ll);
+\draw (left) -- (lr);
+\draw (right) -- (rl);
+\draw (right) -- (rr);
+\end{tikzpicture}
+\caption{Binary tree structure}
+\label{fig:tree}
+\end{wrapfigure}
+
+This text wraps around the figure on the right. The wrapfig package allows figures to be placed within the text flow, with text wrapping around them naturally. This is particularly useful for smaller figures that don't need to take up the full width of the page.
+
+The binary tree shown in Figure~\ref{fig:tree} demonstrates a hierarchical data structure commonly used in computer science. Each node can have at most two children, referred to as the left child and right child.
+
+Binary trees are fundamental data structures used in many algorithms, including binary search trees, heap data structures, and expression trees. The tree structure allows for efficient searching, insertion, and deletion operations when properly balanced.
+
+\section{Complex Graphics}
+
+\subsection{Network Diagram}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=3cm,
+    thick,
+    server/.style={rectangle,draw,fill=blue!20,minimum width=1.5cm,minimum height=1cm},
+    client/.style={circle,draw,fill=green!20,minimum size=1cm},
+    router/.style={diamond,draw,fill=yellow!20,minimum size=1.2cm}
+]
+
+% Servers
+\node[server] (web) at (0,4) {Web Server};
+\node[server] (db) at (4,4) {Database};
+\node[server] (cache) at (2,2) {Cache};
+
+% Router
+\node[router] (router) at (2,0) {Router};
+
+% Clients
+\node[client] (client1) at (-2,-2) {Client 1};
+\node[client] (client2) at (0,-2) {Client 2};
+\node[client] (client3) at (2,-2) {Client 3};
+\node[client] (client4) at (4,-2) {Client 4};
+\node[client] (client5) at (6,-2) {Client 5};
+
+% Connections
+\draw[<->] (web) -- (db);
+\draw[<->] (web) -- (cache);
+\draw[<->] (db) -- (cache);
+\draw[<->] (web) -- (router);
+\draw[<->] (cache) -- (router);
+
+\draw[<->] (router) -- (client1);
+\draw[<->] (router) -- (client2);
+\draw[<->] (router) -- (client3);
+\draw[<->] (router) -- (client4);
+\draw[<->] (router) -- (client5);
+
+% Labels
+\node[above] at (2,4.5) {\textbf{Server Layer}};
+\node[right] at (2.5,1) {\textbf{Network Layer}};
+\node[below] at (2,-2.5) {\textbf{Client Layer}};
+
+\end{tikzpicture}
+\caption{Network architecture diagram showing three-tier system with multiple clients.}
+\label{fig:network}
+\end{figure}
+
+\subsection{Statistical Distribution}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=6cm,
+    xlabel={$x$},
+    ylabel={Probability Density},
+    title={Normal Distribution Comparison},
+    legend pos=north east,
+    grid=major,
+    domain=-4:4,
+    samples=100,
+    smooth
+]
+
+% Standard normal distribution
+\addplot[blue, thick] {1/sqrt(2*pi) * exp(-x^2/2)};
+\addlegendentry{$\mathcal{N}(0,1)$}
+
+% Normal distribution with different parameters
+\addplot[red, thick] {1/sqrt(2*pi*0.5) * exp(-(x-1)^2/(2*0.5))};
+\addlegendentry{$\mathcal{N}(1,0.5)$}
+
+\addplot[green, thick] {1/sqrt(2*pi*2) * exp(-(x+0.5)^2/(2*2))};
+\addlegendentry{$\mathcal{N}(-0.5,2)$}
+
+% Vertical lines for means
+\addplot[blue, dashed] coordinates {(0,0) (0,0.4)};
+\addplot[red, dashed] coordinates {(1,0) (1,0.56)};
+\addplot[green, dashed] coordinates {(-0.5,0) (-0.5,0.28)};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of normal distributions with different means and variances.}
+\label{fig:normal_dist}
+\end{figure}
+
+\section{Figure References and Lists}
+
+Throughout this document, we have created numerous figures:
+
+\begin{itemize}
+\item Figure~\ref{fig:sample}: Basic figure example
+\item Figure~\ref{fig:shapes}: TikZ geometric shapes
+\item Figure~\ref{fig:functions}: Mathematical function plots
+\item Figure~\ref{fig:flowchart}: Process flowchart
+\item Figure~\ref{fig:coordinates}: Coordinate system
+\item Figure~\ref{fig:triangle}: Geometric construction
+\item Figure~\ref{fig:barchart}: Data visualization bar chart
+\item Figure~\ref{fig:piechart}: Pie chart example
+\item Figure~\ref{fig:functions_comparison}: Subfigure comparison
+\item Figure~\ref{fig:tree}: Wrapped binary tree
+\item Figure~\ref{fig:network}: Network architecture
+\item Figure~\ref{fig:normal_dist}: Statistical distributions
+\end{itemize}
+
+\listoffigures
+
+\section{Advanced Graphics Techniques}
+
+\subsection{3D Graphics}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    view={60}{30},
+    width=10cm,
+    height=8cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$z$},
+    title={3D Surface Plot: $z = \sin(x) \cos(y)$},
+    colormap/viridis,
+    mesh/interior colormap name=hot,
+    samples=20
+]
+\addplot3[surf,domain=-pi:pi,domain y=-pi:pi] {sin(deg(x))*cos(deg(y))};
+\end{axis}
+\end{tikzpicture}
+\caption{Three-dimensional surface plot created with pgfplots.}
+\label{fig:3d_surface}
+\end{figure}
+
+\subsection{Parametric Curves}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=8cm,
+    height=8cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    title={Parametric Curves},
+    axis equal,
+    grid=major,
+    legend pos=outer north east
+]
+
+% Circle: x = cos(t), y = sin(t)
+\addplot[blue, thick, samples=100, domain=0:2*pi] ({cos(deg(x))}, {sin(deg(x))});
+\addlegendentry{Circle}
+
+% Ellipse: x = 2cos(t), y = sin(t)
+\addplot[red, thick, samples=100, domain=0:2*pi] ({2*cos(deg(x))}, {sin(deg(x))});
+\addlegendentry{Ellipse}
+
+% Lissajous curve: x = sin(3t), y = sin(2t)
+\addplot[green, thick, samples=200, domain=0:2*pi] ({sin(3*deg(x))}, {sin(2*deg(x))});
+\addlegendentry{Lissajous}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Various parametric curves including circle, ellipse, and Lissajous curve.}
+\label{fig:parametric}
+\end{figure}
+
+This document demonstrates comprehensive figure and graphics capabilities in LaTeX, from basic figure environments to complex TikZ graphics and data visualizations.
+
+\end{document}

@@ -460,16 +460,20 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.heightManager = [ChatCellHeightManager sharedManager];
     self.currentDataFileIndex = 0;
     
-    // 设置数据文件路径 - 从 data1.txt 开始，然后是 data1.txt 到 data7.txt
-    self.dataFilePaths = @[
-        [[NSBundle mainBundle] pathForResource:@"data1" ofType:@"txt"],
-        [[NSBundle mainBundle] pathForResource:@"data2" ofType:@"txt"],
-        [[NSBundle mainBundle] pathForResource:@"data3" ofType:@"txt"],
-        [[NSBundle mainBundle] pathForResource:@"data4" ofType:@"txt"],
-        [[NSBundle mainBundle] pathForResource:@"data5" ofType:@"txt"],
-        [[NSBundle mainBundle] pathForResource:@"data6" ofType:@"txt"],
-        [[NSBundle mainBundle] pathForResource:@"data7" ofType:@"txt"]
-    ];
+//    NSMutableArray *paths = [NSMutableArray array];
+//    for (NSInteger i = 1; i <= 7; i++) {
+//        NSString *fileName = [NSString stringWithFormat:@"data%ld", (long)i];
+//        NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
+//        if (path) [paths addObject:path];
+//    }
+//    self.dataFilePaths = [paths copy];
+    NSMutableArray *paths = [NSMutableArray array];
+    for (NSInteger i = 1; i <= 20; i++) {
+        NSString *fileName = [NSString stringWithFormat:@"latex%ld", (long)i];
+        NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
+        if (path) [paths addObject:path];
+    }
+    self.dataFilePaths = [paths copy];
     
     NSLog(@"📁 Setup data files, total count: %ld", (long)self.dataFilePaths.count);
 }
@@ -562,7 +566,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
     // 刷新 TableView
     NSLog(@"🔄 Reloading table view, messages count: %ld", (long)self.messages.count);
     [self.tableView reloadData];
-    [self scrollToBottom];
+//    [self scrollToBottom];
     
     NSLog(@"📍 Scrolled to last message");
     
@@ -595,7 +599,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
         NSLog(@"⏰ Starting streaming timer");
         
         // 启动定时器进行流式渲染
-        self.streamingTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(streamNextChunk) userInfo:nil repeats:YES];
+        self.streamingTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(streamNextChunk) userInfo:nil repeats:YES];
     } else {
         NSLog(@"❌ 无法读取文件内容: %@", filePath);
         // 如果读取失败，也要重置按钮状态
@@ -880,9 +884,6 @@ typedef NS_ENUM(NSInteger, MessageType) {
     if (CGSizeEqualToSize(size, self.lastRecordedSize)) {
         NSLog(@"😁 Size unchanged (%.2f, %.2f), skipping update", size.width, size.height);
         return;
-    }
-    if (size.height < self.lastRecordedSize.height ) {
-        NSLog(@"😁 Size to smalleer");
     }
     
     NSLog(@"😁 Size changed from (%.2f, %.2f) to (%.2f, %.2f)",

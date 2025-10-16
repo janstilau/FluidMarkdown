@@ -1,0 +1,341 @@
+% LaTeX Test Case 13: Document Structure and Sectioning
+% This document tests various sectioning commands, document classes, table of contents,
+% cross-references, labels, and document organization features
+
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\title{Document Structure and Sectioning Test}
+\author{LaTeX Test Suite\\
+        Department of Computer Science\\
+        University of Testing}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document demonstrates various LaTeX document structuring features including sectioning commands, cross-references, table of contents, and document organization. It serves as a comprehensive test case for document hierarchy and navigation features.
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\chapter{Introduction}
+\label{chap:introduction}
+
+This is the introduction chapter. In LaTeX, chapters are the highest level of sectioning in report and book document classes. This chapter introduces the concepts that will be explored throughout this document.
+
+The document is organized into multiple chapters, each containing several sections and subsections. Cross-references are used extensively to link related content.
+
+\section{Purpose of This Document}
+\label{sec:purpose}
+
+The purpose of this document is to test various LaTeX sectioning and structuring features. As mentioned in Chapter~\ref{chap:introduction}, we will explore different levels of document hierarchy.
+
+\subsection{Testing Objectives}
+\label{subsec:objectives}
+
+Our main objectives include:
+\begin{enumerate}
+\item Testing sectioning commands from chapter to subparagraph
+\item Demonstrating cross-referencing capabilities
+\item Showing table of contents generation
+\item Exploring document metadata and organization
+\end{enumerate}
+
+\subsection{Document Scope}
+\label{subsec:scope}
+
+This document covers sectioning in the report document class. Other document classes like article and book have slightly different sectioning hierarchies.
+
+\subsubsection{Detailed Scope}
+\label{subsubsec:detailed-scope}
+
+The detailed scope includes testing of:
+\begin{itemize}
+\item All sectioning levels
+\item Numbering schemes
+\item Cross-reference formats
+\item Automatic content generation
+\end{itemize}
+
+\paragraph{Paragraph Level Heading}
+\label{para:paragraph-level}
+
+This is a paragraph-level heading. It's typically used for very fine-grained organization within subsections.
+
+\subparagraph{Subparagraph Level Heading}
+\label{subpara:subparagraph-level}
+
+This is the lowest level of sectioning available in LaTeX. Subparagraphs are rarely used but available for extremely detailed document organization.
+
+\chapter{Mathematical Content}
+\label{chap:math}
+
+This chapter contains mathematical content to demonstrate how sectioning works with mathematical environments and equations.
+
+\section{Basic Mathematics}
+\label{sec:basic-math}
+
+Let's start with some basic mathematical expressions. The quadratic formula is given by:
+
+\begin{equation}
+\label{eq:quadratic}
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{equation}
+
+Equation~\ref{eq:quadratic} is fundamental in algebra and appears in Section~\ref{sec:basic-math} of Chapter~\ref{chap:math}.
+
+\subsection{Linear Algebra}
+\label{subsec:linear-algebra}
+
+Matrix operations are essential in linear algebra. Consider the matrix equation:
+
+\begin{equation}
+\label{eq:matrix}
+\mathbf{A}\mathbf{x} = \mathbf{b}
+\end{equation}
+
+where $\mathbf{A}$ is an $n \times n$ matrix, and $\mathbf{x}$ and $\mathbf{b}$ are $n$-dimensional vectors.
+
+\subsubsection{Eigenvalues and Eigenvectors}
+\label{subsubsec:eigenvalues}
+
+For a square matrix $\mathbf{A}$, an eigenvalue $\lambda$ and corresponding eigenvector $\mathbf{v}$ satisfy:
+
+\begin{equation}
+\label{eq:eigenvalue}
+\mathbf{A}\mathbf{v} = \lambda\mathbf{v}
+\end{equation}
+
+The relationship in Equation~\ref{eq:eigenvalue} is fundamental to many applications in physics and engineering.
+
+\subsection{Calculus}
+\label{subsec:calculus}
+
+Calculus deals with rates of change and accumulation. The fundamental theorem of calculus states:
+
+\begin{equation}
+\label{eq:ftc}
+\int_a^b f'(x) dx = f(b) - f(a)
+\end{equation}
+
+\subsubsection{Derivatives}
+\label{subsubsec:derivatives}
+
+The derivative of a function $f(x)$ is defined as:
+
+\begin{equation}
+\label{eq:derivative}
+f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
+\end{equation}
+
+\subsubsection{Integrals}
+\label{subsubsec:integrals}
+
+The definite integral is defined as:
+
+\begin{equation}
+\label{eq:integral}
+\int_a^b f(x) dx = \lim_{n \to \infty} \sum_{i=1}^n f(x_i) \Delta x
+\end{equation}
+
+\chapter{Advanced Topics}
+\label{chap:advanced}
+
+This chapter explores more advanced mathematical and scientific concepts, demonstrating how complex content can be organized using LaTeX sectioning.
+
+\section{Complex Analysis}
+\label{sec:complex-analysis}
+
+Complex analysis studies functions of complex variables. A complex number can be written as:
+
+\begin{equation}
+\label{eq:complex}
+z = x + iy = r e^{i\theta}
+\end{equation}
+
+where $r = |z|$ and $\theta = \arg(z)$.
+
+\subsection{Cauchy-Riemann Equations}
+\label{subsec:cauchy-riemann}
+
+For a function $f(z) = u(x,y) + iv(x,y)$ to be analytic, it must satisfy the Cauchy-Riemann equations:
+
+\begin{align}
+\label{eq:cr1}
+\frac{\partial u}{\partial x} &= \frac{\partial v}{\partial y} \\
+\label{eq:cr2}
+\frac{\partial u}{\partial y} &= -\frac{\partial v}{\partial x}
+\end{align}
+
+Equations~\ref{eq:cr1} and~\ref{eq:cr2} are necessary conditions for analyticity.
+
+\subsection{Residue Theorem}
+\label{subsec:residue}
+
+The residue theorem is a powerful tool for evaluating complex integrals:
+
+\begin{equation}
+\label{eq:residue}
+\oint_C f(z) dz = 2\pi i \sum_{k} \text{Res}(f, z_k)
+\end{equation}
+
+where the sum is over all singularities $z_k$ inside the contour $C$.
+
+\section{Differential Equations}
+\label{sec:diff-eq}
+
+Differential equations describe relationships between functions and their derivatives.
+
+\subsection{Ordinary Differential Equations}
+\label{subsec:ode}
+
+A first-order linear ODE has the form:
+
+\begin{equation}
+\label{eq:ode1}
+\frac{dy}{dx} + P(x)y = Q(x)
+\end{equation}
+
+The solution involves an integrating factor $\mu(x) = e^{\int P(x) dx}$.
+
+\subsection{Partial Differential Equations}
+\label{subsec:pde}
+
+The wave equation is a fundamental PDE:
+
+\begin{equation}
+\label{eq:wave}
+\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}
+\end{equation}
+
+Similarly, the heat equation is:
+
+\begin{equation}
+\label{eq:heat}
+\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}
+\end{equation}
+
+\chapter{Cross-Reference Examples}
+\label{chap:cross-ref}
+
+This chapter demonstrates various types of cross-references and how they work with the sectioning system.
+
+\section{Reference Types}
+\label{sec:ref-types}
+
+LaTeX supports many types of references:
+
+\begin{itemize}
+\item Chapter references: Chapter~\ref{chap:introduction}, Chapter~\ref{chap:math}
+\item Section references: Section~\ref{sec:purpose}, Section~\ref{sec:basic-math}
+\item Subsection references: Subsection~\ref{subsec:objectives}, Subsection~\ref{subsec:linear-algebra}
+\item Equation references: Equation~\ref{eq:quadratic}, Equation~\ref{eq:matrix}
+\item Page references: page~\pageref{chap:introduction}, page~\pageref{eq:derivative}
+\end{itemize}
+
+\section{Forward and Backward References}
+\label{sec:forward-backward}
+
+We can reference content that appears later in the document. For example, see Section~\ref{sec:future-content} which appears in Chapter~\ref{chap:appendix}.
+
+We can also reference earlier content, such as the objectives listed in Subsection~\ref{subsec:objectives} of Chapter~\ref{chap:introduction}.
+
+\section{Multiple References}
+\label{sec:multiple-ref}
+
+Sometimes we need to reference multiple items. The key equations in this document are Equations~\ref{eq:quadratic}, \ref{eq:matrix}, and~\ref{eq:eigenvalue}. The main mathematical chapters are Chapters~\ref{chap:math} and~\ref{chap:advanced}.
+
+\chapter{Document Metadata}
+\label{chap:metadata}
+
+This chapter explores document metadata and organizational features.
+
+\section{Title Information}
+\label{sec:title-info}
+
+The document title, author, and date are specified in the preamble and displayed using the \texttt{\textbackslash maketitle} command.
+
+\section{Table of Contents}
+\label{sec:toc}
+
+The table of contents is automatically generated from the sectioning commands. It includes:
+\begin{itemize}
+\item All chapters, sections, and subsections
+\item Automatic page numbering
+\item Hyperlinks (when using hyperref package)
+\end{itemize}
+
+\section{Lists of Figures and Tables}
+\label{sec:lists}
+
+LaTeX can automatically generate lists of figures and tables. While this document doesn't contain actual figures or tables, the commands \texttt{\textbackslash listoffigures} and \texttt{\textbackslash listoftables} demonstrate the capability.
+
+\chapter{Numbering Schemes}
+\label{chap:numbering}
+
+This chapter explores different numbering schemes and how they interact with sectioning.
+
+\section{Hierarchical Numbering}
+\label{sec:hierarchical}
+
+LaTeX uses hierarchical numbering by default:
+\begin{itemize}
+\item Chapters: 1, 2, 3, ...
+\item Sections: 1.1, 1.2, 2.1, 2.2, ...
+\item Subsections: 1.1.1, 1.1.2, 1.2.1, ...
+\item Equations: (1.1), (1.2), (2.1), ...
+\end{itemize}
+
+\section{Custom Numbering}
+\label{sec:custom-numbering}
+
+Numbering can be customized using various LaTeX commands and packages. The depth of numbering in the table of contents can also be controlled.
+
+\appendix
+
+\chapter{Appendix Material}
+\label{chap:appendix}
+
+This is an appendix chapter. Appendices are numbered with letters (A, B, C, ...) instead of numbers.
+
+\section{Future Content}
+\label{sec:future-content}
+
+This section was referenced earlier in Section~\ref{sec:forward-backward} as an example of forward referencing.
+
+\section{Additional Examples}
+\label{sec:additional}
+
+Additional mathematical examples and proofs can be placed in appendices to avoid cluttering the main text.
+
+\subsection{Proof of Fundamental Theorem}
+\label{subsec:proof}
+
+Detailed proofs and derivations are often relegated to appendices for readers who want the complete mathematical details.
+
+\chapter{Bibliography and Index}
+\label{chap:biblio}
+
+This appendix chapter would typically contain bibliography and index information.
+
+\section{References}
+\label{sec:references}
+
+In a real document, this section would contain properly formatted references to external sources.
+
+\section{Index}
+\label{sec:index}
+
+An alphabetical index of important terms and concepts would appear here in a complete document.
+
+\end{document}

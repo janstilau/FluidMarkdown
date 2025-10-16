@@ -1,0 +1,300 @@
+% LaTeX Test Case 14: Special Environments and Theorem-like Structures
+% This document tests various special environments including theorem, proof, definition,
+% example, remark, and other mathematical and academic writing environments
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{xcolor}
+\usepackage{framed}
+
+% Define theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{note}[theorem]{Note}
+\newtheorem{observation}[theorem]{Observation}
+
+\title{Special Environments and Theorem-like Structures Test}
+\author{LaTeX Test Suite}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic Theorem Environments}
+
+\begin{theorem}[Pythagorean Theorem]
+\label{thm:pythagoras}
+In a right triangle with legs of length $a$ and $b$, and hypotenuse of length $c$, we have:
+$$a^2 + b^2 = c^2$$
+\end{theorem}
+
+\begin{proof}
+Consider a right triangle with legs $a$ and $b$, and hypotenuse $c$. We can construct a square with side length $(a+b)$ and arrange four copies of our triangle within it.
+
+The area of the large square is $(a+b)^2 = a^2 + 2ab + b^2$.
+
+The area can also be calculated as the sum of the four triangles plus the inner square with side length $c$:
+$$4 \cdot \frac{1}{2}ab + c^2 = 2ab + c^2$$
+
+Setting these equal: $a^2 + 2ab + b^2 = 2ab + c^2$
+
+Simplifying: $a^2 + b^2 = c^2$
+\end{proof}
+
+\begin{lemma}
+\label{lem:triangle-inequality}
+For any real numbers $x$ and $y$, we have $|x + y| \leq |x| + |y|$.
+\end{lemma}
+
+\begin{proof}
+We consider several cases based on the signs of $x$ and $y$.
+
+Case 1: If $x \geq 0$ and $y \geq 0$, then $|x + y| = x + y = |x| + |y|$.
+
+Case 2: If $x < 0$ and $y < 0$, then $|x + y| = -(x + y) = -x - y = |x| + |y|$.
+
+Case 3: If $x \geq 0$ and $y < 0$, then either $x + y \geq 0$ or $x + y < 0$.
+\begin{itemize}
+\item If $x + y \geq 0$, then $|x + y| = x + y \leq x - y = |x| + |y|$.
+\item If $x + y < 0$, then $|x + y| = -(x + y) = -x - y \leq -x + y = |x| + |y|$.
+\end{itemize}
+
+Case 4: If $x < 0$ and $y \geq 0$, the proof is similar to Case 3.
+
+In all cases, $|x + y| \leq |x| + |y|$.
+\end{proof}
+
+\begin{proposition}
+\label{prop:quadratic-roots}
+The quadratic equation $ax^2 + bx + c = 0$ with $a \neq 0$ has:
+\begin{itemize}
+\item Two distinct real roots if $\Delta = b^2 - 4ac > 0$
+\item One repeated real root if $\Delta = b^2 - 4ac = 0$
+\item Two complex conjugate roots if $\Delta = b^2 - 4ac < 0$
+\end{itemize}
+\end{proposition}
+
+\begin{corollary}
+\label{cor:discriminant}
+A quadratic polynomial $ax^2 + bx + c$ with $a > 0$ is always positive if and only if its discriminant $\Delta = b^2 - 4ac < 0$.
+\end{corollary}
+
+\section{Definition Environments}
+
+\begin{definition}[Group]
+\label{def:group}
+A \emph{group} is a set $G$ together with a binary operation $\cdot: G \times G \to G$ such that:
+\begin{enumerate}
+\item \textbf{Closure:} For all $a, b \in G$, we have $a \cdot b \in G$.
+\item \textbf{Associativity:} For all $a, b, c \in G$, we have $(a \cdot b) \cdot c = a \cdot (b \cdot c)$.
+\item \textbf{Identity:} There exists an element $e \in G$ such that for all $a \in G$, $e \cdot a = a \cdot e = a$.
+\item \textbf{Inverse:} For each $a \in G$, there exists an element $a^{-1} \in G$ such that $a \cdot a^{-1} = a^{-1} \cdot a = e$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Limit of a Function]
+\label{def:limit}
+Let $f$ be a function defined on some open interval containing $a$, except possibly at $a$ itself. We say that
+$$\lim_{x \to a} f(x) = L$$
+if for every $\varepsilon > 0$, there exists a $\delta > 0$ such that whenever $0 < |x - a| < \delta$, we have $|f(x) - L| < \varepsilon$.
+\end{definition}
+
+\begin{definition}[Big O Notation]
+\label{def:big-o}
+Let $f$ and $g$ be functions from $\mathbb{N}$ to $\mathbb{R}^+$. We say that $f(n) = O(g(n))$ if there exist positive constants $c$ and $n_0$ such that
+$$f(n) \leq c \cdot g(n)$$
+for all $n \geq n_0$.
+\end{definition}
+
+\section{Example Environments}
+
+\begin{example}[Linear Group]
+\label{ex:linear-group}
+The set of all $n \times n$ invertible matrices over the real numbers, denoted $GL_n(\mathbb{R})$, forms a group under matrix multiplication. The identity element is the identity matrix $I_n$, and the inverse of a matrix $A$ is its matrix inverse $A^{-1}$.
+\end{example}
+
+\begin{example}[Limit Calculation]
+\label{ex:limit-calc}
+Calculate $\lim_{x \to 2} \frac{x^2 - 4}{x - 2}$.
+
+We cannot directly substitute $x = 2$ since this gives $\frac{0}{0}$. Instead, we factor:
+$$\frac{x^2 - 4}{x - 2} = \frac{(x-2)(x+2)}{x-2} = x + 2$$
+for $x \neq 2$.
+
+Therefore, $\lim_{x \to 2} \frac{x^2 - 4}{x - 2} = \lim_{x \to 2} (x + 2) = 4$.
+\end{example}
+
+\begin{example}[Algorithm Complexity]
+\label{ex:complexity}
+Consider the following algorithm for finding the maximum element in an array:
+\begin{verbatim}
+function findMax(array A of length n):
+    max = A[0]
+    for i = 1 to n-1:
+        if A[i] > max:
+            max = A[i]
+    return max
+\end{verbatim}
+
+This algorithm performs exactly $n-1$ comparisons, so its time complexity is $O(n)$.
+\end{example}
+
+\section{Exercise Environments}
+
+\begin{exercise}
+\label{ex:prove-inequality}
+Prove that for any positive real numbers $a$ and $b$, we have $\frac{a+b}{2} \geq \sqrt{ab}$ (the arithmetic-geometric mean inequality).
+\end{exercise}
+
+\begin{exercise}
+\label{ex:group-properties}
+Let $(G, \cdot)$ be a group. Prove that:
+\begin{enumerate}
+\item The identity element is unique.
+\item For each element $a \in G$, the inverse $a^{-1}$ is unique.
+\item For any $a \in G$, we have $(a^{-1})^{-1} = a$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:limit-properties}
+Using the definition of limit, prove that if $\lim_{x \to a} f(x) = L$ and $\lim_{x \to a} g(x) = M$, then $\lim_{x \to a} [f(x) + g(x)] = L + M$.
+\end{exercise}
+
+\section{Remark and Note Environments}
+
+\begin{remark}
+\label{rem:pythagoras-history}
+The Pythagorean theorem was known to ancient civilizations long before Pythagoras. Babylonian tablets from around 1800 BCE contain Pythagorean triples, suggesting knowledge of the relationship.
+\end{remark}
+
+\begin{note}
+\label{note:group-notation}
+In group theory, the operation is often written multiplicatively (as $a \cdot b$ or simply $ab$), but it can also be written additively (as $a + b$) when the group is abelian. The choice of notation is conventional and depends on the context.
+\end{note}
+
+\begin{observation}
+\label{obs:limit-uniqueness}
+If a limit exists, it is unique. This follows from the triangle inequality and the definition of limit. Suppose $\lim_{x \to a} f(x) = L_1$ and $\lim_{x \to a} f(x) = L_2$. Then for any $\varepsilon > 0$, we can make both $|f(x) - L_1| < \varepsilon/2$ and $|f(x) - L_2| < \varepsilon/2$, which implies $|L_1 - L_2| < \varepsilon$. Since this holds for any $\varepsilon > 0$, we must have $L_1 = L_2$.
+\end{observation}
+
+\section{Advanced Theorem Structures}
+
+\begin{theorem}[Fundamental Theorem of Calculus]
+\label{thm:ftc}
+Let $f$ be a continuous function on $[a, b]$.
+\begin{enumerate}
+\item If $F(x) = \int_a^x f(t) \, dt$, then $F$ is differentiable on $(a, b)$ and $F'(x) = f(x)$.
+\item If $G$ is any antiderivative of $f$ on $[a, b]$, then $\int_a^b f(x) \, dx = G(b) - G(a)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We prove each part separately.
+
+\textbf{Part 1:} Let $F(x) = \int_a^x f(t) \, dt$. We need to show that $F'(x) = f(x)$.
+
+By definition of the derivative:
+$$F'(x) = \lim_{h \to 0} \frac{F(x+h) - F(x)}{h} = \lim_{h \to 0} \frac{1}{h} \left( \int_a^{x+h} f(t) \, dt - \int_a^x f(t) \, dt \right)$$
+
+Using properties of integrals:
+$$F'(x) = \lim_{h \to 0} \frac{1}{h} \int_x^{x+h} f(t) \, dt$$
+
+Since $f$ is continuous, by the Mean Value Theorem for integrals, there exists $c \in [x, x+h]$ such that:
+$$\int_x^{x+h} f(t) \, dt = f(c) \cdot h$$
+
+Therefore:
+$$F'(x) = \lim_{h \to 0} \frac{f(c) \cdot h}{h} = \lim_{h \to 0} f(c) = f(x)$$
+
+The last equality follows from the continuity of $f$ and the fact that $c \to x$ as $h \to 0$.
+
+\textbf{Part 2:} Let $G$ be any antiderivative of $f$, so $G'(x) = f(x)$. Define $H(x) = \int_a^x f(t) \, dt$. From Part 1, we know $H'(x) = f(x) = G'(x)$.
+
+This means $(G - H)'(x) = 0$, so $G(x) - H(x) = C$ for some constant $C$.
+
+Setting $x = a$: $G(a) - H(a) = G(a) - 0 = G(a) = C$.
+
+Therefore, $G(x) = H(x) + G(a) = \int_a^x f(t) \, dt + G(a)$.
+
+Setting $x = b$: $G(b) = \int_a^b f(t) \, dt + G(a)$.
+
+Rearranging: $\int_a^b f(t) \, dt = G(b) - G(a)$.
+\end{proof}
+
+\section{Nested Environments}
+
+\begin{theorem}[Intermediate Value Theorem]
+\label{thm:ivt}
+Let $f$ be a continuous function on the closed interval $[a, b]$, and let $y$ be any value between $f(a)$ and $f(b)$. Then there exists a point $c \in [a, b]$ such that $f(c) = y$.
+
+\begin{proof}
+Without loss of generality, assume $f(a) < y < f(b)$ (the case $f(b) < y < f(a)$ is similar).
+
+Define the set $S = \{x \in [a, b] : f(x) < y\}$.
+
+\begin{lemma}
+The set $S$ is non-empty and bounded above.
+\end{lemma}
+
+\begin{proof}[Proof of Lemma]
+Since $f(a) < y$, we have $a \in S$, so $S$ is non-empty. Since $S \subseteq [a, b]$, the set $S$ is bounded above by $b$.
+\end{proof}
+
+By the completeness of the real numbers, $S$ has a supremum. Let $c = \sup S$.
+
+We claim that $f(c) = y$.
+
+\begin{itemize}
+\item If $f(c) < y$, then by continuity, there exists $\delta > 0$ such that $f(x) < y$ for all $x \in (c - \delta, c + \delta)$. This means $c + \delta/2 \in S$, contradicting the fact that $c$ is an upper bound for $S$.
+
+\item If $f(c) > y$, then by continuity, there exists $\delta > 0$ such that $f(x) > y$ for all $x \in (c - \delta, c + \delta)$. This means no point in $(c - \delta, c]$ can be in $S$, so $c - \delta/2$ is an upper bound for $S$, contradicting the fact that $c$ is the least upper bound.
+\end{itemize}
+
+Therefore, $f(c) = y$.
+\end{proof}
+\end{theorem}
+
+\section{Custom Environment Examples}
+
+\begin{framed}
+\textbf{Important Note:} This is an example of a custom framed environment that can be used to highlight important information or warnings in mathematical texts.
+\end{framed}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\textbf{Key Insight:} The power of theorem-like environments lies in their ability to structure mathematical arguments clearly and provide automatic numbering and cross-referencing capabilities.
+}}
+\end{center}
+
+\section{Cross-References to Theorems}
+
+Throughout this document, we have established several important results:
+
+\begin{itemize}
+\item Theorem~\ref{thm:pythagoras} provides the fundamental relationship in right triangles.
+\item Lemma~\ref{lem:triangle-inequality} is essential for many proofs in analysis.
+\item Definition~\ref{def:group} establishes the axiomatic foundation for group theory.
+\item The Fundamental Theorem of Calculus (Theorem~\ref{thm:ftc}) connects differentiation and integration.
+\item The Intermediate Value Theorem (Theorem~\ref{thm:ivt}) guarantees the existence of solutions to certain equations.
+\end{itemize}
+
+These results build upon each other and demonstrate the hierarchical nature of mathematical knowledge.
+
+\end{document}

@@ -1,0 +1,237 @@
+物理公式和科学记号测试
+本文档测试物理学中常用的LaTeX公式、单位、向量表示等科学记号。
+
+# 经典力学
+
+## 牛顿定律
+
+第一定律（惯性定律）：
+物体在不受外力或合外力为零时，保持静止或匀速直线运动状态。
+
+第二定律：
+$$\vec{F} = m\vec{a} = m\frac{d\vec{v}}{dt} = \frac{d\vec{p}}{dt}$$
+
+第三定律：
+$$\vec{F}_{12} = -\vec{F}_{21}$$
+
+## 运动学
+
+位移：$\vec{s} = \vec{r}(t) - \vec{r}(0)$
+
+速度：$\vec{v} = \frac{d\vec{r}}{dt}$
+
+加速度：$\vec{a} = \frac{d\vec{v}}{dt} = \frac{d^2\vec{r}}{dt^2}$
+
+匀加速直线运动：
+$$v = v_0 + at$$
+$$s = v_0 t + \frac{1}{2}at^2$$
+$$v^2 = v_0^2 + 2as$$
+
+## 圆周运动
+
+角速度：$\omega = \frac{d\theta}{dt}$
+
+角加速度：$\alpha = \frac{d\omega}{dt}$
+
+向心加速度：$a_c = \frac{v^2}{r} = \omega^2 r$
+
+向心力：$F_c = m\frac{v^2}{r} = m\omega^2 r$
+
+## 功和能
+
+功：$W = \int \vec{F} \cdot d\vec{s} = Fs\cos\theta$
+
+动能：$E_k = \frac{1}{2}mv^2$
+
+势能：$E_p = mgh$（重力势能）
+
+动能定理：$W = \Delta E_k = E_{k2} - E_{k1}$
+
+机械能守恒：$E_k + E_p = \text{常数}$
+
+## 动量
+
+动量：$\vec{p} = m\vec{v}$
+
+冲量：$\vec{I} = \int \vec{F} dt = \Delta \vec{p}$
+
+动量守恒定律：
+$$\sum \vec{p}_i = \text{常数}$$
+
+弹性碰撞：
+$$m_1 v_1 + m_2 v_2 = m_1 v_1' + m_2 v_2'$$
+$$\frac{1}{2}m_1 v_1^2 + \frac{1}{2}m_2 v_2^2 = \frac{1}{2}m_1 v_1'^2 + \frac{1}{2}m_2 v_2'^2$$
+
+# 电磁学
+
+## 库仑定律
+
+$$\vec{F} = k\frac{q_1 q_2}{r^2}\hat{r} = \frac{1}{4\pi\epsilon_0}\frac{q_1 q_2}{r^2}\hat{r}$$
+
+其中 $k = \frac{1}{4\pi\epsilon_0} = 8.99 \times 10^9 \, \text{N·m}^2/\text{C}^2$
+
+## 电场
+
+电场强度：$\vec{E} = \frac{\vec{F}}{q} = \frac{1}{4\pi\epsilon_0}\frac{Q}{r^2}\hat{r}$
+
+电势：$V = \frac{U}{q} = \int_{\infty}^{r} \vec{E} \cdot d\vec{l}$
+
+电势能：$U = qV$
+
+高斯定律：
+$$\oint \vec{E} \cdot d\vec{A} = \frac{Q_{\text{enc}}}{\epsilon_0}$$
+
+## 磁场
+
+洛伦兹力：$\vec{F} = q(\vec{v} \times \vec{B})$
+
+安培力：$\vec{F} = I\vec{L} \times \vec{B}$
+
+毕奥-萨伐尔定律：
+$$d\vec{B} = \frac{\mu_0}{4\pi}\frac{Id\vec{l} \times \hat{r}}{r^2}$$
+
+安培环路定律：
+$$\oint \vec{B} \cdot d\vec{l} = \mu_0 I_{\text{enc}}$$
+
+## 电磁感应
+
+法拉第定律：
+$$\mathcal{E} = -\frac{d\Phi_B}{dt} = -\frac{d}{dt}\int \vec{B} \cdot d\vec{A}$$
+
+楞次定律：感应电流的方向总是阻碍引起它的磁通量的变化
+
+自感：$\mathcal{E} = -L\frac{dI}{dt}$
+
+互感：$\mathcal{E}_{12} = -M\frac{dI_1}{dt}$
+
+## 麦克斯韦方程组
+
+$$\nabla \cdot \vec{E} = \frac{\rho}{\epsilon_0}$$
+$$\nabla \cdot \vec{B} = 0$$
+$$\nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t}$$
+$$\nabla \times \vec{B} = \mu_0 \vec{J} + \mu_0 \epsilon_0 \frac{\partial \vec{E}}{\partial t}$$
+
+# 热力学
+
+## 理想气体
+
+状态方程：$PV = nRT = Nk_B T$
+
+其中：
+- $R = 8.314 \, \text{J/(mol·K)}$（气体常数）
+- $k_B = 1.38 \times 10^{-23} \, \text{J/K}$（玻尔兹曼常数）
+- $N_A = 6.022 \times 10^{23} \, \text{mol}^{-1}$（阿伏伽德罗常数）
+
+## 热力学第一定律
+
+$$dU = \delta Q - \delta W$$
+
+或者：$\Delta U = Q - W$
+
+对于理想气体：$dU = nC_V dT$
+
+## 热力学第二定律
+
+克劳修斯表述：热量不能自发地从低温物体传递到高温物体
+
+开尔文表述：不可能从单一热源吸取热量并把它完全转换为功
+
+熵增原理：$dS \geq \frac{\delta Q}{T}$
+
+## 卡诺循环
+
+效率：$\eta = 1 - \frac{T_2}{T_1}$
+
+其中$T_1$是高温热源温度，$T_2$是低温热源温度
+
+# 量子力学
+
+## 薛定谔方程
+
+时间相关：
+$$i\hbar\frac{\partial \Psi}{\partial t} = \hat{H}\Psi$$
+
+时间无关：
+$$\hat{H}\psi = E\psi$$
+
+其中$\hbar = \frac{h}{2\pi} = 1.055 \times 10^{-34} \, \text{J·s}$
+
+## 不确定性原理
+
+海森堡不确定性原理：
+$$\Delta x \Delta p \geq \frac{\hbar}{2}$$
+
+能量-时间不确定性：
+$$\Delta E \Delta t \geq \frac{\hbar}{2}$$
+
+## 氢原子
+
+波函数：$\psi_{nlm}(r,\theta,\phi) = R_{nl}(r)Y_l^m(\theta,\phi)$
+
+能级：$E_n = -\frac{13.6 \, \text{eV}}{n^2}$
+
+## 德布罗意波
+
+德布罗意波长：$\lambda = \frac{h}{p} = \frac{h}{mv}$
+
+# 相对论
+
+## 狭义相对论
+
+洛伦兹因子：$\gamma = \frac{1}{\sqrt{1-v^2/c^2}}$
+
+时间膨胀：$\Delta t = \gamma \Delta t_0$
+
+长度收缩：$L = \frac{L_0}{\gamma}$
+
+质能关系：$E = mc^2$
+
+相对论动量：$\vec{p} = \gamma m \vec{v}$
+
+相对论能量：$E^2 = (pc)^2 + (mc^2)^2$
+
+## 广义相对论
+
+爱因斯坦场方程：
+$$G_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu}$$
+
+其中$G_{\mu\nu}$是爱因斯坦张量，$T_{\mu\nu}$是能量-动量张量
+
+# 统计力学
+
+## 玻尔兹曼分布
+
+$$P(E) = \frac{1}{Z}e^{-E/k_B T}$$
+
+其中配分函数：$Z = \sum_i e^{-E_i/k_B T}$
+
+## 麦克斯韦-玻尔兹曼分布
+
+速度分布：
+$$f(v) = 4\pi n \left(\frac{m}{2\pi k_B T}\right)^{3/2} v^2 e^{-mv^2/2k_B T}$$
+
+最概然速度：$v_p = \sqrt{\frac{2k_B T}{m}}$
+
+平均速度：$\langle v \rangle = \sqrt{\frac{8k_B T}{\pi m}}$
+
+方均根速度：$v_{rms} = \sqrt{\frac{3k_B T}{m}}$
+
+# 原子物理
+
+## 玻尔模型
+
+轨道半径：$r_n = n^2 a_0$，其中$a_0 = 0.529 \times 10^{-10} \, \text{m}$
+
+能级：$E_n = -\frac{13.6 \, \text{eV}}{n^2}$
+
+## 光电效应
+
+爱因斯坦方程：$E_k = h\nu - W_0$
+
+其中$W_0$是逸出功，$h = 6.626 \times 10^{-34} \, \text{J·s}$
+
+## 康普顿散射
+
+波长变化：$\Delta \lambda = \frac{h}{m_e c}(1 - \cos\theta)$
+
+其中$\frac{h}{m_e c} = 2.43 \times 10^{-12} \, \text{m}$是康普顿波长
