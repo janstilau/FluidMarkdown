@@ -306,9 +306,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
 @interface StreamingChatViewController () <UITableViewDataSource, UITableViewDelegate, AMXMarkdownTextViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *inputContainer;
-@property (nonatomic, strong) UITextField *inputField;
 @property (nonatomic, strong) UIButton *sendButton;
-@property (nonatomic, strong) UIButton *pauseButton;
 @property (nonatomic, strong) UIButton *stopButton;
 
 @property (nonatomic, strong) NSMutableArray<ChatMessage *> *messages;
@@ -383,13 +381,6 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.inputContainer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.inputContainer];
     
-    // 输入框
-    self.inputField = [[UITextField alloc] init];
-    self.inputField.placeholder = @"输入消息...";
-    self.inputField.borderStyle = UITextBorderStyleRoundedRect;
-    self.inputField.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.inputContainer addSubview:self.inputField];
-    
     // 发送按钮
     self.sendButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.sendButton setTitle:@"发送" forState:UIControlStateNormal];
@@ -397,12 +388,6 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.inputContainer addSubview:self.sendButton];
     
-    // 暂停按钮
-    self.pauseButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
-    [self.pauseButton addTarget:self action:@selector(pauseStreaming) forControlEvents:UIControlEventTouchUpInside];
-    self.pauseButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.inputContainer addSubview:self.pauseButton];
     
     // 停止按钮
     self.stopButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -413,7 +398,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.stopButton.hidden = YES;
     [self.inputContainer addSubview:self.stopButton];
     
-    // 约束设置
+    // 约束设置（双按钮布局：左侧发送，右侧停止）
     [NSLayoutConstraint activateConstraints:@[
         // TableView
         [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
@@ -427,31 +412,17 @@ typedef NS_ENUM(NSInteger, MessageType) {
         [self.inputContainer.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
         [self.inputContainer.heightAnchor constraintEqualToConstant:60],
         
-        // 输入框
-        [self.inputField.leadingAnchor constraintEqualToAnchor:self.inputContainer.leadingAnchor constant:16],
-        [self.inputField.centerYAnchor constraintEqualToAnchor:self.inputContainer.centerYAnchor],
-        [self.inputField.heightAnchor constraintEqualToConstant:36],
-        
-        // 发送按钮
-        [self.sendButton.trailingAnchor constraintEqualToAnchor:self.pauseButton.leadingAnchor constant:-8],
+        // 发送按钮（左侧）
+        [self.sendButton.leadingAnchor constraintEqualToAnchor:self.inputContainer.leadingAnchor constant:16],
         [self.sendButton.centerYAnchor constraintEqualToAnchor:self.inputContainer.centerYAnchor],
         [self.sendButton.widthAnchor constraintEqualToConstant:60],
         [self.sendButton.heightAnchor constraintEqualToConstant:36],
         
-        // 暂停按钮
-        [self.pauseButton.trailingAnchor constraintEqualToAnchor:self.stopButton.leadingAnchor constant:-8],
-        [self.pauseButton.centerYAnchor constraintEqualToAnchor:self.inputContainer.centerYAnchor],
-        [self.pauseButton.widthAnchor constraintEqualToConstant:60],
-        [self.pauseButton.heightAnchor constraintEqualToConstant:36],
-        
-        // 停止按钮
+        // 停止按钮（右侧）
         [self.stopButton.trailingAnchor constraintEqualToAnchor:self.inputContainer.trailingAnchor constant:-16],
         [self.stopButton.centerYAnchor constraintEqualToAnchor:self.inputContainer.centerYAnchor],
         [self.stopButton.widthAnchor constraintEqualToConstant:60],
-        [self.stopButton.heightAnchor constraintEqualToConstant:36],
-        
-        // 输入框与发送按钮的间距
-        [self.inputField.trailingAnchor constraintEqualToAnchor:self.sendButton.leadingAnchor constant:-8]
+        [self.stopButton.heightAnchor constraintEqualToConstant:36]
     ]];
 }
 
@@ -558,10 +529,9 @@ typedef NS_ENUM(NSInteger, MessageType) {
     [self.messages addObject:aiMessage];
     self.currentStreamingMessage = aiMessage;
     
-    // 显示停止按钮和暂停按钮，隐藏发送按钮
+    // 显示停止按钮，隐藏发送按钮
     self.sendButton.hidden = YES;
     self.stopButton.hidden = NO;
-    self.pauseButton.hidden = NO;
     
     // 刷新 TableView
     NSLog(@"🔄 Reloading table view, messages count: %ld", (long)self.messages.count);
@@ -668,9 +638,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
         ChatMessage *lastMessage = self.messages.lastObject;
         lastMessage.isStreaming = NO;
         
-        // 数据流式输入完成后，立即更新按钮状态
-        // 隐藏暂停按钮，因为没有数据流可以暂停了
-        self.pauseButton.hidden = YES;
+        // 数据流式输入完成
         
         // 如果渲染也已完成，则完全完成消息处理
         if (lastMessage.isRenderingComplete) {
@@ -678,7 +646,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
         }
     }
     
-    NSLog(@"✅ Data streaming completed, pause button hidden");
+    NSLog(@"✅ Data streaming completed");
 }
 
 // 处理消息渲染完全完成（数据输入和渲染都完成）
@@ -716,73 +684,20 @@ typedef NS_ENUM(NSInteger, MessageType) {
 - (void)resetButtonStates {
     self.sendButton.hidden = NO;
     self.stopButton.hidden = YES;
-    self.pauseButton.hidden = YES;
     self.sendButton.enabled = YES;
-    
-    // 重置暂停按钮的标题为默认状态
-    [self.pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
 }
 
-// 暂停流式渲染
-- (void)pauseStreaming {
-    if (self.isStreaming && self.streamingTimer) {
-        // 暂停数据流式输入
-        [self.streamingTimer invalidate];
-        self.streamingTimer = nil;
-        self.isStreaming = NO;
-        [self.pauseButton setTitle:@"继续" forState:UIControlStateNormal];
-        
-        // 暂停 AMXMarkdownTextView 的渲染
-        if (self.sharedStreamingMarkdownView) {
-            [self.sharedStreamingMarkdownView pause];
-        }
-        
-        NSLog(@"⏸️ Streaming paused");
-    } else if (!self.isStreaming && self.streamingContent && self.streamingIndex < self.streamingContent.length) {
-        // 恢复数据流式输入
-        self.isStreaming = YES;
-        NSTimer *timer = [NSTimer timerWithTimeInterval:0.05 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            [self streamNextChunk];
-        }];
-        self.streamingTimer = timer;
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        [self.pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
-        
-        // 恢复 AMXMarkdownTextView 的渲染
-        if (self.sharedStreamingMarkdownView) {
-            [self.sharedStreamingMarkdownView resume];
-        }
-        
-        NSLog(@"▶️ Streaming resumed");
-    }
-}
+// 暂停功能已移除（仅保留发送与停止按钮）
 
 - (void)stopStreaming {
     NSLog(@"🛑 Stop streaming button pressed");
     
     [self stopStreamingTimer];
     
-    // 停止 AMXMarkdownTextView 的渲染 - 避免在更新期间调用 cellForRowAtIndexPath
-    if (self.messages.count > 0) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
-        NSArray *visibleCells = [self.tableView visibleCells];
-        
-        for (UITableViewCell *cell in visibleCells) {
-            if ([cell isKindOfClass:[AIMessageCell class]]) {
-                NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-                if (cellIndexPath && cellIndexPath.row == indexPath.row) {
-                    AIMessageCell *aiCell = (AIMessageCell *)cell;
-                if (aiCell.markdownView) {
-                    [aiCell.markdownView stop];
-                }
-                    break;
-                }
-            }
-        }
+    // 停止 AMXMarkdownTextView 的渲染（直接停止共享视图）
+    if (self.sharedStreamingMarkdownView) {
+        [self.sharedStreamingMarkdownView stop];
     }
-    
-    // 重置暂停按钮状态
-    [self.pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
 }
 
 - (void)clearMessages {
