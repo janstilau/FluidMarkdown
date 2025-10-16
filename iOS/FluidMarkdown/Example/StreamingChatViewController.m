@@ -8,6 +8,8 @@
 #import "AMXRenderService.h"
 #import "UIColor+Random.h"
 
+static CGFloat kContentWidth = 380;
+
 // 消息类型枚举
 typedef NS_ENUM(NSInteger, MessageType) {
     MessageTypeUser = 0,
@@ -179,6 +181,11 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.markdownView.translatesAutoresizingMaskIntoConstraints = NO;
     self.markdownView.styleId = @"chat";
     self.markdownView.textViewDelegate = self;
+    
+    // 关键修复：设置与高度计算一致的内边距配置
+    self.markdownView.textContainerInset = UIEdgeInsetsZero;
+    self.markdownView.textContainer.lineFragmentPadding = 0;
+    
 //    self.markdownView.userInteractionEnabled = false;
     [self.bubbleView addSubview:self.markdownView];
     
@@ -188,13 +195,13 @@ typedef NS_ENUM(NSInteger, MessageType) {
         [self.bubbleView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:16],
         [self.bubbleView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:0],
         [self.bubbleView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:0],
-        [self.bubbleView.widthAnchor constraintLessThanOrEqualToConstant:320],
+        [self.bubbleView.widthAnchor constraintLessThanOrEqualToConstant:kContentWidth],
         
         // Markdown 视图约束
         [self.markdownView.leadingAnchor constraintEqualToAnchor:self.bubbleView.leadingAnchor constant:12],
         [self.markdownView.trailingAnchor constraintEqualToAnchor:self.bubbleView.trailingAnchor constant:-12],
-        [self.markdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:0],
-        [self.markdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:0]
+        [self.markdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:5],
+        [self.markdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:-5]
     ]];
     
 //    self.backgroundColor = [UIColor randomColor];
@@ -269,7 +276,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
     [self.bubbleView addSubview:sharedMarkdownView];
     
     // 更新共享markdownView的frame以匹配约束宽度
-    CGFloat constrainWidth = 320 - 24; // 与heightForRowAtIndexPath保持一致
+    CGFloat constrainWidth = kContentWidth - 24; // 与heightForRowAtIndexPath保持一致
     CGRect newFrame = sharedMarkdownView.frame;
     newFrame.size.width = constrainWidth;
     sharedMarkdownView.frame = newFrame;
@@ -278,8 +285,8 @@ typedef NS_ENUM(NSInteger, MessageType) {
     [NSLayoutConstraint activateConstraints:@[
         [sharedMarkdownView.leadingAnchor constraintEqualToAnchor:self.bubbleView.leadingAnchor constant:12],
         [sharedMarkdownView.trailingAnchor constraintEqualToAnchor:self.bubbleView.trailingAnchor constant:-12],
-        [sharedMarkdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:0],
-        [sharedMarkdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:0]
+        [sharedMarkdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:5],
+        [sharedMarkdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:-5]
     ]];
 }
 
@@ -459,13 +466,18 @@ typedef NS_ENUM(NSInteger, MessageType) {
 
 - (void)setupSharedStreamingMarkdownView {
     // 创建共享的流式渲染 AMXMarkdownTextView，设置合适的初始frame
-    CGFloat constrainWidth = 320 - 24; // 气泡宽度减去内边距，与heightForRowAtIndexPath保持一致
+    CGFloat constrainWidth = kContentWidth - 24; // 气泡宽度减去内边距，与heightForRowAtIndexPath保持一致
     self.sharedStreamingMarkdownView = [[AMXMarkdownTextView alloc] initWithFrame_ant_mark:CGRectMake(0, 0, constrainWidth, 100)];
     self.sharedStreamingMarkdownView.backgroundColor = [UIColor.redColor colorWithAlphaComponent:0.5];
     self.sharedStreamingMarkdownView.delegate = self;
     self.sharedStreamingMarkdownView.backgroundColor = [UIColor clearColor];
     self.sharedStreamingMarkdownView.translatesAutoresizingMaskIntoConstraints = NO;
     self.sharedStreamingMarkdownView.styleId = @"chat";
+    self.sharedStreamingMarkdownView.panGestureRecognizer.enabled = false;
+    
+    // 关键修复：设置与高度计算一致的内边距配置
+    self.sharedStreamingMarkdownView.textContainerInset = UIEdgeInsetsZero;
+    self.sharedStreamingMarkdownView.textContainer.lineFragmentPadding = 0;
     
     // 关键修复：完全禁用用户交互，避免阻塞tableView滑动
     self.sharedStreamingMarkdownView.scrollEnabled = NO;
@@ -832,40 +844,33 @@ typedef NS_ENUM(NSInteger, MessageType) {
         return size.height + 32; // 加上 padding
     } else {
         // AI 消息使用高度管理器
-        CGFloat constrainWidth = 320 - 24; // 气泡宽度减去内边距
-        
+        CGFloat constrainWidth = kContentWidth - 24; // 气泡宽度减去内边距
         if (message.isStreaming || !message.isRenderingComplete) {
             // 流式渲染中的消息或渲染未完成的消息，使用共享的markdownView计算高度
             if (self.sharedStreamingMarkdownView) {
-                return [self.heightManager heightForStreamingMessage:message.messageId textView:self.sharedStreamingMarkdownView];
+                CGFloat hegith = [self.heightManager heightForStreamingMessage:message.messageId textView:self.sharedStreamingMarkdownView];
+                NSLog(@"%@ 高度动态 %@", message.messageId, @(hegith));
+                return hegith;
             } else {
                 return [self.heightManager estimatedHeightForMessage:message.messageId];
             }
         } else {
             // 渲染完成的静态消息
-            return [self.heightManager heightForStaticMessage:message.messageId
-                                                      content:message.content
-                                               constrainWidth:constrainWidth];
+            CGFloat hegith = [self.heightManager heightForStaticMessage:message.messageId
+                                                                content:message.content
+                                                         constrainWidth:constrainWidth];
+            NSLog(@"%@ 高度静态 %@", message.messageId, @(hegith));
+            return hegith;
         }
     }
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    ChatMessage *message = self.messages[indexPath.row];
-//    
-//    if (message.type == MessageTypeUser) {
-//        return 60;
-//    } else {
-//        return [self.heightManager estimatedHeightForMessage:message.messageId];
-//    }
-//}
 
 #pragma mark - AMXMarkdownTextViewDelegate
 
 - (void)onSizeChange:(CGSize)size {
     if (self.currentStreamingMessage) {
         // 更新流式渲染消息的高度
-        [self.heightManager updateStreamingHeight:size.height + 32 forMessageId:self.currentStreamingMessage.messageId];
+        [self.heightManager updateStreamingHeight:size.height + 10 forMessageId:self.currentStreamingMessage.messageId];
         
         // 方法1：使用performBatchUpdates（推荐）- 更平滑，无动画
         [self.tableView performBatchUpdates:^{
@@ -899,7 +904,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
             
             // 如果不在底部（允许一定的误差范围）
             if (currentOffset < bottomOffset - 10) {
-                [self scrollToBottom];
+//                [self scrollToBottom];
             }
         }
     }

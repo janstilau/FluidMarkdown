@@ -238,6 +238,11 @@ static AMXMarkdownTextView* _caculateContentView;
 
 - (void)addStreamContent:(NSString *)text
 {
+    // 构建完整的富文本：安全部分 + 新渲染部分
+    if (!self.preloadMarkdownAttrStr) {
+        self.preloadMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+    }
+    
     if (text.length <= 0) {
         return;
     }
@@ -260,9 +265,13 @@ static AMXMarkdownTextView* _caculateContentView;
         [strongSelf.preloadMarkdownRawText appendString:text];
         
         
-//        // 原来的逻辑
-//        strongSelf.preloadMarkdownAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:strongSelf.preloadMarkdownRawText];
-//        return;
+        // 原来的逻辑
+        strongSelf.preloadMarkdownAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:strongSelf.preloadMarkdownRawText];
+        // 如果处于暂停状态，恢复计时器以继续渲染
+        if (strongSelf.state == AMXMarkdownPrintStatePaused) {
+            [strongSelf resumeInternal];
+        }
+        return;
         
         // 使用安全索引优化渲染：从当前安全位置开始查找新的安全位置
         NSInteger newSafeIndex = [strongSelf findSafeRawStringIndex:strongSelf.preloadMarkdownRawText fromIndex:strongSelf.safeRawStringIndex];
@@ -280,11 +289,6 @@ static AMXMarkdownTextView* _caculateContentView;
                 [strongSelf.safeMarkdownAttrStr appendAttributedString:newSafeAttrStr];
             }
             strongSelf.safeRawStringIndex = newSafeIndex;
-        }
-        
-        // 构建完整的富文本：安全部分 + 新渲染部分
-        if (!strongSelf.preloadMarkdownAttrStr) {
-            strongSelf.preloadMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
         }
         
         // 使用已缓存的安全富文本作为基础

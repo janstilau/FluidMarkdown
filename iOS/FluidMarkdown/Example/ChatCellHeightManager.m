@@ -8,7 +8,7 @@
 static const NSInteger kMaxCachedHeights = 50;
 static const NSInteger kMaxEstimatedHeights = 100;
 static const CGFloat kDefaultEstimatedHeight = 100.0;
-static const CGFloat kCellPadding = 20.0;
+static const CGFloat kCellPadding = 10.0;
 
 @interface ChatCellHeightManager ()
 
@@ -72,9 +72,10 @@ static const CGFloat kCellPadding = 20.0;
     
     // 2. 使用 AMXMarkdownTextView 的静态计算方法
     CGSize constrainSize = CGSizeMake(constrainWidth, CGFLOAT_MAX);
-    CGSize contentSize = [AMXMarkdownTextView caculateContentSize:content 
-                                                    constrainSize:constrainSize 
-                                                          styleId:@"default"];
+    CGSize contentSize = [AMXMarkdownTextView
+                          caculateContentSize:content
+                                                    constrainSize:constrainSize
+                                                          styleId:@"chat"];
     
     CGFloat totalHeight = contentSize.height + kCellPadding;
     
@@ -84,6 +85,8 @@ static const CGFloat kCellPadding = 20.0;
     
     // 4. 同时设置预估高度
     self.estimatedHeights[messageId] = @(totalHeight);
+    
+    NSLog(@"更新静态高度 %@ 为 %@", messageId, @(totalHeight));
     
     return totalHeight;
 }
@@ -127,7 +130,6 @@ static const CGFloat kCellPadding = 20.0;
     // 将流式渲染的高度移动到精确缓存中
     NSNumber *streamingHeight = self.streamingHeights[messageId];
     if (streamingHeight) {
-        self.cachedHeights[messageId] = streamingHeight;
         [self.streamingHeights removeObjectForKey:messageId];
     }
 }
