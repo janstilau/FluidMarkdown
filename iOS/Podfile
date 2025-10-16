@@ -10,8 +10,8 @@ target 'FluidMarkdown' do
 
   # Pods for FluidMarkdown
   
-  # DoraemonKit 调试工具 - 仅在 Debug 配置下使用
-  pod 'DoraemonKit/Core', '~> 3.0.4', :configurations => ['Debug']
+  # DoraemonKit 调试工具 - 临时注释掉以避免沙盒权限问题
+   pod 'DoraemonKit/Core', '~> 3.0.4', :configurations => ['Debug']
 #  pod 'DoraemonKit/WithLogger', '~> 3.0.4', :configurations => ['Debug']
 #  pod 'DoraemonKit/WithGPS', '~> 3.0.4', :configurations => ['Debug']
 #  # 暂时注释掉 WithLoad，因为 DoraemonLoadAnalyze.framework 存在架构兼容问题

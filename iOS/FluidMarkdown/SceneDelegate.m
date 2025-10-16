@@ -7,6 +7,7 @@
 #import <AntMarkdown/AntMarkdown.h>
 #import "MenuViewController.h"
 #import "CustomAttachmentViewController.h"
+#import <DoraemonKit/DoraemonManager.h>
 
 @interface SceneDelegate ()
 
@@ -26,6 +27,8 @@
     MenuViewController *rootVC = [[MenuViewController alloc] init];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootVC];
     [self.window makeKeyAndVisible];
+    
+    [DoraemonManager.shareInstance install];
 }
 
 
