@@ -8,7 +8,7 @@
 #import "AMXRenderService.h"
 #import "UIColor+Random.h"
 
-static CGFloat kContentWidth = 380;
+static CGFloat kContentWidth = 330;
 
 // 消息类型枚举
 typedef NS_ENUM(NSInteger, MessageType) {
@@ -186,7 +186,8 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.markdownView.textContainerInset = UIEdgeInsetsZero;
     self.markdownView.textContainer.lineFragmentPadding = 0;
     
-//    self.markdownView.userInteractionEnabled = false;
+    // 关键修复：禁用用户交互，避免阻塞tableView滑动
+    self.markdownView.scrollEnabled = false;
     [self.bubbleView addSubview:self.markdownView];
     
     // 约束设置
@@ -327,12 +328,18 @@ typedef NS_ENUM(NSInteger, MessageType) {
 // 专用的流式渲染 AMXMarkdownTextView（不在cell中，在ViewController层面）
 @property (nonatomic, strong) AMXMarkdownTextView *sharedStreamingMarkdownView;
 @property (nonatomic, strong) AIMessageCell *currentMountedCell;
+
+// 尺寸变化优化相关
+@property (nonatomic, assign) CGSize lastRecordedSize;
 @end
 
 @implementation StreamingChatViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 初始化尺寸记录
+    self.lastRecordedSize = CGSizeZero;
     
     // 设置 Markdown 样式
     [[AMXRenderService shared] setMarkdownStyleWithId:[AMXMarkdownStyleConfig defaultConfig] styleId:@"chat"];
@@ -486,8 +493,6 @@ typedef NS_ENUM(NSInteger, MessageType) {
     for (UIGestureRecognizer *gesture in self.sharedStreamingMarkdownView.gestureRecognizers) {
         [self.sharedStreamingMarkdownView removeGestureRecognizer:gesture];
     }
-    
-    NSLog(@"🔧 Shared streaming markdown view initialized with width: %.2f, userInteractionEnabled: NO", constrainWidth);
     
     self.sharedStreamingMarkdownView.layer.borderColor = [[UIColor purpleColor] CGColor];
     self.sharedStreamingMarkdownView.layer.borderWidth = 2;
@@ -868,9 +873,24 @@ typedef NS_ENUM(NSInteger, MessageType) {
 #pragma mark - AMXMarkdownTextViewDelegate
 
 - (void)onSizeChange:(CGSize)size {
+    // 尺寸变化优化：只有当尺寸真正发生变化时才执行后续逻辑
+    if (CGSizeEqualToSize(size, self.lastRecordedSize)) {
+        NSLog(@"📏 Size unchanged (%.2f, %.2f), skipping update", size.width, size.height);
+        return;
+    }
+    
+    NSLog(@"📏 Size changed from (%.2f, %.2f) to (%.2f, %.2f)", 
+          self.lastRecordedSize.width, self.lastRecordedSize.height, 
+          size.width, size.height);
+    
+    // 记录新的尺寸
+    self.lastRecordedSize = size;
+    
     if (self.currentStreamingMessage) {
         // 更新流式渲染消息的高度
         [self.heightManager updateStreamingHeight:size.height + 10 forMessageId:self.currentStreamingMessage.messageId];
+        
+//        [self.tableView reloadData];
         
         // 方法1：使用performBatchUpdates（推荐）- 更平滑，无动画
         [self.tableView performBatchUpdates:^{
@@ -902,10 +922,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
             CGFloat currentOffset = self.tableView.contentOffset.y;
             CGFloat bottomOffset = contentHeight - tableViewHeight;
             
-            // 如果不在底部（允许一定的误差范围）
-            if (currentOffset < bottomOffset - 10) {
-//                [self scrollToBottom];
-            }
+            [self scrollToBottom];
         }
     }
 }
