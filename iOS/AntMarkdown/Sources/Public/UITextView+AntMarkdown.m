@@ -403,7 +403,7 @@
      */
     
     // ========== 第三阶段：动画效果处理 ==========
-    animated = false;
+//    animated = false;
     NSInteger totalCount = [attributedText length];
     if (animated) {
         // 3.1 设置遮罩层，用于实现渐变显示效果

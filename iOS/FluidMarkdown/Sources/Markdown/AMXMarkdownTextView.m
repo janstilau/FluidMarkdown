@@ -231,6 +231,11 @@ static AMXMarkdownTextView* _caculateContentView;
     }
     [self.preloadMarkdownRawText appendString:text];
     
+    
+//    // 原来的逻辑
+//    self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:self.preloadMarkdownRawText];
+//    return;
+    
     // 使用安全索引优化渲染：从当前安全位置开始查找新的安全位置
     NSInteger newSafeIndex = [self findSafeRawStringIndex:self.preloadMarkdownRawText fromIndex:self.safeRawStringIndex];
     
@@ -264,6 +269,9 @@ static AMXMarkdownTextView* _caculateContentView;
         remainingAttrStr = [AMXMarkdownHelper restoreWhitespaceForAttributedString:remainingAttrStr originalString:remainingContent];
         if (remainingAttrStr) {
             [self.preloadMarkdownAttrStr appendAttributedString:remainingAttrStr];
+        }
+        if (self.timerCountIndex > self.preloadMarkdownAttrStr.length) {
+            self.timerCountIndex = self.preloadMarkdownAttrStr.length;
         }
     }
     
@@ -337,14 +345,14 @@ static AMXMarkdownTextView* _caculateContentView;
     if (!self.timer) {
         return;
     }
-    if (self.preloadMarkdownRawText.length == 0) {
+    if (self.preloadMarkdownAttrStr.length == 0) {
         return;
     }
     
-    if (self.timerCountIndex <= self.preloadMarkdownRawText.length) {
+    if (self.timerCountIndex <= self.preloadMarkdownAttrStr.length) {
         [self timerRenderUI];
         self.timerCountIndex += self.chunkSize;
-        if (self.timerCountIndex > self.preloadMarkdownRawText.length) {
+        if (self.timerCountIndex > self.preloadMarkdownAttrStr.length) {
             [self pause];
         }
     } else {
@@ -421,7 +429,7 @@ static AMXMarkdownTextView* _caculateContentView;
     if (value.length <= 0) {
         return NSMutableAttributedString.new;
     }
-    NSLog(@"当前渲染: %@", value);
+    NSLog(@"当前渲染:长度 %@  %@ ", @(value.length), value);
     if (!self.nativeStyles) {
         AMXMarkdownStyleConfig* style = [[AMXRenderService shared] getMarkdownStyleWithId:self.styleId];
         self.nativeStyles = [AMXMarkdownTextView XRMarkdownStyle2AMTextStyle:style textView:self];

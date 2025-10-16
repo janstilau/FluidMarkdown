@@ -72,12 +72,12 @@ typedef NS_ENUM(NSInteger, MessageType) {
         // 文本约束
         [self.messageLabel.leadingAnchor constraintEqualToAnchor:self.bubbleView.leadingAnchor constant:12],
         [self.messageLabel.trailingAnchor constraintEqualToAnchor:self.bubbleView.trailingAnchor constant:-12],
-        [self.messageLabel.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:8],
-        [self.messageLabel.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:-8]
+        [self.messageLabel.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:0],
+        [self.messageLabel.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:-0]
     ]];
     
-    self.backgroundColor = [UIColor randomColor];
-    self.contentView.backgroundColor = self.backgroundColor;
+//    self.backgroundColor = [UIColor randomColor];
+//    self.contentView.backgroundColor = self.backgroundColor;
 }
 
 - (void)prepareForReuse {
@@ -88,6 +88,12 @@ typedef NS_ENUM(NSInteger, MessageType) {
 - (void)configureWithMessage:(ChatMessage *)message {
     self.messageLabel.text = message.content;
 }
+
+@end
+
+@interface BubbleView: UIView
+@end
+@implementation BubbleView
 
 @end
 
@@ -160,7 +166,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     // 气泡背景
-    self.bubbleView = [[UIView alloc] init];
+    self.bubbleView = [[BubbleView alloc] init];
     self.bubbleView.backgroundColor = [UIColor systemGray6Color];
     self.bubbleView.layer.cornerRadius = 12;
     self.bubbleView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -172,26 +178,32 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.markdownView.translatesAutoresizingMaskIntoConstraints = NO;
     self.markdownView.styleId = @"chat";
     self.markdownView.textViewDelegate = self;
-    self.markdownView.userInteractionEnabled = false;
+//    self.markdownView.userInteractionEnabled = false;
     [self.bubbleView addSubview:self.markdownView];
     
     // 约束设置
     [NSLayoutConstraint activateConstraints:@[
         // 气泡约束
         [self.bubbleView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:16],
-        [self.bubbleView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:8],
-        [self.bubbleView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-8],
+        [self.bubbleView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:0],
+        [self.bubbleView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:0],
         [self.bubbleView.widthAnchor constraintLessThanOrEqualToConstant:320],
         
         // Markdown 视图约束
         [self.markdownView.leadingAnchor constraintEqualToAnchor:self.bubbleView.leadingAnchor constant:12],
         [self.markdownView.trailingAnchor constraintEqualToAnchor:self.bubbleView.trailingAnchor constant:-12],
-        [self.markdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:8],
-        [self.markdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:-8]
+        [self.markdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:0],
+        [self.markdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:0]
     ]];
     
-    self.backgroundColor = [UIColor randomColor];
-    self.contentView.backgroundColor = self.backgroundColor;
+//    self.backgroundColor = [UIColor randomColor];
+//    self.contentView.backgroundColor = self.backgroundColor;
+    
+    self.bubbleView.layer.borderColor = UIColor.redColor.CGColor;
+    self.bubbleView.layer.borderWidth = 1;
+    
+    self.markdownView.layer.borderColor = UIColor.purpleColor.CGColor;
+    self.markdownView.layer.borderWidth = 1;
 }
 
 - (void)prepareForReuse {
@@ -264,14 +276,9 @@ typedef NS_ENUM(NSInteger, MessageType) {
     [NSLayoutConstraint activateConstraints:@[
         [sharedMarkdownView.leadingAnchor constraintEqualToAnchor:self.bubbleView.leadingAnchor constant:12],
         [sharedMarkdownView.trailingAnchor constraintEqualToAnchor:self.bubbleView.trailingAnchor constant:-12],
-        [sharedMarkdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:8],
-        [sharedMarkdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:-8]
+        [sharedMarkdownView.topAnchor constraintEqualToAnchor:self.bubbleView.topAnchor constant:0],
+        [sharedMarkdownView.bottomAnchor constraintEqualToAnchor:self.bubbleView.bottomAnchor constant:0]
     ]];
-    
-    // 显示共享的markdownView
-    sharedMarkdownView.hidden = NO;
-    
-    NSLog(@"✅ Shared markdown view mounted successfully with width: %.2f", constrainWidth);
 }
 
 // 卸载共享的流式渲染markdownView
@@ -279,16 +286,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
     NSLog(@"🔌 Unmounting shared markdown view from cell");
     
     // 隐藏并从bubbleView中移除共享的markdownView
-    sharedMarkdownView.hidden = YES;
     [sharedMarkdownView removeFromSuperview];
-    
-    // 显示自己的markdownView（如果消息已完成，应该渲染完整内容）
-    if (self.message && !self.message.isStreaming) {
-        self.markdownView.hidden = NO;
-        [self.markdownView renderCompleteContent:self.message.content];
-        NSLog(@"📝 Restored cell's own markdownView with complete content");
-    }
-    
     NSLog(@"✅ Shared markdown view unmounted successfully");
 }
 
@@ -402,7 +400,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
         [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
         [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.tableView.bottomAnchor constraintEqualToAnchor:self.inputContainer.topAnchor],
+        [self.tableView.bottomAnchor constraintEqualToAnchor:self.inputContainer.topAnchor constant:-20],
         
         // 输入容器
         [self.inputContainer.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
@@ -461,16 +459,21 @@ typedef NS_ENUM(NSInteger, MessageType) {
     // 创建共享的流式渲染 AMXMarkdownTextView，设置合适的初始frame
     CGFloat constrainWidth = 320 - 24; // 气泡宽度减去内边距，与heightForRowAtIndexPath保持一致
     self.sharedStreamingMarkdownView = [[AMXMarkdownTextView alloc] initWithFrame_ant_mark:CGRectMake(0, 0, constrainWidth, 100)];
+    self.sharedStreamingMarkdownView.backgroundColor = [UIColor.redColor colorWithAlphaComponent:0.5];
     self.sharedStreamingMarkdownView.delegate = self;
     self.sharedStreamingMarkdownView.backgroundColor = [UIColor clearColor];
     self.sharedStreamingMarkdownView.translatesAutoresizingMaskIntoConstraints = NO;
     self.sharedStreamingMarkdownView.styleId = @"chat";
-    self.sharedStreamingMarkdownView.userInteractionEnabled = NO;
     
-    // 初始状态下隐藏，只有在流式渲染时才显示
-    self.sharedStreamingMarkdownView.hidden = YES;
+    // 关键修复：完全禁用用户交互，避免阻塞tableView滑动
+    self.sharedStreamingMarkdownView.scrollEnabled = NO;
     
-    NSLog(@"🔧 Shared streaming markdown view initialized with width: %.2f", constrainWidth);
+    // 移除所有手势识别器，避免干扰tableView的滑动
+    for (UIGestureRecognizer *gesture in self.sharedStreamingMarkdownView.gestureRecognizers) {
+        [self.sharedStreamingMarkdownView removeGestureRecognizer:gesture];
+    }
+    
+    NSLog(@"🔧 Shared streaming markdown view initialized with width: %.2f, userInteractionEnabled: NO", constrainWidth);
 }
 
 #pragma mark - Actions
@@ -583,10 +586,8 @@ typedef NS_ENUM(NSInteger, MessageType) {
         return;
     }
     
-    NSLog(@"🔄 streamNextChunk called, index: %ld, total: %ld", (long)self.streamingIndex, (long)self.streamingContent.length);
-    
     // 每次添加 3 个字符
-    NSInteger chunkSize = 3;
+    NSInteger chunkSize = 5;
     NSInteger remainingLength = self.streamingContent.length - self.streamingIndex;
     NSInteger actualChunkSize = MIN(chunkSize, remainingLength);
     
@@ -606,8 +607,6 @@ typedef NS_ENUM(NSInteger, MessageType) {
             // 更新高度缓存
             CGFloat newHeight = [self.heightManager heightForStreamingMessage:self.currentStreamingMessage.messageId textView:self.sharedStreamingMarkdownView];
             [self.heightManager updateStreamingHeight:newHeight forMessageId:self.currentStreamingMessage.messageId];
-            
-            NSLog(@"📏 Updated height: %.2f for message: %@", newHeight, self.currentStreamingMessage.messageId);
         }
         
         // 延迟更新 TableView 高度，避免在更新期间调用
@@ -670,7 +669,11 @@ typedef NS_ENUM(NSInteger, MessageType) {
     } else if (!self.isStreaming && self.streamingContent && self.streamingIndex < self.streamingContent.length) {
         // 恢复流式渲染
         self.isStreaming = YES;
-        self.streamingTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(streamNextChunk) userInfo:nil repeats:YES];
+        NSTimer *timer =  [NSTimer timerWithTimeInterval:0.05 repeats:true block:^(NSTimer * _Nonnull timer) {
+                    [self streamNextChunk];
+        }];
+        self.streamingTimer = timer;
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         [self.pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
         
         // 恢复 AMXMarkdownTextView
@@ -726,7 +729,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
 - (void)scrollToBottom {
     if (self.messages.count > 0) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }
 }
 
@@ -738,10 +741,10 @@ typedef NS_ENUM(NSInteger, MessageType) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatMessage *message = self.messages[indexPath.row];
-    NSLog(@"🏗️ Creating cell for indexPath: %@, message type: %d, isStreaming: %d", indexPath, message.type, message.isStreaming);
-    
     if (message.type == MessageTypeUser) {
         UserMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserMessageCell" forIndexPath:indexPath];
+        cell.layer.borderColor = UIColor.blueColor.CGColor;
+        cell.layer.borderWidth = 2;
         [cell configureWithMessage:message];
         NSLog(@"👤 Created UserMessageCell");
         return cell;
@@ -762,11 +765,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
             // 挂载到当前cell
             [cell mountSharedMarkdownView:self.sharedStreamingMarkdownView];
             self.currentMountedCell = cell;
-            
-            NSLog(@"✅ Shared markdown view mounted to current streaming cell");
         }
-        
-        NSLog(@"🤖 Created AIMessageCell, streaming: %d", message.isStreaming);
         return cell;
     }
 }
@@ -803,15 +802,15 @@ typedef NS_ENUM(NSInteger, MessageType) {
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatMessage *message = self.messages[indexPath.row];
-    
-    if (message.type == MessageTypeUser) {
-        return 60;
-    } else {
-        return [self.heightManager estimatedHeightForMessage:message.messageId];
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    ChatMessage *message = self.messages[indexPath.row];
+//    
+//    if (message.type == MessageTypeUser) {
+//        return 60;
+//    } else {
+//        return [self.heightManager estimatedHeightForMessage:message.messageId];
+//    }
+//}
 
 #pragma mark - AMXMarkdownTextViewDelegate
 
@@ -820,13 +819,55 @@ typedef NS_ENUM(NSInteger, MessageType) {
         // 更新流式渲染消息的高度
         [self.heightManager updateStreamingHeight:size.height + 32 forMessageId:self.currentStreamingMessage.messageId];
         
-        // 平滑更新 TableView 高度
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
+        // 方法1：使用performBatchUpdates（推荐）- 更平滑，无动画
+        [self.tableView performBatchUpdates:^{
+            // 这里不需要做任何操作，只是触发高度重新计算
+        } completion:nil];
         
-        // 保持滚动到底部
-        [self scrollToBottom];
+        // 方法2：如果performBatchUpdates还是有晃动，可以尝试直接更新特定行
+//         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
+//         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        // 方法3：最平滑的方式 - 手动调整contentSize（如果上面方法还是晃动的话）
+//         CGFloat oldContentHeight = self.tableView.contentSize.height;
+//         CGFloat newContentHeight = [self calculateTotalContentHeight];
+//         CGFloat heightDiff = newContentHeight - oldContentHeight;
+//         if (heightDiff != 0) {
+//             CGPoint currentOffset = self.tableView.contentOffset;
+//             self.tableView.contentSize = CGSizeMake(self.tableView.contentSize.width, newContentHeight);
+//             // 如果用户在底部，保持在底部
+//             if (currentOffset.y >= oldContentHeight - self.tableView.frame.size.height - 10) {
+//                 [self.tableView setContentOffset:CGPointMake(0, newContentHeight - self.tableView.frame.size.height) animated:NO];
+//             }
+//         }
+        
+        // 只有在没有手指触摸、没有在滚动且当前没有在底部时才触发 scrollToBottom
+        if (!self.tableView.isTracking && !self.tableView.isDragging && !self.tableView.isDecelerating) {
+            // 检查是否已经在底部
+            CGFloat contentHeight = self.tableView.contentSize.height;
+            CGFloat tableViewHeight = self.tableView.frame.size.height;
+            CGFloat currentOffset = self.tableView.contentOffset.y;
+            CGFloat bottomOffset = contentHeight - tableViewHeight;
+            
+            // 如果不在底部（允许一定的误差范围）
+            if (currentOffset < bottomOffset - 10) {
+                [self scrollToBottom];
+            }
+        }
     }
+}
+
+// 计算TableView的总内容高度
+- (CGFloat)calculateTotalContentHeight {
+    CGFloat totalHeight = 0;
+    
+    for (NSInteger i = 0; i < self.messages.count; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        CGFloat cellHeight = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+        totalHeight += cellHeight;
+    }
+    
+    return totalHeight;
 }
 
 - (void)onPrintComplete {
