@@ -1,0 +1,42 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '12.0'
+
+# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+target 'FluidMarkdown' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for FluidMarkdown
+  
+  # DoraemonKit 调试工具 - 仅在 Debug 配置下使用
+  pod 'DoraemonKit/Core', '~> 3.0.4', :configurations => ['Debug']
+#  pod 'DoraemonKit/WithLogger', '~> 3.0.4', :configurations => ['Debug']
+#  pod 'DoraemonKit/WithGPS', '~> 3.0.4', :configurations => ['Debug']
+#  # 暂时注释掉 WithLoad，因为 DoraemonLoadAnalyze.framework 存在架构兼容问题
+#  # pod 'DoraemonKit/WithLoad', '~> 3.0.4', :configurations => ['Debug']
+#  pod 'DoraemonKit/WithWeex', '~> 3.0.4', :configurations => ['Debug']
+#  pod 'DoraemonKit/WithDatabase', '~> 3.0.4', :configurations => ['Debug']
+  # 暂时注释掉 WithMLeaksFinder，因为 FBRetainCycleDetector 存在编译问题
+  # pod 'DoraemonKit/WithMLeaksFinder', '3.0.4', :configurations => ['Debug']
+
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+      # 修复 rsync 权限问题
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+      # 避免符号链接问题
+      config.build_settings['COPY_PHASE_STRIP'] = 'NO'
+      config.build_settings['STRIP_INSTALLED_PRODUCT'] = 'NO'
+    end
+  end
+  
+  # 修复文件权限
+  system("find #{installer.sandbox.root} -name '*.framework' -exec chmod -R 755 {} \\;")
+  system("find #{installer.sandbox.root} -name '*.bundle' -exec chmod -R 755 {} \\;")
+end

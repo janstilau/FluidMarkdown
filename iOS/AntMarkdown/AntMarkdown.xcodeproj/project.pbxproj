@@ -204,8 +204,7 @@
 		9CF1E8872CDBA5B100451CBD /* cmark-gfm-extension_api.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CF1E7012CDB9D8200451CBD /* cmark-gfm-extension_api.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CF1E8882CDBA5B500451CBD /* cmark-gfm.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CF1E7022CDB9D8200451CBD /* cmark-gfm.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CF1E8892CDBA5F500451CBD /* CMNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CF1E75B2CDB9D8200451CBD /* CMNode_Private.h */; };
-		A2CA04A0188A78A900D1E152 /* AntMarkdown-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2CA0499188A78A900D1E152 /* AntMarkdown-Info.plist */; };
-		A2CA04A1188A78A900D1E152 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2CA049B188A78A900D1E152 /* InfoPlist.strings */; };
+		A2CA04A1188A78A900D1E152 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2CA049A188A78A900D1E152 /* InfoPlist.strings */; };
 		A2E668DD2D310BA2005CC3B6 /* AMGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E668DC2D310BA2005CC3B6 /* AMGradientLayer.m */; };
 		A2E668DE2D310BA2005CC3B6 /* AMGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E668DB2D310BA2005CC3B6 /* AMGradientLayer.h */; };
 		AAC068C2188D1F8E001B468D /* AntMarkdown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAC068C1188D1F8E001B468D /* AntMarkdown.bundle */; };
@@ -1017,7 +1016,6 @@
 			files = (
 				9CF1E8682CDB9FE300451CBD /* mathFonts.bundle in Resources */,
 				9CF1E8692CDB9FE300451CBD /* highlightjs.bundle in Resources */,
-				A2CA04A0188A78A900D1E152 /* AntMarkdown-Info.plist in Resources */,
 				A2CA04A1188A78A900D1E152 /* InfoPlist.strings in Resources */,
 				AAC068C2188D1F8E001B468D /* AntMarkdown.bundle in Resources */,
 			);
