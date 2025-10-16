@@ -266,7 +266,14 @@ static AMXMarkdownTextView* _caculateContentView;
         
         
         // 原来的逻辑
-        strongSelf.preloadMarkdownAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:strongSelf.preloadMarkdownRawText];
+        NSMutableAttributedString *updatedAttsr = [strongSelf markdowmMutableAttributedStringFromValue:strongSelf.preloadMarkdownRawText];
+        if (updatedAttsr.length == 0) {
+            return;
+        }
+        strongSelf.preloadMarkdownAttrStr = updatedAttsr;
+        if (strongSelf.timerCountIndex > strongSelf.preloadMarkdownAttrStr.length) {
+            strongSelf.timerCountIndex = strongSelf.preloadMarkdownAttrStr.length;
+        }
         // 如果处于暂停状态，恢复计时器以继续渲染
         if (strongSelf.state == AMXMarkdownPrintStatePaused) {
             [strongSelf resumeInternal];
@@ -458,6 +465,14 @@ static AMXMarkdownTextView* _caculateContentView;
         markdownAttrStr = self.markdownAttrStr;
     }
     return markdownAttrStr;
+}
+- (void)setTimerCountIndex:(NSInteger)timerCountIndex {
+    NSInteger rawIndex = _timerCountIndex;
+    _timerCountIndex = timerCountIndex;
+    NSLog(@"timerCountIndex changed from %@ to %@", @(rawIndex), @(timerCountIndex));
+    if (rawIndex > 200 && _timerCountIndex == 0 ) {
+        NSLog(@"timerCountIndex changed from %@ to %@", @(rawIndex), @(timerCountIndex));
+    }
 }
 -(void)notifyError:(NSError*)error
 {

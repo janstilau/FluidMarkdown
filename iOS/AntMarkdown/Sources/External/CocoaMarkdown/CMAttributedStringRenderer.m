@@ -74,6 +74,9 @@
         [parser parse];
         
         _attributedString = [_buffer copy];
+        if (_attributedString.length == 0) {
+            NSLog(@"empty");
+        }
         _attributeStack = nil;
         _HTMLStack = nil;
         _buffer = nil;

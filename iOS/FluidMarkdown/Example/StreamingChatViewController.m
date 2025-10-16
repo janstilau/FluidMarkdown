@@ -345,6 +345,9 @@ typedef NS_ENUM(NSInteger, MessageType) {
     [[AMXRenderService shared] setMarkdownStyleWithId:[AMXMarkdownStyleConfig defaultConfig] styleId:@"chat"];
     [self setupUI];
     [self setupData];
+    
+    // 添加 tableView contentSize 监听
+    [self.tableView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 - (void)setupUI {
@@ -635,10 +638,10 @@ typedef NS_ENUM(NSInteger, MessageType) {
         }
         
         // 延迟更新 TableView 高度，避免在更新期间调用
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView beginUpdates];
-            [self.tableView endUpdates];
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView beginUpdates];
+//            [self.tableView endUpdates];
+//        });
     } else {
         NSLog(@"❌ Shared streaming markdownView is nil");
     }
@@ -875,12 +878,15 @@ typedef NS_ENUM(NSInteger, MessageType) {
 - (void)onSizeChange:(CGSize)size {
     // 尺寸变化优化：只有当尺寸真正发生变化时才执行后续逻辑
     if (CGSizeEqualToSize(size, self.lastRecordedSize)) {
-        NSLog(@"📏 Size unchanged (%.2f, %.2f), skipping update", size.width, size.height);
+        NSLog(@"😁 Size unchanged (%.2f, %.2f), skipping update", size.width, size.height);
         return;
     }
+    if (size.height < self.lastRecordedSize.height ) {
+        NSLog(@"😁 Size to smalleer");
+    }
     
-    NSLog(@"📏 Size changed from (%.2f, %.2f) to (%.2f, %.2f)", 
-          self.lastRecordedSize.width, self.lastRecordedSize.height, 
+    NSLog(@"😁 Size changed from (%.2f, %.2f) to (%.2f, %.2f)",
+          self.lastRecordedSize.width, self.lastRecordedSize.height,
           size.width, size.height);
     
     // 记录新的尺寸
@@ -890,39 +896,27 @@ typedef NS_ENUM(NSInteger, MessageType) {
         // 更新流式渲染消息的高度
         [self.heightManager updateStreamingHeight:size.height + 10 forMessageId:self.currentStreamingMessage.messageId];
         
-//        [self.tableView reloadData];
+        // 立即更新 TableView 高度 - 使用 reload 方式刷新流式消息 cell
+        NSIndexPath *streamingIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
         
-        // 方法1：使用performBatchUpdates（推荐）- 更平滑，无动画
-        [self.tableView performBatchUpdates:^{
-            // 这里不需要做任何操作，只是触发高度重新计算
-        } completion:nil];
+        // 方法2：重新加载流式消息的 cell - 确保高度变化立即生效
+        [self.tableView reloadRowsAtIndexPaths:@[streamingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
         
-        // 方法2：如果performBatchUpdates还是有晃动，可以尝试直接更新特定行
-//         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
-//         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        
-        // 方法3：最平滑的方式 - 手动调整contentSize（如果上面方法还是晃动的话）
-//         CGFloat oldContentHeight = self.tableView.contentSize.height;
-//         CGFloat newContentHeight = [self calculateTotalContentHeight];
-//         CGFloat heightDiff = newContentHeight - oldContentHeight;
-//         if (heightDiff != 0) {
-//             CGPoint currentOffset = self.tableView.contentOffset;
-//             self.tableView.contentSize = CGSizeMake(self.tableView.contentSize.width, newContentHeight);
-//             // 如果用户在底部，保持在底部
-//             if (currentOffset.y >= oldContentHeight - self.tableView.frame.size.height - 10) {
-//                 [self.tableView setContentOffset:CGPointMake(0, newContentHeight - self.tableView.frame.size.height) animated:NO];
-//             }
-//         }
-        
-        // 只有在没有手指触摸、没有在滚动且当前没有在底部时才触发 scrollToBottom
+        // 检查是否需要滚动到底部
         if (!self.tableView.isTracking && !self.tableView.isDragging && !self.tableView.isDecelerating) {
-            // 检查是否已经在底部
+            // 检查是否已经在底部附近
             CGFloat contentHeight = self.tableView.contentSize.height;
             CGFloat tableViewHeight = self.tableView.frame.size.height;
             CGFloat currentOffset = self.tableView.contentOffset.y;
             CGFloat bottomOffset = contentHeight - tableViewHeight;
             
-            [self scrollToBottom];
+            // 定义底部附近的阈值（例如距离底部50像素以内）
+            CGFloat bottomThreshold = 50.0;
+            
+            // 只有当前偏移在底部附近时才自动滚动到底部
+            if (currentOffset >= bottomOffset - bottomThreshold) {
+                [self scrollToBottom];
+            }
         }
     }
 }
@@ -1054,5 +1048,32 @@ static inline void dispatch_async_on_main_queue(void (^block)()) {
     
 }
 
+#pragma mark - KVO
+
+/**
+ * 清理资源
+ */
+- (void)dealloc {
+    // 移除 KVO 监听
+    [self.tableView removeObserver:self forKeyPath:@"contentSize"];
+    NSLog(@"🗑️ StreamingChatViewController dealloc - KVO observer removed");
+}
+
+/**
+ * KVO 监听回调
+ * 监听 tableView 的 contentSize 变化
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"contentSize"] && object == self.tableView) {
+        CGSize oldSize = [[change objectForKey:NSKeyValueChangeOldKey] CGSizeValue];
+        CGSize newSize = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue];
+        
+        NSLog(@"📏 TableView contentSize changed:");
+        NSLog(@"📏 Old size: %.2f x %.2f", oldSize.width, oldSize.height);
+        NSLog(@"📏 New size: %.2f x %.2f", newSize.width, newSize.height);
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
 
 @end

@@ -32,6 +32,9 @@ const CMDocumentOptions AMDefaultDocumentOptions
     AMAttributedStringRenderer *renderer = [[AMAttributedStringRenderer alloc] initWithDocument:document
                                                                                      attributes:styles delegate:delegate];
     NSAttributedString* rst = renderer.render;
+    if (rst.length == 0) {
+        NSLog(@"empty");
+    }
     [delegate notifyNodeUpdate:[renderer clickableObjs]];
     return rst;
 }

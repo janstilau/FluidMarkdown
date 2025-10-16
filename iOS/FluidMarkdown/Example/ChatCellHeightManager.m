@@ -94,6 +94,10 @@ static const CGFloat kCellPadding = 10.0;
 - (CGFloat)heightForStreamingMessage:(NSString *)messageId 
                             textView:(AMXMarkdownTextView *)textView {
     
+    NSNumber *cachedHeight = self.streamingHeights[messageId];
+    if (cachedHeight) {
+        return cachedHeight.floatValue;
+    }
     // 流式渲染中，使用实时计算
     CGSize limitSize = CGSizeMake(textView.frame.size.width, CGFLOAT_MAX);
     CGSize contentSize = [AMXMarkdownTextView calculateSizeWithLayoutManager:textView limitSize:limitSize];
