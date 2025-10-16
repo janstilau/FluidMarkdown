@@ -100,14 +100,22 @@ static AMXMarkdownTextView* _caculateContentView;
         [self notifyError:error];
         return;
     }
-    self.state = AMXMarkdownPrintStateRunning;
-    // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
-    self.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
-    self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:content];
-    // 初始化安全渲染优化相关属性
-    self.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
-    self.safeRawStringIndex = 0;
-    [self startTimer];
+    
+    // 将状态变更操作放到 timerQueue 中执行，确保线程安全
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(self.queue, ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        strongSelf.state = AMXMarkdownPrintStateRunning;
+        // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
+        strongSelf.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
+        strongSelf.preloadMarkdownAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:content];
+        // 初始化安全渲染优化相关属性
+        strongSelf.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+        strongSelf.safeRawStringIndex = 0;
+        [strongSelf startTimer];
+    });
 }
 - (void)startStreamingWithContent:(NSString*)content printIndex:(NSInteger)printIndex
 {
@@ -130,16 +138,28 @@ static AMXMarkdownTextView* _caculateContentView;
         [self notifyError:error];
         return;
     }
-    self.state = AMXMarkdownPrintStateRunning;
-    // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
-    self.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
-    self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:content];
-    // 初始化安全渲染优化相关属性
-    self.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
-    self.safeRawStringIndex = 0;
-    [self renderCompleteContent:[content substringToIndex:printIndex]];
-    self.timerCountIndex = printIndex;
-    [self startTimer];
+    
+    // 将状态变更操作放到 timerQueue 中执行，确保线程安全
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(self.queue, ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        strongSelf.state = AMXMarkdownPrintStateRunning;
+        // 初始化原始 Markdown 文本缓冲，保证之后可以完整重建富文本
+        strongSelf.preloadMarkdownRawText = [NSMutableString stringWithString:content ?: @""];
+        strongSelf.preloadMarkdownAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:content];
+        // 初始化安全渲染优化相关属性
+        strongSelf.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+        strongSelf.safeRawStringIndex = 0;
+        
+        dispatch_async_on_main_queue(^{
+            [strongSelf renderCompleteContent:[content substringToIndex:printIndex]];
+        });
+        
+        strongSelf.timerCountIndex = printIndex;
+        [strongSelf startTimer];
+    });
 }
 
 #pragma mark - 安全索引查找方法
@@ -218,83 +238,100 @@ static AMXMarkdownTextView* _caculateContentView;
 
 - (void)addStreamContent:(NSString *)text
 {
-    if (self.state != AMXMarkdownPrintStateRunning && self.state != AMXMarkdownPrintStatePaused) {
-        return;
-    }
     if (text.length <= 0) {
         return;
     }
     
-    // 先维护原始 Markdown 文本
-    if (!self.preloadMarkdownRawText) {
-        self.preloadMarkdownRawText = [NSMutableString string];
-    }
-    [self.preloadMarkdownRawText appendString:text];
-    
-    
-//    // 原来的逻辑
-//    self.preloadMarkdownAttrStr = [self markdowmMutableAttributedStringFromValue:self.preloadMarkdownRawText];
-//    return;
-    
-    // 使用安全索引优化渲染：从当前安全位置开始查找新的安全位置
-    NSInteger newSafeIndex = [self findSafeRawStringIndex:self.preloadMarkdownRawText fromIndex:self.safeRawStringIndex];
-    
-    if (newSafeIndex > self.safeRawStringIndex) {
-        // 找到了新的安全位置，累加渲染新的安全内容
-        NSString *newSafeContent = [self.preloadMarkdownRawText substringWithRange:NSMakeRange(self.safeRawStringIndex, newSafeIndex - self.safeRawStringIndex)];
-        NSMutableAttributedString *newSafeAttrStr = [self markdowmMutableAttributedStringFromValue:newSafeContent];
-        
-        if (newSafeAttrStr) {
-            newSafeAttrStr = [AMXMarkdownHelper restoreWhitespaceForAttributedString:newSafeAttrStr originalString:newSafeContent];
-            if (!self.safeMarkdownAttrStr) {
-                self.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
-            }
-            [self.safeMarkdownAttrStr appendAttributedString:newSafeAttrStr];
-        }
-        self.safeRawStringIndex = newSafeIndex;
-    }
-    
-    // 构建完整的富文本：安全部分 + 新渲染部分
-    if (!self.preloadMarkdownAttrStr) {
-        self.preloadMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
-    }
-    
-    // 使用已缓存的安全富文本作为基础
-    [self.preloadMarkdownAttrStr setAttributedString:self.safeMarkdownAttrStr];
-    
-    // 如果有安全索引之后的内容，渲染并追加
-    if (self.safeRawStringIndex < self.preloadMarkdownRawText.length) {
-        NSString *remainingContent = [self.preloadMarkdownRawText substringFromIndex:self.safeRawStringIndex];
-        NSMutableAttributedString *remainingAttrStr = [self markdowmMutableAttributedStringFromValue:remainingContent];
-        remainingAttrStr = [AMXMarkdownHelper restoreWhitespaceForAttributedString:remainingAttrStr originalString:remainingContent];
-        if (remainingAttrStr) {
-            [self.preloadMarkdownAttrStr appendAttributedString:remainingAttrStr];
-        }
-        if (self.timerCountIndex > self.preloadMarkdownAttrStr.length) {
-            self.timerCountIndex = self.preloadMarkdownAttrStr.length;
-        }
-    }
-    
-    // 如果处于暂停状态，恢复计时器以继续渲染
-    if (self.state == AMXMarkdownPrintStatePaused) {
-        [self resume];
-    }
-}
-- (void)pause
-{
-    if (self.state == AMXMarkdownPrintStateRunning) {
-        self.state = AMXMarkdownPrintStatePaused;
-        [self.textViewDelegate didChangeState:AMXMarkdownPrintStatePaused];
-    }
-    [self stopTimer];
+    // 将所有状态变更操作放到 timerQueue 中执行，确保线程安全
     __weak typeof(self) weakSelf = self;
-    dispatch_async_on_main_queue(^{
+    dispatch_async(self.queue, ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        // render all data without animation to remove the animation maksk layer
-        [strongSelf setAttributedTextPartialUpdate_ant_mark:strongSelf.preloadMarkdownAttrStr];
+        if (!strongSelf) return;
+        
+        // 检查状态是否允许添加内容
+        if (strongSelf.state != AMXMarkdownPrintStateRunning && strongSelf.state != AMXMarkdownPrintStatePaused) {
+            return;
+        }
+        
+        // 先维护原始 Markdown 文本
+        if (!strongSelf.preloadMarkdownRawText) {
+            strongSelf.preloadMarkdownRawText = [NSMutableString string];
+        }
+        [strongSelf.preloadMarkdownRawText appendString:text];
+        
+        
+//        // 原来的逻辑
+//        strongSelf.preloadMarkdownAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:strongSelf.preloadMarkdownRawText];
+//        return;
+        
+        // 使用安全索引优化渲染：从当前安全位置开始查找新的安全位置
+        NSInteger newSafeIndex = [strongSelf findSafeRawStringIndex:strongSelf.preloadMarkdownRawText fromIndex:strongSelf.safeRawStringIndex];
+        
+        if (newSafeIndex > strongSelf.safeRawStringIndex) {
+            // 找到了新的安全位置，累加渲染新的安全内容
+            NSString *newSafeContent = [strongSelf.preloadMarkdownRawText substringWithRange:NSMakeRange(strongSelf.safeRawStringIndex, newSafeIndex - strongSelf.safeRawStringIndex)];
+            NSMutableAttributedString *newSafeAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:newSafeContent];
+            
+            if (newSafeAttrStr) {
+                newSafeAttrStr = [AMXMarkdownHelper restoreWhitespaceForAttributedString:newSafeAttrStr originalString:newSafeContent];
+                if (!strongSelf.safeMarkdownAttrStr) {
+                    strongSelf.safeMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+                }
+                [strongSelf.safeMarkdownAttrStr appendAttributedString:newSafeAttrStr];
+            }
+            strongSelf.safeRawStringIndex = newSafeIndex;
+        }
+        
+        // 构建完整的富文本：安全部分 + 新渲染部分
+        if (!strongSelf.preloadMarkdownAttrStr) {
+            strongSelf.preloadMarkdownAttrStr = [[NSMutableAttributedString alloc] init];
+        }
+        
+        // 使用已缓存的安全富文本作为基础
+        [strongSelf.preloadMarkdownAttrStr setAttributedString:strongSelf.safeMarkdownAttrStr];
+        
+        // 如果有安全索引之后的内容，渲染并追加
+        if (strongSelf.safeRawStringIndex < strongSelf.preloadMarkdownRawText.length) {
+            NSString *remainingContent = [strongSelf.preloadMarkdownRawText substringFromIndex:strongSelf.safeRawStringIndex];
+            NSMutableAttributedString *remainingAttrStr = [strongSelf markdowmMutableAttributedStringFromValue:remainingContent];
+            remainingAttrStr = [AMXMarkdownHelper restoreWhitespaceForAttributedString:remainingAttrStr originalString:remainingContent];
+            if (remainingAttrStr) {
+                [strongSelf.preloadMarkdownAttrStr appendAttributedString:remainingAttrStr];
+            }
+            if (strongSelf.timerCountIndex > strongSelf.preloadMarkdownAttrStr.length) {
+                strongSelf.timerCountIndex = strongSelf.preloadMarkdownAttrStr.length;
+            }
+        }
+        
+        // 如果处于暂停状态，恢复计时器以继续渲染
+        if (strongSelf.state == AMXMarkdownPrintStatePaused) {
+            [strongSelf resumeInternal];
+        }
     });
 }
-- (void)resume
+
+- (void)pause
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(self.queue, ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        if (strongSelf.state == AMXMarkdownPrintStateRunning) {
+            strongSelf.state = AMXMarkdownPrintStatePaused;
+            [strongSelf.textViewDelegate didChangeState:AMXMarkdownPrintStatePaused];
+        }
+        [strongSelf stopTimer];
+        
+        dispatch_async_on_main_queue(^{
+            // render all data without animation to remove the animation maksk layer
+            [strongSelf setAttributedTextPartialUpdate_ant_mark:strongSelf.preloadMarkdownAttrStr];
+        });
+    });
+}
+
+// 内部恢复方法，已经在 timerQueue 中执行
+- (void)resumeInternal
 {
     if (self.state == AMXMarkdownPrintStatePaused) {
         self.state = AMXMarkdownPrintStateRunning;
@@ -302,20 +339,36 @@ static AMXMarkdownTextView* _caculateContentView;
     }
     [self startTimer];
 }
-- (void)stop
+
+- (void)resume
 {
-    if (self.state != AMXMarkdownPrintStateRunning && self.state != AMXMarkdownPrintStatePaused) {
-        return;
-    }
-    [self.timer stopTimer];
-    self.timer = nil;
-    
-    NSMutableAttributedString *attrStr = self.markdownAttrStr.mutableCopy;
     __weak typeof(self) weakSelf = self;
     dispatch_async(self.queue, ^{
-        [AMXMarkdownHelper setImageAttachListener:attrStr delegate:self];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        [strongSelf resumeInternal];
+    });
+}
+
+- (void)stop
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(self.queue, ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        if (strongSelf.state != AMXMarkdownPrintStateRunning && strongSelf.state != AMXMarkdownPrintStatePaused) {
+            return;
+        }
+        
+        [strongSelf.timer stopTimer];
+        strongSelf.timer = nil;
+        
+        NSMutableAttributedString *attrStr = strongSelf.markdownAttrStr.mutableCopy;
+        [AMXMarkdownHelper setImageAttachListener:attrStr delegate:strongSelf];
+        
         dispatch_async_on_main_queue(^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
             // render all data without animation to remove the animation maksk layer
             [strongSelf setAttributedTextPartialUpdate_ant_mark:strongSelf.preloadMarkdownAttrStr];
             [strongSelf updateSize];
@@ -370,9 +423,16 @@ static AMXMarkdownTextView* _caculateContentView;
     [self.timer stopTimer];
     self.timer = nil;
 }
+
+- (void)setTimer:(AMXMarkdownTimer *)timer {
+    _timer = timer;
+    if (self.state == 1 && timer == nil) {
+        NSLog(@"setTimer == %@, state is %@", timer, @(self.state));
+    }
+}
 - (void)timerRenderUI {
+    NSMutableAttributedString *attrStr = [self timerUpdateRenderAttrText];
     dispatch_async_on_main_queue(^{
-        NSMutableAttributedString *attrStr = [self timerUpdateRenderAttrText];
         self.markdownAttrStr = attrStr;
         
         __weak typeof(self) weakSelf = self;
@@ -388,8 +448,8 @@ static AMXMarkdownTextView* _caculateContentView;
     });
 }
 - (NSMutableAttributedString *)timerUpdateRenderAttrText {
-    
-    NSMutableAttributedString *markdownAttrStr = [self.preloadMarkdownAttrStr attributedSubstringFromRange:NSMakeRange(0, MIN(self.timerCountIndex, self.preloadMarkdownAttrStr.length))].mutableCopy;
+    NSUInteger length = MIN(self.timerCountIndex, self.preloadMarkdownAttrStr.length);
+    NSMutableAttributedString *markdownAttrStr = [self.preloadMarkdownAttrStr attributedSubstringFromRange:NSMakeRange(0, length)].mutableCopy;
     if (!markdownAttrStr || markdownAttrStr.length <= 0) {
         markdownAttrStr = self.markdownAttrStr;
     }
@@ -541,12 +601,7 @@ static AMXMarkdownTextView* _caculateContentView;
     }
     return modelArray;
 }
-- (void)updateMarkdowmMutableAttributedString:(NSMutableAttributedString *)attStr {
-    self.markdownAttrStr = attStr;
-    [AMXMarkdownHelper setImageAttachListener:attStr delegate:self];
-    [self _updateMarkdowmAttributedString:attStr];
-    [self sizeToFit];
-}
+
 - (void)_updateMarkdowmAttributedString:(NSAttributedString *)attStr {
     [self setAttributedText_ant_mark:attStr];
 }

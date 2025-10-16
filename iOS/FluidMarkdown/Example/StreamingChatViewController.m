@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, MessageType) {
 @property (nonatomic, strong) NSString *messageId;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, assign) MessageType type;
-@property (nonatomic, assign) BOOL isStreaming;
+@property (nonatomic, assign) BOOL isStreaming; // 是否还在接收流式网络输入
+@property (nonatomic, assign) BOOL isRenderingComplete; // AMXMarkdownTextView是否已完成渲染
 @property (nonatomic, strong) NSDate *timestamp;
 @end
 
@@ -202,7 +203,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.bubbleView.layer.borderColor = UIColor.redColor.CGColor;
     self.bubbleView.layer.borderWidth = 1;
     
-    self.markdownView.layer.borderColor = UIColor.purpleColor.CGColor;
+    self.markdownView.layer.borderColor = UIColor.orangeColor.CGColor;
     self.markdownView.layer.borderWidth = 1;
 }
 
@@ -228,8 +229,8 @@ typedef NS_ENUM(NSInteger, MessageType) {
     
     // 清理消息引用和高度缓存
     if (self.message) {
-        // 如果消息已完成，清理缓存以避免复用时的高度错误
-        if (!self.message.isStreaming) {
+        // 如果消息已完成渲染，清理缓存以避免复用时的高度错误
+        if (self.message.isRenderingComplete) {
             [[ChatCellHeightManager sharedManager] clearCacheForMessage:self.message.messageId];
         }
         self.message = nil;
@@ -239,17 +240,18 @@ typedef NS_ENUM(NSInteger, MessageType) {
 }
 
 - (void)configureWithMessage:(ChatMessage *)message {
-    NSLog(@"🔧 Configuring AIMessageCell with message: %@, isStreaming: %d", message.messageId, message.isStreaming);
+    NSLog(@"🔧 Configuring AIMessageCell with message: %@, isStreaming: %d, isRenderingComplete: %d", 
+          message.messageId, message.isStreaming, message.isRenderingComplete);
     
     self.message = message;
     
-    if (message.isStreaming) {
-        NSLog(@"🔄 Cell configured for streaming mode - will be mounted by ViewController");
-        // 流式渲染模式：隐藏自己的markdownView，等待ViewController挂载共享的markdownView
+    if (message.isStreaming || !message.isRenderingComplete) {
+        NSLog(@"🔄 Cell configured for streaming/rendering mode - will be mounted by ViewController");
+        // 流式渲染模式或渲染未完成：隐藏自己的markdownView，等待ViewController挂载共享的markdownView
         self.markdownView.hidden = YES;
     } else {
         NSLog(@"📝 Rendering complete content in cell's own markdownView");
-        // 显示自己的markdownView并渲染完整内容
+        // 渲染完成：显示自己的markdownView并渲染完整内容
         self.markdownView.hidden = NO;
         [self.markdownView renderCompleteContent:message.content];
     }
@@ -474,6 +476,9 @@ typedef NS_ENUM(NSInteger, MessageType) {
     }
     
     NSLog(@"🔧 Shared streaming markdown view initialized with width: %.2f, userInteractionEnabled: NO", constrainWidth);
+    
+    self.sharedStreamingMarkdownView.layer.borderColor = [[UIColor purpleColor] CGColor];
+    self.sharedStreamingMarkdownView.layer.borderWidth = 2;
 }
 
 #pragma mark - Actions
@@ -499,6 +504,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
                           [currentFilePath lastPathComponent]];
     userMessage.type = MessageTypeUser;
     userMessage.isStreaming = NO;
+    userMessage.isRenderingComplete = YES; // 用户消息不需要渲染
     userMessage.timestamp = [NSDate date];
     
     [self.messages addObject:userMessage];
@@ -520,6 +526,7 @@ typedef NS_ENUM(NSInteger, MessageType) {
     aiMessage.content = @"";
     aiMessage.type = MessageTypeAI;
     aiMessage.isStreaming = YES;
+    aiMessage.isRenderingComplete = NO; // 初始状态为未完成渲染
     aiMessage.timestamp = [NSDate date];
     
     NSLog(@"📝 Created AI message: %@, isStreaming: %d", aiMessage.messageId, aiMessage.isStreaming);
@@ -527,9 +534,10 @@ typedef NS_ENUM(NSInteger, MessageType) {
     [self.messages addObject:aiMessage];
     self.currentStreamingMessage = aiMessage;
     
-    // 显示停止按钮
+    // 显示停止按钮和暂停按钮，隐藏发送按钮
     self.sendButton.hidden = YES;
     self.stopButton.hidden = NO;
+    self.pauseButton.hidden = NO;
     
     // 刷新 TableView
     NSLog(@"🔄 Reloading table view, messages count: %ld", (long)self.messages.count);
@@ -631,57 +639,97 @@ typedef NS_ENUM(NSInteger, MessageType) {
     }
     self.isStreaming = NO;
     
-    // 标记消息为完成状态
+    // 标记数据流式输入完成
     if (self.messages.count > 0) {
         ChatMessage *lastMessage = self.messages.lastObject;
         lastMessage.isStreaming = NO;
+        
+        // 数据流式输入完成后，立即更新按钮状态
+        // 隐藏暂停按钮，因为没有数据流可以暂停了
+        self.pauseButton.hidden = YES;
+        
+        // 如果渲染也已完成，则完全完成消息处理
+        if (lastMessage.isRenderingComplete) {
+            [self handleMessageRenderingComplete];
+        }
+    }
+    
+    NSLog(@"✅ Data streaming completed, pause button hidden");
+}
+
+// 处理消息渲染完全完成（数据输入和渲染都完成）
+- (void)handleMessageRenderingComplete {
+    NSLog(@"🎉 Message completely finished (data + rendering)");
+    
+    if (self.currentStreamingMessage) {
         // 将流式高度转换为最终高度
-        [self.heightManager markMessageAsCompleted:lastMessage.messageId];
+        [self.heightManager markMessageAsCompleted:self.currentStreamingMessage.messageId];
+        
+        // 卸载共享的markdownView，让cell使用自己的markdownView显示完整内容
+        if (self.currentMountedCell) {
+            [self.currentMountedCell unmountSharedMarkdownView:self.sharedStreamingMarkdownView];
+            self.currentMountedCell = nil;
+        }
+        
+        // 刷新对应的cell以显示完整内容
+        NSInteger messageIndex = [self.messages indexOfObject:self.currentStreamingMessage];
+        if (messageIndex != NSNotFound) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messageIndex inSection:0];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            NSLog(@"🔄 Reloaded cell at indexPath: %@ to show complete content", indexPath);
+        }
+        
+        self.currentStreamingMessage = nil;
     }
     
     // 恢复发送按钮，隐藏停止按钮
     [self resetButtonStates];
     
-    NSLog(@"✅ Streaming completed, buttons reset");
+    NSLog(@"✅ Message rendering completely finished, buttons reset");
 }
 
 // 重置按钮状态
 - (void)resetButtonStates {
     self.sendButton.hidden = NO;
     self.stopButton.hidden = YES;
+    self.pauseButton.hidden = YES;
     self.sendButton.enabled = YES;
+    
+    // 重置暂停按钮的标题为默认状态
+    [self.pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
 }
 
 // 暂停流式渲染
 - (void)pauseStreaming {
     if (self.isStreaming && self.streamingTimer) {
+        // 暂停数据流式输入
         [self.streamingTimer invalidate];
         self.streamingTimer = nil;
         self.isStreaming = NO;
         [self.pauseButton setTitle:@"继续" forState:UIControlStateNormal];
         
-        // 暂停 AMXMarkdownTextView
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
-        AIMessageCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        if (cell && cell.markdownView) {
-            [cell.markdownView pause];
+        // 暂停 AMXMarkdownTextView 的渲染
+        if (self.sharedStreamingMarkdownView) {
+            [self.sharedStreamingMarkdownView pause];
         }
+        
+        NSLog(@"⏸️ Streaming paused");
     } else if (!self.isStreaming && self.streamingContent && self.streamingIndex < self.streamingContent.length) {
-        // 恢复流式渲染
+        // 恢复数据流式输入
         self.isStreaming = YES;
-        NSTimer *timer =  [NSTimer timerWithTimeInterval:0.05 repeats:true block:^(NSTimer * _Nonnull timer) {
-                    [self streamNextChunk];
+        NSTimer *timer = [NSTimer timerWithTimeInterval:0.05 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            [self streamNextChunk];
         }];
         self.streamingTimer = timer;
         [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         [self.pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
         
-        // 恢复 AMXMarkdownTextView
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
-        AIMessageCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        if (cell && cell.markdownView) {
-            [cell.markdownView resume];
+        // 恢复 AMXMarkdownTextView 的渲染
+        if (self.sharedStreamingMarkdownView) {
+            [self.sharedStreamingMarkdownView resume];
         }
+        
+        NSLog(@"▶️ Streaming resumed");
     }
 }
 
@@ -752,9 +800,9 @@ typedef NS_ENUM(NSInteger, MessageType) {
         AIMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AIMessageCell" forIndexPath:indexPath];
         [cell configureWithMessage:message];
         
-        // 如果是流式渲染消息，需要挂载共享的markdownView
-        if (message.isStreaming) {
-            NSLog(@"🔗 Mounting shared markdown view for streaming message");
+        // 如果是流式渲染消息或渲染未完成的消息，需要挂载共享的markdownView
+        if (message.isStreaming || !message.isRenderingComplete) {
+            NSLog(@"🔗 Mounting shared markdown view for streaming/rendering message");
             
             // 先卸载之前的cell（如果有）
             if (self.currentMountedCell && self.currentMountedCell != cell) {
@@ -786,15 +834,15 @@ typedef NS_ENUM(NSInteger, MessageType) {
         // AI 消息使用高度管理器
         CGFloat constrainWidth = 320 - 24; // 气泡宽度减去内边距
         
-        if (message.isStreaming) {
-            // 流式渲染中的消息，使用共享的markdownView计算高度
+        if (message.isStreaming || !message.isRenderingComplete) {
+            // 流式渲染中的消息或渲染未完成的消息，使用共享的markdownView计算高度
             if (self.sharedStreamingMarkdownView) {
                 return [self.heightManager heightForStreamingMessage:message.messageId textView:self.sharedStreamingMarkdownView];
             } else {
                 return [self.heightManager estimatedHeightForMessage:message.messageId];
             }
         } else {
-            // 静态消息
+            // 渲染完成的静态消息
             return [self.heightManager heightForStaticMessage:message.messageId
                                                       content:message.content
                                                constrainWidth:constrainWidth];
@@ -910,14 +958,56 @@ typedef NS_ENUM(NSInteger, MessageType) {
     NSLog(@"Markdown rendering error: %@", error.localizedDescription);
 }
 
-
+static inline void dispatch_async_on_main_queue(void (^block)()) {
+    if(!block) return;
+    dispatch_async(dispatch_get_main_queue(), block);
+}
 
 /**
  * Markdown 打印状态变化回调
  * @param state 新的打印状态（开始、进行中、完成等）
  */
 -(void)didChangeState:(AMXMarkdownPrintState)state {
-    
+    NSLog(@"📊 AMXMarkdownTextView state changed to: %ld", (long)state);
+    dispatch_async_on_main_queue(^{
+        if (!self.currentStreamingMessage) {
+            return;
+        }
+        
+        switch (state) {
+            case AMXMarkdownPrintStateRunning:
+                NSLog(@"🏃 Markdown rendering started/resumed");
+                break;
+                
+            case AMXMarkdownPrintStatePaused:
+                NSLog(@"⏸️ Markdown rendering paused");
+                
+                // 当渲染暂停且数据流式输入已完成时，认为渲染完毕
+                if (!self.currentStreamingMessage.isStreaming) {
+                    NSLog(@"✅ Markdown rendering completed (paused + streaming finished)");
+                    // 标记渲染完成
+                    
+                    self.currentStreamingMessage.isRenderingComplete = YES;
+                    [self handleMessageRenderingComplete];
+                }
+                break;
+                
+            case AMXMarkdownPrintStateStopped:
+                NSLog(@"🛑 Markdown rendering stopped (manual stop)");
+                // 保留 stopped 状态的处理，但不在此状态下触发渲染完毕逻辑
+                self.currentStreamingMessage.isRenderingComplete = YES;
+                [self handleMessageRenderingComplete];
+                break;
+                
+            case AMXMarkdownPrintStateInitial:
+                NSLog(@"🔄 Markdown rendering initialized");
+                self.currentStreamingMessage.isRenderingComplete = NO;
+                break;
+                
+            default:
+                break;
+        }
+    });
 }
 
 /**
