@@ -266,19 +266,19 @@ static AMXMarkdownTextView* _caculateContentView;
         
         
         // 原来的逻辑
-        NSMutableAttributedString *updatedAttsr = [strongSelf markdowmMutableAttributedStringFromValue:strongSelf.preloadMarkdownRawText];
-        if (updatedAttsr.length == 0) {
-            return;
-        }
-        strongSelf.preloadMarkdownAttrStr = updatedAttsr;
-        if (strongSelf.timerCountIndex > strongSelf.preloadMarkdownAttrStr.length) {
-            strongSelf.timerCountIndex = strongSelf.preloadMarkdownAttrStr.length;
-        }
-        // 如果处于暂停状态，恢复计时器以继续渲染
-        if (strongSelf.state == AMXMarkdownPrintStatePaused) {
-            [strongSelf resumeInternal];
-        }
-        return;
+//        NSMutableAttributedString *updatedAttsr = [strongSelf markdowmMutableAttributedStringFromValue:strongSelf.preloadMarkdownRawText];
+//        if (updatedAttsr.length == 0) {
+//            return;
+//        }
+//        strongSelf.preloadMarkdownAttrStr = updatedAttsr;
+//        if (strongSelf.timerCountIndex > strongSelf.preloadMarkdownAttrStr.length) {
+//            strongSelf.timerCountIndex = strongSelf.preloadMarkdownAttrStr.length;
+//        }
+//        // 如果处于暂停状态，恢复计时器以继续渲染
+//        if (strongSelf.state == AMXMarkdownPrintStatePaused) {
+//            [strongSelf resumeInternal];
+//        }
+//        return;
         
         // 使用安全索引优化渲染：从当前安全位置开始查找新的安全位置
         NSInteger newSafeIndex = [strongSelf findSafeRawStringIndex:strongSelf.preloadMarkdownRawText fromIndex:strongSelf.safeRawStringIndex];
@@ -336,7 +336,8 @@ static AMXMarkdownTextView* _caculateContentView;
         
         dispatch_async_on_main_queue(^{
             // render all data without animation to remove the animation maksk layer
-            [strongSelf setAttributedTextPartialUpdate_ant_mark:strongSelf.preloadMarkdownAttrStr];
+            NSAttributedString *preloadedCopy = [strongSelf.preloadMarkdownAttrStr copy];
+            [strongSelf setAttributedTextPartialUpdate_ant_mark:preloadedCopy];
         });
     });
 }
@@ -381,7 +382,8 @@ static AMXMarkdownTextView* _caculateContentView;
         
         dispatch_async_on_main_queue(^{
             // render all data without animation to remove the animation maksk layer
-            [strongSelf setAttributedTextPartialUpdate_ant_mark:strongSelf.preloadMarkdownAttrStr];
+            NSAttributedString *preloadCopy = [strongSelf.preloadMarkdownAttrStr copy];
+            [strongSelf setAttributedTextPartialUpdate_ant_mark:preloadCopy];
             [strongSelf updateSize];
             [strongSelf reset];
             [strongSelf.textViewDelegate didChangeState:AMXMarkdownPrintStateStopped];

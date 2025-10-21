@@ -431,20 +431,20 @@ typedef NS_ENUM(NSInteger, MessageType) {
     self.heightManager = [ChatCellHeightManager sharedManager];
     self.currentDataFileIndex = 0;
     
-//    NSMutableArray *paths = [NSMutableArray array];
-//    for (NSInteger i = 1; i <= 7; i++) {
-//        NSString *fileName = [NSString stringWithFormat:@"data%ld", (long)i];
-//        NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
-//        if (path) [paths addObject:path];
-//    }
-//    self.dataFilePaths = [paths copy];
     NSMutableArray *paths = [NSMutableArray array];
-    for (NSInteger i = 1; i <= 20; i++) {
-        NSString *fileName = [NSString stringWithFormat:@"latex%ld", (long)i];
+    for (NSInteger i = 1; i <= 7; i++) {
+        NSString *fileName = [NSString stringWithFormat:@"data%ld", (long)i];
         NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
         if (path) [paths addObject:path];
     }
     self.dataFilePaths = [paths copy];
+//    NSMutableArray *paths = [NSMutableArray array];
+//    for (NSInteger i = 1; i <= 20; i++) {
+//        NSString *fileName = [NSString stringWithFormat:@"latex%ld", (long)i];
+//        NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
+//        if (path) [paths addObject:path];
+//    }
+//    self.dataFilePaths = [paths copy];
     
     NSLog(@"📁 Setup data files, total count: %ld", (long)self.dataFilePaths.count);
 }

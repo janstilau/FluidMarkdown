@@ -8,13 +8,14 @@
 #import "AIChatViewController.h"
 #import "StreamFlueViewController.h"
 #import "StreamingChatViewController.h"
+#import "LatexCoverageViewController.h"
 
 
 @implementation MenuViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.menuItems = @[@"stream print preview", @"AI conversation scenario simulation", @"Stream Flue Demo", @"Streaming Chat with AMXMarkdownTextView"];
+    self.menuItems = @[@"stream print preview", @"AI conversation scenario simulation", @"Stream Flue Demo", @"Streaming Chat with AMXMarkdownTextView", @"LaTeX 覆盖测试"];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -114,6 +115,9 @@
     } else if (indexPath.row == 3) {
         StreamingChatViewController *streamingChatVC = [[StreamingChatViewController alloc] init];
         [self.navigationController pushViewController:streamingChatVC animated:YES];
+    } else if (indexPath.row == 4) {
+        LatexCoverageViewController *latexVC = [[LatexCoverageViewController alloc] init];
+        [self.navigationController pushViewController:latexVC animated:YES];
     }
 }
 @end
