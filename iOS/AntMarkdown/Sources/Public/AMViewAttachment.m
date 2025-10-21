@@ -5,7 +5,9 @@
 NSString *const AMTextAttachmentSizeDidUpdateNotification = @"AMTextAttachmentSizeDidUpdateNotification";
 
 @interface AMViewAttachment ()
+
 @property (nonatomic) CGRect cachedBounds;
+
 @end
 
 @implementation AMViewAttachment

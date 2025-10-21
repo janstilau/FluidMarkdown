@@ -382,6 +382,7 @@
     [self addClickableObjects:CMNodeTypeImage data:URL.absoluteString tag:@""];
 }
 
+// FootNode 也有固定的格式. 
 - (void)parser:(CMParser *)parser didStartFootNoteRefIndex:(NSInteger)index title:(NSString *)title defination:(NSString *)content
 {
     if (self.attributes.footnoteRefBuilder) {

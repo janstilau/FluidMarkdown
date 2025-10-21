@@ -291,7 +291,7 @@ static NSImage* _placeholderImage;
 - (NSArray<NSValue*>*) rangesForAttachment:(NSTextAttachment*)textAttachment
 {
     NSMutableArray<NSValue*>* rangesForAttachment = [NSMutableArray new];
-    
+    // 找到所有的 AttrbuteString 里面, 包含 NSAttachmentAttributeName 的部分. 
     [self.textStorage enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.textStorage.length) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         if (value == textAttachment) {
             [rangesForAttachment addObject:[NSValue valueWithRange:range]];

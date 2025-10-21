@@ -4,6 +4,7 @@
 
 #import "AMXMarkdownCodeView.h"
 
+// 这是一个废类, 什么都没有做. 
 @implementation AMXMarkdownCodeView
 
 - (void)didCopyCode:(NSString *)code {

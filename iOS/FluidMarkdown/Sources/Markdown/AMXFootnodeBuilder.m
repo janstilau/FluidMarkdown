@@ -5,7 +5,6 @@
 #import "AMXFootnodeBuilder.h"
 #import <AntMarkdown/AMUtils.h>
 
-@interface AMXFootNoteAttachment : NSTextAttachment
 
 /**
  * AMXFootNoteAttachment 是 NSTextAttachment 的子类，用于在富文本中嵌入脚注引用。
@@ -30,6 +29,8 @@
  •    渲染时，解析器会自动把所有脚注统一显示在文章底部（渲染器负责收集和展示）；
  •    因此 位置不影响显示效果，但过早定义会影响可读性。
  */
+@interface AMXFootNoteAttachment : NSTextAttachment
+
 @property(nonatomic,assign) NSInteger noteIndex;
 @property(nonatomic,copy) NSString *noteTitle;
 
@@ -65,7 +66,8 @@
     return [AMXFootnodeBuilder footnoteWithTitle:title index:index styles:styles];
 }
 
-// 这里是实际根据 title 生成脚注图片的地方. 
+// 这里是实际根据 title 生成脚注图片的地方.
+// 这里生成的脚注, 其实是圆圈的那一部分.
 + (NSAttributedString *)footnoteWithTitle:(NSString *)title index:(NSInteger)index styles:(AMTextStyles*)styles{
 
     if (!(title && [title isKindOfClass:[NSString class]] && ![@"" isEqualToString:title])) {
@@ -124,6 +126,8 @@
     return [attributedString copy];
 }
 
+// 就是使用 UILabel 的显示来变化的图片.
+// 因为使用到了 UIKit, 所以这里就必须在主线程里面执行了.
 + (UIImage*)convertTitleToImage:(NSString*)title styles:(AMTextStyles*)styles
 {
     CGFloat labelSize = styles.footNoteAttributes.stringAttributes[@"labelSize"] ? [styles.footNoteAttributes.stringAttributes[@"labelSize"] floatValue] : 18.f;

@@ -7,7 +7,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*
+ 这其实就是使用不同的 ID, 来给不同的业务使用不同的 Style
+ */
+
 @interface AMXRenderService : NSObject
+
 + (instancetype)shared;
 /**
  Set a style with a unique ID and assign the ID to AMXMarkdownTextView to render markdown data using that style

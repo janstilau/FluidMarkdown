@@ -74,8 +74,10 @@ static AMXMarkdownTextView* _caculateContentView;
 -(void)setStyleId:(NSString *)styleId
 {
     _styleId = styleId;
+    // 这个屁作用都没有
     ((AMLayoutManager*)self.layoutManager).styleId = styleId;
 }
+
 - (void)renderCompleteContent:(NSString *)text
 {
     NSMutableAttributedString* attrStr = [self markdowmMutableAttributedStringFromValue:text];
@@ -482,6 +484,7 @@ static AMXMarkdownTextView* _caculateContentView;
         [self.textViewDelegate onError:error];
     }
 }
+// 当内容发生改变了之后, 就会触发这里.
 - (void)onSizeChanged:(NSNotification *)noti {
     if ([noti.object isKindOfClass:[NSAttributedString class]]) {
         NSAttributedString *object = (NSAttributedString *)noti.object;
@@ -517,11 +520,13 @@ static AMXMarkdownTextView* _caculateContentView;
         [AMTextStyles setAMStylesWithId:self.styleId styles:self.nativeStyles];
     }
     
+    // 真正的返回 NSMutableAttributedString 的地方, 还是使用了 PARSER, 一点点的构建出整个 MD 的 AttributeString
     return [AMXMarkdownHelper mdToAttrString:value
                                defaultStyles:self.nativeStyles
                                     delegate:self
                                     textView:self];
 }
+
 -(void)notifyNodeLocation:(NSArray*)locArray {
     if (!self.logModel.spm || [self.logModel.spm isEqualToString:@""]) {
         return;
@@ -529,6 +534,7 @@ static AMXMarkdownTextView* _caculateContentView;
     if (!locArray || [locArray count] == [self.clickableLocationObjs count]) {
         return;
     }
+    // 这是一个缓存的机制.
     if (!self.clickableLocationObjs) {
         self.clickableLocationObjs = [[NSMutableArray alloc] initWithArray:locArray];
     } else {
@@ -544,6 +550,7 @@ static AMXMarkdownTextView* _caculateContentView;
         [self.textViewDelegate onUpdateExposureElement:self.clickableObjs];
     }
 }
+
 -(void)notifyNodeUpdate:(NSArray*)dataArray {
     if (!dataArray || [dataArray count] == [self.clickableObjs count]) {
         return;
@@ -634,6 +641,7 @@ static AMXMarkdownTextView* _caculateContentView;
     }
     [AMTextStyles removeAMStylesWithId:self.styleId];
 }
+
 + (CGSize)caculateContentSize:(NSString *)markdownText constrainSize:(CGSize)constrainSize styleId:(NSString*)styleId{
     AMTextStyles* textStyle = [AMTextStyles cpl_cardDefaultTextStyles];
     
@@ -663,15 +671,13 @@ static AMXMarkdownTextView* _caculateContentView;
     contentRect.size.height = (contentRect.size.height < tmpHeight) ? tmpHeight : contentRect.size.height;
     return contentRect.size;
 }
+
 + (CGSize)calculateSizeWithLayoutManager:(UITextView *)textView limitSize:(CGSize)limitSize {
     textView.textContainer.size = CGSizeMake(limitSize.width, CGFLOAT_MAX);
+    // Forces the layout manager to perform layout for the specified text container if it hasn’t already.
     [textView.layoutManager ensureLayoutForTextContainer:textView.textContainer];
     CGRect usedRect = [textView.layoutManager usedRectForTextContainer:textView.textContainer];
     return CGSizeMake(ceil(usedRect.size.width), ceil(usedRect.size.height));
-}
--(void)willRemoveSubview:(UIView *)subview
-{
-    [super willRemoveSubview:subview];
 }
 
 

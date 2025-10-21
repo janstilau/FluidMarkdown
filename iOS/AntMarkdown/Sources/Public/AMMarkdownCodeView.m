@@ -14,6 +14,7 @@ const CGFloat AMCodeHeaderHeight = 40.0;
 const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right = 12};
 
 @interface AMMarkdownCodeView ()
+// styles 是整个 TextView 的配置, 下放到这里, 其实也就是一个全局量.
 @property (nonatomic) AMTextStyles *styles;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) NSLayoutConstraint *heightConstraint;
@@ -29,6 +30,7 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
     if (self) {
         self.styles = styles;
         
+        // 真正的进行代码展示的部分. 还是一个 UITextView
         self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 60)];
         self.textView.contentInset = UIEdgeInsetsZero;
         self.textView.textContainer.lineFragmentPadding = 0;
@@ -214,6 +216,7 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
     [self.textView removeObserver:self forKeyPath:KEYPATH(self.textView, contentSize)];
 }
 
+// 这里是完全显示的, 因为整个的高度, 是根据 textView 的 contentSize 一点点的进行变化的.
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
@@ -278,12 +281,6 @@ const UIEdgeInsets AMCodeViewInset = {.top = 4, .left = 12, .bottom = 10, .right
         [self.textView setAttributedText:codeText];
     }
     if (codeText.length > 0) {
-        //        UIColor *bgColor = [codeText attribute:NSBackgroundColorAttributeName
-        //                                       atIndex:0
-        //                                effectiveRange:NULL];
-        //        if ([bgColor isKindOfClass:[UIColor class]]) {
-        //            self.backgroundColor = bgColor;
-        //        }
     }
     
     if([NSThread isMainThread])

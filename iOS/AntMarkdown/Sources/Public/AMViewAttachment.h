@@ -96,6 +96,7 @@ UIKIT_EXTERN NSString *const AMTextAttachmentSizeDidUpdateNotification;
  * 这是一个基础类，通常通过其子类来实现具体的视图嵌入功能。
  */
 // 对于 AMViewAttachment 的实现, 都在这个 AMViewAttachment 中, 所以, 所有的 View 相关的 Attachment, 都是这个类的子类
+// 这个类和这个协议, 是完全一致的. 
 @interface AMViewAttachment : NSTextAttachment <AMViewAttachment>
 
 @property (nonatomic, readonly, nullable) __kindof UIView<AMAttachedView> *view;

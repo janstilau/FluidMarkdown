@@ -150,6 +150,8 @@
 }
 
 // 只会真正的 View 开始展示的时候, 才会触发 View 的创建.
+// setAttributedTextPartialUpdate_ant_mark
+// 真正触发 view 的创建是在上面的方法中, 而在这个方法中, 是真正的进行了 attachment 所属的 View 的创建了. 
 - (__kindof UIView *)view
 {
     if (!_codeView) {

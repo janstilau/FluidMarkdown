@@ -6,6 +6,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// 这就是一个纯纯的数据类. 
 @interface AMXMarkdownCustomRenderEventModel : NSObject
 @property (nonatomic, copy)NSString* contentUrl;
 @property (nonatomic, copy)NSString* contentType;
