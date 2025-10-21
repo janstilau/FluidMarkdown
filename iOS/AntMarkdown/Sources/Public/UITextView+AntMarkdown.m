@@ -118,6 +118,16 @@
  * @param animated 是否启用渐变动画效果
  */
 // - 每次传入的都是 从开头到当前进度的完整文本
+/*
+ ### setAttributedTextPartialUpdate_ant_mark:animated:（增量更新）
+ 设计理念 ：智能差异检测 + 增量更新
+
+ - 性能优化 ：只更新变化的部分，避免全量重绘
+ - 内容假设 ：每次传入的都是 从开头到当前进度的完整文本
+ - 更新策略 ：从末尾向前比较，找到差异点，只更新变化部分
+ - 动画支持 ：支持渐变显示动画效果
+ - 适用场景 ： 流式渲染 、实时更新、聊天消息等
+ */
 - (void)setAttributedTextPartialUpdate_ant_mark:(NSAttributedString *)attributedText animated:(BOOL)animated {
     const NSUInteger textLength = self.textStorage.length;
     
@@ -621,6 +631,15 @@
     }
 }
 
+/*
+ ### setAttributedText_ant_mark:（全量替换）
+ 设计理念 ：完全替换 + 重新构建
+
+ - 处理方式 ：清空所有内容，重新设置
+ - 更新策略 ：全量替换，重新布局
+ - 动画支持 ：无动画效果
+ - 适用场景 ： 一次性设置 、内容完全变更
+ */
 - (void)setAttributedText_ant_mark:(NSAttributedString *)attributedText {
     
     [self.attributedText enumerateAttribute:NSAttachmentAttributeName
@@ -629,6 +648,7 @@
                                  usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         if ([value conformsToProtocol:@protocol(AMViewAttachment)]) {
             id<AMViewAttachment> attach = (id<AMViewAttachment>)value;
+            // 首先是把自己的都先删了.
             UIView<AMViewAttachment> *view = [attach view];
             if (view.superview == self) {
                 if ([view respondsToSelector:@selector(setAttachment:)]) {

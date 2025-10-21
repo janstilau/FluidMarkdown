@@ -26,6 +26,23 @@
 
 @implementation CMAttributedStringRenderer
 
+/*
+ {
+     span = <AMHTMLSpanTransformer: 0x281cfd2f0>;
+     sup = <CMHTMLSuperscriptTransformer: 0x281e72a60>;
+     font = <AMHTMLFontTransformer: 0x281cfd5f0>;
+     img = <AMHTMLImgTransformer: 0x281cfc860>;
+     s = <CMHTMLStrikethroughTransformer: 0x281e71040>;
+     del = <AMHTMLDelTransformer: 0x281cfc570>;
+     sub = <CMHTMLSubscriptTransformer: 0x281e73b60>;
+     icon = <AMHTMLIconTransformer: 0x281cfca40>;
+     u = <AMHTMLUnderlineTransformer: 0x281e73d40>;
+     mark = <AMHTMLMarkTransformer: 0x281cfc8f0>;
+     iconlink = <AMHTMLIconLinkTransformer: 0x281e73f60>;
+     cite = <AMHTMLCiteTransformer: 0x281cfc410>;
+ }
+ */
+
 - (instancetype)initWithDocument:(CMDocument *)document attributes:(CMTextAttributes *)attributes
 {
     if ((self = [super init])) {
